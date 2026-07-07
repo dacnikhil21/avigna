@@ -24,8 +24,8 @@ const promises = [
   },
   {
     icon: MessageCircle,
-    title: "WhatsApp Support",
-    description: "Personal styling advice and support available on WhatsApp.",
+    title: "Client Support",
+    description: "Dedicated assistance from our friendly support team.",
   },
   {
     icon: Award,

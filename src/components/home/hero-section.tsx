@@ -174,14 +174,12 @@ export function HeroSection() {
               >
                 Explore Collections
               </Link>
-              <a
-                href="https://wa.me/919876543210"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/shop"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/40 hover:border-[#C5A880] text-white hover:bg-[#C5A880] hover:text-[#121212] text-xs uppercase tracking-[0.2em] font-medium transition-all duration-500 ease-out active:scale-[0.98] select-none text-center"
               >
-                Book WhatsApp Consultation
-              </a>
+                Shop All Jewellery
+              </Link>
             </motion.div>
           </div>
         </motion.div>

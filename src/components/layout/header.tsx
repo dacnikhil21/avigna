@@ -4,13 +4,13 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ShoppingBag, Search, Heart, User, ChevronDown, MessageCircle, MapPin, HelpCircle } from "lucide-react";
+import { Menu, X, ShoppingBag, Search, Heart, User, ChevronDown, MapPin, HelpCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/lib/store/cart";
 
 const MESSAGES = [
   "Complimentary Insured Shipping Across India",
-  "WhatsApp Styling Concierge Available",
+  "Pristine 1 Gram Gold Replica Jewellery",
   "Visit Our Boutique – Wanaparthy, Telangana"
 ];
 
@@ -155,11 +155,8 @@ export function Header() {
               <Link href="/collections" className="hover:text-[#C5A880] transition-colors duration-300 py-8">
                 Collections
               </Link>
-              <Link href="/bridal-salon" className="hover:text-[#C5A880] transition-colors duration-300 py-8">
-                Bridal
-              </Link>
               <Link href="/about" className="hover:text-[#C5A880] transition-colors duration-300 py-8">
-                About
+                About Us
               </Link>
               <Link href="/contact" className="hover:text-[#C5A880] transition-colors duration-300 py-8">
                 Contact
@@ -179,9 +176,7 @@ export function Header() {
                   Collections
                 </span>
               </div>
-            </Link>
-
-            {/* Desktop Right Navigation Utilities */}
+            </Link>             {/* Desktop Right Navigation Utilities */}
             <div className={cn(
               "hidden lg:flex items-center gap-6 text-[13px] tracking-[0.08em] uppercase font-sans font-medium transition-colors duration-300",
               isHeaderDark ? "text-white" : "text-[#121212]"
@@ -194,16 +189,6 @@ export function Header() {
                 <Search className="w-4 h-4" />
                 <span className="hidden xl:inline text-[11px] tracking-wider">Search</span>
               </button>
-
-              <a
-                href="https://wa.me/917013004127"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 hover:text-[#C5A880] transition-colors duration-300"
-              >
-                <MessageCircle className="w-4 h-4 text-[#C5A880]" />
-                <span>Concierge</span>
-              </a>
 
               <Link
                 href="/wishlist"
@@ -435,12 +420,12 @@ export function Header() {
                   Home
                 </Link>
 
-                <Link href="/collections" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40">
-                  Collections
+                <Link href="/shop" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40">
+                  Shop
                 </Link>
 
-                <Link href="/bridal-salon" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40">
-                  Bridal Salon
+                <Link href="/collections" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40">
+                  Collections
                 </Link>
 
                 <Link href="/about" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40">
@@ -462,16 +447,6 @@ export function Header() {
                   <span>Search</span>
                 </button>
 
-                <a
-                  href="https://wa.me/917013004127"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40 flex items-center gap-2"
-                >
-                  <MessageCircle className="w-4.5 h-4.5 text-[#C5A880]" />
-                  <span>Concierge</span>
-                </a>
-
                 <Link href="/wishlist" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40 flex items-center gap-2">
                   <Heart className="w-4.5 h-4.5" />
                   <span>Wishlist</span>
@@ -485,15 +460,6 @@ export function Header() {
 
               {/* Bottom utilities inside mobile drawer */}
               <div className="mt-auto pt-6 border-t border-[#EFECE7] flex flex-col gap-3">
-                <a
-                  href="https://wa.me/919876543210"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-[#121212] hover:text-[#C5A880] transition-colors"
-                >
-                  <MessageCircle className="w-4 h-4 text-[#C5A880]" />
-                  <span>WhatsApp Concierge</span>
-                </a>
                 <Link
                   href="/contact"
                   onClick={() => setIsMobileOpen(false)}

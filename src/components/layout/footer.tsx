@@ -45,14 +45,12 @@ export function Footer() {
                 </Link>
               </li>
               <li className="pt-2">
-                <a
-                  href="https://wa.me/917013004127"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/contact"
                   className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-[#C5A880] hover:text-white transition-all duration-300 font-medium"
                 >
-                  WhatsApp Consult &rarr;
-                </a>
+                  Contact Us &rarr;
+                </Link>
               </li>
             </ul>
           </div>

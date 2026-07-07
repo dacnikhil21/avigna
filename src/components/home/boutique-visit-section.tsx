@@ -1,27 +1,26 @@
 "use client";
 
-import Link from "next/link";
-import { MapPin, Clock } from "lucide-react";
+import { MapPin, Clock, Phone, Mail } from "lucide-react";
 import { FadeIn } from "@/components/shared/motion";
 
 export function BoutiqueVisitSection() {
   return (
-    <section className="bg-[#FAF8F5] py-28 md:py-36 border-t border-[#EFECE7]">
+    <section className="bg-[#FAF8F5] py-20 md:py-24 border-t border-[#EFECE7]">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 xl:px-28">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* Left Column - Details */}
           <div className="lg:col-span-5">
             <FadeIn>
-              <p className="text-[11px] font-sans font-medium tracking-[0.35em] uppercase text-[#C5A880] mb-6">
+              <p className="text-[11px] font-sans font-medium tracking-[0.35em] uppercase text-[#C5A880] mb-4">
                 Our Flagship
               </p>
               
-              <h2 className="font-serif text-3xl md:text-4xl font-light text-[#121212] leading-tight italic mb-8">
-                Visit the Boutique
+              <h2 className="font-serif text-3xl md:text-4xl font-light text-[#121212] leading-tight mb-8">
+                Visit Our Store
               </h2>
               
-              <div className="space-y-8 text-sm font-sans font-light text-[#6B6560] leading-relaxed mb-10">
+              <div className="space-y-6 text-sm font-sans font-light text-[#6B6560] leading-relaxed mb-8">
                 <div className="flex gap-4 items-start">
                   <MapPin className="w-5 h-5 text-[#C5A880] shrink-0 mt-0.5" />
                   <div>
@@ -30,8 +29,8 @@ export function BoutiqueVisitSection() {
                     </h4>
                     <p className="text-sm">
                       Avighna Collections<br />
-                      123, MG Road, Ashok Nagar,<br />
-                      Bengaluru, Karnataka 560001
+                      Beside More Supermarket, Opp RR Complex,<br />
+                      Polytechnic Road, Wanaparthy – 509103
                     </p>
                   </div>
                 </div>
@@ -48,31 +47,47 @@ export function BoutiqueVisitSection() {
                     </p>
                   </div>
                 </div>
+
+                <div className="flex gap-4 items-start">
+                  <Phone className="w-5 h-5 text-[#C5A880] shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-serif text-base font-normal text-[#121212] mb-1">
+                      Phone Number
+                    </h4>
+                    <p className="text-sm">
+                      +91 70130 04127
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 items-start">
+                  <Mail className="w-5 h-5 text-[#C5A880] shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-serif text-base font-normal text-[#121212] mb-1">
+                      Email Address
+                    </h4>
+                    <p className="text-sm">
+                      avighnacollections1@gmail.com
+                    </p>
+                  </div>
+                </div>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
                 <a
-                  href="https://maps.google.com/?q=123+MG+Road+Ashok+Nagar+Bengaluru"
+                  href="https://maps.google.com/?q=Avighna+Collections+Wanaparthy"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-4 text-[12px] font-dmsans tracking-[0.22em] uppercase text-[#121212] hover:text-[#C5A880] transition-colors duration-300 group"
                 >
-                  <span>Get Directions</span>
+                  <span>Get Directions on Google Maps</span>
                   <span className="w-8 h-[1px] bg-[#121212] group-hover:bg-[#C5A880] group-hover:w-16 transition-all duration-500" />
                 </a>
-
-                <Link
-                  href="/boutique"
-                  className="inline-flex items-center gap-4 text-[12px] font-dmsans tracking-[0.22em] uppercase text-[#C5A880] hover:text-[#121212] transition-colors duration-300 group"
-                >
-                  <span>Book Appointment</span>
-                  <span className="w-8 h-[1px] bg-[#C5A880] group-hover:bg-[#121212] group-hover:w-16 transition-all duration-500" />
-                </Link>
               </div>
             </FadeIn>
           </div>
 
-          {/* Right Column - Map Placeholder */}
+          {/* Right Column - Map Visualizer */}
           <div className="lg:col-span-7">
             <FadeIn delay={0.2}>
               <div className="relative aspect-[16/10] bg-[#121212] flex flex-col items-center justify-center text-center p-6 select-none border border-white/5 shadow-luxury">
