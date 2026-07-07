@@ -8,10 +8,10 @@ const bestSellers = getFeaturedProducts().slice(0, 8);
 
 export function BestSellersSection() {
   return (
-    <section className="section-padding py-16 md:py-24 bg-[#FAF8F5]">
-      <FadeIn className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-10 gap-4">
+    <section className="section-padding py-12 md:py-16 bg-[#FAF8F5]">
+      <FadeIn className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-6 gap-4">
         <div>
-          <p className="label-luxury mb-2">Customer Favourites</p>
+          <p className="label-luxury mb-1">Customer Favourites</p>
           <h2 className="heading-md">Best Sellers</h2>
         </div>
         <Link
@@ -22,10 +22,10 @@ export function BestSellersSection() {
         </Link>
       </FadeIn>
 
-      <StaggerContainer className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
+      <StaggerContainer className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
         {bestSellers.map((product, i) => (
           <StaggerItem key={product.id}>
-            <ProductCard product={product} priority={i < 4} />
+            <ProductCard product={product} priority={i < 5} />
           </StaggerItem>
         ))}
       </StaggerContainer>

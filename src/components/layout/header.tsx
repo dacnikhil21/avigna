@@ -118,7 +118,7 @@ export function Header() {
                 : "bg-transparent border-transparent h-20 md:h-[88px]"
           )}
         >
-          <div className="w-full h-full max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between relative">
+          <div className="w-full h-full max-w-7xl mx-auto px-6 md:px-12 flex lg:grid lg:grid-cols-3 items-center justify-between relative">
             
             {/* Mobile Menu Trigger */}
             <button
@@ -132,9 +132,9 @@ export function Header() {
               <Menu className="w-5 h-5" />
             </button>
 
-            {/* Desktop Left Navigation */}
+            {/* Desktop Left Navigation (Column 1) */}
             <nav className={cn(
-              "hidden lg:flex items-center gap-6 text-[13px] tracking-[0.08em] uppercase font-sans font-medium transition-colors duration-300",
+              "hidden lg:flex items-center gap-6 justify-start text-[13px] tracking-[0.08em] uppercase font-sans font-medium transition-colors duration-300",
               isHeaderDark ? "text-white" : "text-[#121212]"
             )}>
               <Link href="/" className="hover:text-[#C5A880] transition-colors duration-300 py-8">
@@ -163,22 +163,26 @@ export function Header() {
               </Link>
             </nav>
 
-            {/* Centered Monogram / Logo */}
-            <Link href="/" className="absolute left-1/2 -translate-x-1/2 text-center group z-10">
-              <div className="flex flex-col items-center">
-                <span className={cn(
-                  "font-serif text-xl md:text-2xl font-light tracking-[0.08em] transition-colors duration-300",
-                  isHeaderDark ? "text-white" : "text-[#121212]"
-                )}>
-                  Avighna
-                </span>
-                <span className="hidden sm:block text-[9px] uppercase tracking-[0.3em] text-[#C5A880] mt-0.5 font-medium">
-                  Collections
-                </span>
-              </div>
-            </Link>             {/* Desktop Right Navigation Utilities */}
+            {/* Centered Monogram / Logo (Column 2) */}
+            <div className="lg:flex lg:justify-center lg:items-center lg:relative lg:left-0 lg:translate-x-0 absolute left-1/2 -translate-x-1/2 z-10">
+              <Link href="/" className="text-center group">
+                <div className="flex flex-col items-center">
+                  <span className={cn(
+                    "font-serif text-xl md:text-2xl font-light tracking-[0.08em] transition-colors duration-300",
+                    isHeaderDark ? "text-white" : "text-[#121212]"
+                  )}>
+                    Avighna
+                  </span>
+                  <span className="hidden sm:block text-[9px] uppercase tracking-[0.3em] text-[#C5A880] mt-0.5 font-medium">
+                    Collections
+                  </span>
+                </div>
+              </Link>
+            </div>
+
+            {/* Desktop Right Navigation Utilities (Column 3) */}
             <div className={cn(
-              "hidden lg:flex items-center gap-6 text-[13px] tracking-[0.08em] uppercase font-sans font-medium transition-colors duration-300",
+              "hidden lg:flex items-center gap-6 justify-end text-[13px] tracking-[0.08em] uppercase font-sans font-medium transition-colors duration-300",
               isHeaderDark ? "text-white" : "text-[#121212]"
             )}>
               <button
@@ -241,6 +245,7 @@ export function Header() {
                 )}
               </button>
             </div>
+
 
           </div>
 

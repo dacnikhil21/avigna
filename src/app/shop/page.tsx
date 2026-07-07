@@ -62,9 +62,9 @@ function ShopContent() {
 
       <div className="section-padding pb-16">
         {/* Header */}
-        <FadeIn className="text-center max-w-2xl mx-auto mb-8">
-          <p className="label-luxury mb-3">Avighna Collections</p>
-          <h1 className="heading-lg mb-3">
+        <FadeIn className="text-center max-w-2xl mx-auto mb-6">
+          <p className="label-luxury mb-1">Avighna Collections</p>
+          <h1 className="heading-lg mb-1">
             {activeCategory ? activeCategory.name : "All Jewellery"}
           </h1>
           <p className="body-lg text-sm">
@@ -74,13 +74,13 @@ function ShopContent() {
         </FadeIn>
 
         {/* Filter bar */}
-        <FadeIn className="mb-8">
+        <FadeIn className="mb-6">
           {/* Scrollable category pills */}
-          <div className="flex items-center gap-3 mb-4 overflow-x-auto pb-2 scrollbar-none">
+          <div className="flex items-center gap-2 mb-4 overflow-x-auto pb-2 no-scrollbar">
             <Link
               href="/shop"
               className={cn(
-                "flex-shrink-0 px-4 py-2 rounded-full text-xs uppercase tracking-wider transition-all duration-300 border",
+                "flex-shrink-0 px-3 py-1.5 rounded-full text-[10px] md:text-xs uppercase tracking-wider transition-all duration-300 border",
                 !categoryFilter
                   ? "bg-[#121212] text-white border-[#121212]"
                   : "bg-white text-[#6B6560] border-[#EFECE7] hover:border-[#C5A880]"
@@ -93,7 +93,7 @@ function ShopContent() {
                 key={cat.slug}
                 href={`/shop?category=${cat.slug}`}
                 className={cn(
-                  "flex-shrink-0 px-4 py-2 rounded-full text-xs uppercase tracking-wider transition-all duration-300 border whitespace-nowrap",
+                  "flex-shrink-0 px-3 py-1.5 rounded-full text-[10px] md:text-xs uppercase tracking-wider transition-all duration-300 border whitespace-nowrap",
                   categoryFilter === cat.slug
                     ? "bg-[#121212] text-white border-[#121212]"
                     : "bg-white text-[#6B6560] border-[#EFECE7] hover:border-[#C5A880]"
@@ -106,11 +106,11 @@ function ShopContent() {
 
           {/* Results count + Sort */}
           <div className="flex items-center justify-between">
-            <p className="text-sm text-[#6B6560]">
+            <p className="text-xs md:text-sm text-[#6B6560]">
               <span className="font-medium text-[#121212]">{filteredProducts.length}</span> {filteredProducts.length === 1 ? "piece" : "pieces"}
             </p>
-            <div className="flex items-center gap-2 border border-[#EFECE7] bg-white rounded-full px-4 py-2">
-              <SlidersHorizontal className="w-3.5 h-3.5 text-[#9a948f]" />
+            <div className="flex items-center gap-1.5 border border-[#EFECE7] bg-white rounded-full px-3 py-1.5">
+              <SlidersHorizontal className="w-3 h-3 text-[#9a948f]" />
               <select
                 value={sortBy}
                 onChange={(e) => {
@@ -118,7 +118,7 @@ function ShopContent() {
                   params.set("sort", e.target.value);
                   router.push(`${pathname}?${params.toString()}`);
                 }}
-                className="text-xs bg-transparent border-none focus:outline-none text-[#121212] cursor-pointer"
+                className="text-[10px] md:text-xs bg-transparent border-none focus:outline-none text-[#121212] cursor-pointer"
               >
                 <option value="featured">Featured</option>
                 <option value="newest">Newest</option>
@@ -130,12 +130,12 @@ function ShopContent() {
           </div>
         </FadeIn>
 
-        {/* Product Grid — 2 cols mobile, 3 tablet, 4 desktop */}
+        {/* Product Grid — 2 cols mobile, 3 tablet, 4-5 desktop */}
         {filteredProducts.length > 0 ? (
-          <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
+          <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
             {filteredProducts.map((product, i) => (
               <StaggerItem key={product.id}>
-                <ProductCard product={product} priority={i < 4} />
+                <ProductCard product={product} priority={i < 5} />
               </StaggerItem>
             ))}
           </StaggerContainer>

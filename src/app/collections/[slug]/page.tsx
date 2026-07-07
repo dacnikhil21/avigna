@@ -69,10 +69,10 @@ export default async function CollectionDetailPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="section-padding py-20">
-        <FadeIn className="flex items-end justify-between mb-12">
+      <section className="section-padding py-12 md:py-16">
+        <FadeIn className="flex items-end justify-between mb-6">
           <div>
-            <p className="label-luxury mb-2">The Collection</p>
+            <p className="label-luxury mb-1">The Collection</p>
             <h2 className="heading-md">Featured Pieces</h2>
           </div>
           <Button variant="outline" asChild className="hidden sm:inline-flex">
@@ -83,7 +83,7 @@ export default async function CollectionDetailPage({ params }: Props) {
           </Button>
         </FadeIn>
 
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
           {collectionProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

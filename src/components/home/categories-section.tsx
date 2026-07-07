@@ -29,14 +29,14 @@ const DISPLAY_CATEGORIES = categories.filter(c =>
 export function CategoriesSection() {
   return (
     <section className="py-12 md:py-16 bg-white border-b border-[#EFECE7]">
-      <FadeIn className="text-center max-w-2xl mx-auto mb-8 px-6">
-        <p className="text-[10px] font-sans font-semibold tracking-[0.25em] uppercase text-[#C5A880] mb-2">Shop by Category</p>
+      <FadeIn className="text-center max-w-2xl mx-auto mb-6 px-6">
+        <p className="text-[10px] font-sans font-semibold tracking-[0.25em] uppercase text-[#C5A880] mb-1">Shop by Category</p>
         <h2 className="font-serif text-2xl md:text-3xl font-light text-[#121212]">Browse Our Curation</h2>
       </FadeIn>
 
       <div className="relative w-full">
         {/* Horizontal Scroll Wrapper */}
-        <div className="flex gap-5 md:gap-8 overflow-x-auto pb-4 pt-2 px-6 md:px-12 scrollbar-none scroll-smooth">
+        <div className="flex gap-5 md:gap-8 overflow-x-auto pb-4 pt-2 px-6 md:px-12 no-scrollbar scroll-smooth">
           {DISPLAY_CATEGORIES.map((cat) => (
             <Link
               key={cat.slug}

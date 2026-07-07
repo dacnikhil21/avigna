@@ -11,10 +11,10 @@ export const metadata: Metadata = {
 export default function CollectionsPage() {
   return (
     <div className="section-padding pt-32 md:pt-36 pb-20">
-      <div className="text-center max-w-2xl mx-auto mb-16">
-        <p className="label-luxury mb-4">Curated Collections</p>
-        <h1 className="heading-lg mb-4">Stories Woven in Gold</h1>
-        <p className="body-lg">
+      <div className="text-center max-w-2xl mx-auto mb-8">
+        <p className="label-luxury mb-1">Curated Collections</p>
+        <h1 className="heading-lg mb-1">Stories Woven in Gold</h1>
+        <p className="body-lg text-sm">
           Each collection is a chapter in our legacy — crafted with passion,
           designed for the extraordinary moments in your life.
         </p>

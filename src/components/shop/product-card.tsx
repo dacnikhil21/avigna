@@ -65,10 +65,10 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
 
   return (
     <>
-      <article className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-[#EFECE7] hover:shadow-xl hover:border-[#C5A880]/30 transition-all duration-500">
+      <article className="group flex flex-col bg-white rounded-xl overflow-hidden border border-[#EFECE7] hover:shadow-lg hover:border-[#C5A880]/30 transition-all duration-500">
         {/* Image */}
         <Link href={`/product/${product.slug}`} className="block relative">
-          <div className="relative aspect-[3/4] overflow-hidden bg-[#FAF8F5]">
+          <div className="relative aspect-[4/5] overflow-hidden bg-[#FAF8F5]">
             <Image
               src={product.images[0]?.url ?? ""}
               alt={product.images[0]?.altText ?? product.name}
@@ -84,12 +84,12 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
             {/* Badges top-left */}
             <div className="absolute top-2 left-2 flex flex-col gap-1 z-10">
               {badge && (
-                <span className={cn("px-2 py-0.5 text-[9px] md:text-[10px] uppercase tracking-wider text-white font-medium rounded-full", badge.color)}>
+                <span className={cn("px-1.5 py-0.5 text-[8px] md:text-[9px] uppercase tracking-wider text-white font-medium rounded-md", badge.color)}>
                   {badge.label}
                 </span>
               )}
               {discountPct && (
-                <span className="px-2 py-0.5 text-[9px] md:text-[10px] uppercase tracking-wider text-white font-medium rounded-full bg-[#E05252]">
+                <span className="px-1.5 py-0.5 text-[8px] md:text-[9px] uppercase tracking-wider text-white font-medium rounded-md bg-[#E05252]">
                   -{discountPct}%
                 </span>
               )}
@@ -99,27 +99,27 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
             <button
               onClick={handleToggleWishlist}
               className={cn(
-                "absolute top-2 right-2 z-10 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm",
+                "absolute top-2 right-2 z-10 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm",
                 isWishlisted
                   ? "bg-white text-[#C5A880] opacity-100"
                   : "bg-white/80 text-[#6B6560] opacity-0 group-hover:opacity-100"
               )}
               aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
             >
-              <Heart className={cn("w-3.5 h-3.5", isWishlisted && "fill-[#C5A880]")} />
+              <Heart className={cn("w-3 h-3", isWishlisted && "fill-[#C5A880]")} />
             </button>
 
             {/* Quick View hover overlay */}
             <div className="absolute inset-x-0 bottom-0 p-2 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0 flex gap-1.5">
               <button
                 onClick={handleQuickView}
-                className="flex-1 flex items-center justify-center gap-1 py-2 bg-white/90 backdrop-blur-sm text-[#121212] text-[9px] md:text-[10px] uppercase tracking-wider rounded-lg hover:bg-white transition-colors font-medium"
+                className="flex-1 flex items-center justify-center gap-1 py-1.5 bg-white/90 backdrop-blur-sm text-[#121212] text-[8px] md:text-[9px] uppercase tracking-wider rounded-md hover:bg-white transition-colors font-medium"
               >
                 <Eye className="w-3 h-3" /> Quick View
               </button>
               <button
                 onClick={handleAddToCart}
-                className="flex-1 flex items-center justify-center gap-1 py-2 bg-[#121212]/90 backdrop-blur-sm text-white text-[9px] md:text-[10px] uppercase tracking-wider rounded-lg hover:bg-[#121212] transition-colors font-medium"
+                className="flex-1 flex items-center justify-center gap-1 py-1.5 bg-[#121212]/90 backdrop-blur-sm text-white text-[8px] md:text-[9px] uppercase tracking-wider rounded-md hover:bg-[#121212] transition-colors font-medium"
               >
                 <ShoppingBag className="w-3 h-3" /> Add Bag
               </button>
@@ -128,45 +128,45 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
         </Link>
 
         {/* Info */}
-        <div className="p-3 md:p-4 flex flex-col flex-1">
+        <div className="p-2.5 md:p-3.5 flex flex-col flex-1">
           {/* Category */}
-          <p className="text-[9px] md:text-[10px] uppercase tracking-[0.15em] text-[#C5A880] mb-1 truncate">
+          <p className="text-[8px] md:text-[9px] uppercase tracking-[0.15em] text-[#C5A880] mb-0.5 truncate">
             {product.category?.name ?? product.metal}
           </p>
 
           {/* Name */}
           <Link href={`/product/${product.slug}`}>
-            <h3 className="font-serif text-sm md:text-base font-light leading-snug mb-2 text-[#121212] group-hover:text-[#C5A880] transition-colors duration-300 line-clamp-2">
+            <h3 className="font-serif text-xs md:text-sm font-light leading-snug mb-1 text-[#121212] group-hover:text-[#C5A880] transition-colors duration-300 line-clamp-1">
               {product.name}
             </h3>
           </Link>
 
           {/* Pricing */}
-          <div className="flex items-center gap-2 mb-3 flex-wrap">
-            <span className="text-sm md:text-base font-semibold text-[#121212]">
+          <div className="flex items-center gap-1.5 mb-2.5 flex-wrap">
+            <span className="text-xs md:text-sm font-semibold text-[#121212]">
               {product.salePrice ? formatPrice(product.salePrice) : formatPrice(product.price)}
             </span>
             {product.salePrice && (
-              <span className="text-xs text-[#9a948f] line-through">
+              <span className="text-[10px] md:text-xs text-[#9a948f] line-through">
                 {formatPrice(product.price)}
               </span>
             )}
           </div>
 
           {/* Action Buttons */}
-          <div className="mt-auto flex flex-col gap-1.5">
+          <div className="mt-auto flex flex-col gap-1">
             <button
               onClick={handleAddToCart}
-              className="w-full flex items-center justify-center gap-1.5 py-2 md:py-2.5 border border-[#121212] text-[#121212] text-[9px] md:text-[10px] uppercase tracking-wider rounded-lg hover:bg-[#121212] hover:text-white transition-all duration-300 font-medium"
+              className="w-full flex items-center justify-center gap-1 py-1.5 border border-[#121212] text-[#121212] text-[8px] md:text-[9px] uppercase tracking-wider rounded-md hover:bg-[#121212] hover:text-white transition-all duration-300 font-medium"
             >
-              <ShoppingBag className="w-3 h-3" />
+              <ShoppingBag className="w-2.5 h-2.5" />
               Add to Cart
             </button>
             <Link
               href={`/product/${product.slug}`}
-              className="w-full flex items-center justify-center gap-1.5 py-2 md:py-2.5 bg-[#C5A880] text-white text-[9px] md:text-[10px] uppercase tracking-wider rounded-lg hover:bg-[#b8966f] transition-all duration-300 font-medium"
+              className="w-full flex items-center justify-center gap-1 py-1.5 bg-[#C5A880] text-white text-[8px] md:text-[9px] uppercase tracking-wider rounded-md hover:bg-[#b8966f] transition-all duration-300 font-medium"
             >
-              <Zap className="w-3 h-3" />
+              <Zap className="w-2.5 h-2.5" />
               Buy Now
             </Link>
           </div>
@@ -248,7 +248,7 @@ export function CollectionCard({
 }) {
   return (
     <Link href={`/collections/${slug}`} className="group block">
-      <article className="relative aspect-[4/5] rounded-3xl overflow-hidden">
+      <article className="relative aspect-[4/5] rounded-xl overflow-hidden">
         <Image
           src={image}
           alt={name}

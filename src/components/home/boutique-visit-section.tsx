@@ -12,11 +12,11 @@ export function BoutiqueVisitSection() {
           {/* Left Column - Details */}
           <div className="lg:col-span-5">
             <FadeIn>
-              <p className="text-[11px] font-sans font-medium tracking-[0.35em] uppercase text-[#C5A880] mb-4">
+              <p className="text-[11px] font-sans font-medium tracking-[0.35em] uppercase text-[#C5A880] mb-1">
                 Our Flagship
               </p>
               
-              <h2 className="font-serif text-3xl md:text-4xl font-light text-[#121212] leading-tight mb-8">
+              <h2 className="font-serif text-3xl md:text-4xl font-light text-[#121212] leading-tight mb-4">
                 Visit Our Store
               </h2>
               
