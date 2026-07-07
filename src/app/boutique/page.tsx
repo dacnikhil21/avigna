@@ -46,15 +46,15 @@ export default function BoutiquePage() {
                 Flagship Store
               </p>
               <h1 className="font-serif text-3xl md:text-4xl font-light text-[#121212] mb-6">
-                The Bangalore <br />
+                The Wanaparthy <br />
                 <em>Boutique</em>
               </h1>
               <p className="font-sans text-sm text-[#6B6560] leading-relaxed mb-8">
-                Step away from the digital noise. Visit our flagship sanctuary in the heart of Bengaluru for an unhurried, personal jewellery discovery.
+                Step away from the digital noise. Visit our flagship sanctuary in Wanaparthy for an unhurried, personal jewellery discovery.
               </p>
             </FadeIn>
 
-            <FadeIn delay={0.1} className="space-y-6 bg-white border border-[#EFECE7] p-8">
+            <FadeIn delay={0.1} className="space-y-6 bg-white border border-[#EFECE7] p-8 rounded-xl">
               <h3 className="font-serif text-lg font-light text-[#121212] mb-4">Location & Hours</h3>
               
               <div className="space-y-4">
@@ -63,8 +63,8 @@ export default function BoutiquePage() {
                   <div>
                     <p className="text-sm font-medium text-[#121212]">Address</p>
                     <p className="text-sm text-[#6B6560] mt-1">
-                      123, MG Road, Ashok Nagar,<br />
-                      Bengaluru, Karnataka 560001
+                      Beside More Supermarket, Opp RR Complex,<br />
+                      Polytechnic Road, Wanaparthy – 509103
                     </p>
                   </div>
                 </div>
@@ -83,18 +83,18 @@ export default function BoutiquePage() {
                 <div className="flex items-start gap-4">
                   <Phone className="w-5 h-5 text-[#C5A880] shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-sm font-medium text-[#121212]">Client Concierge</p>
-                    <p className="text-sm text-[#6B6560] mt-1">+91 98765 43210</p>
+                    <p className="text-sm font-medium text-[#121212]">Client Support</p>
+                    <p className="text-sm text-[#6B6560] mt-1">+91 70130 04127</p>
                   </div>
                 </div>
               </div>
             </FadeIn>
 
             {/* Custom Grayscale Styled Map Iframe Container */}
-            <FadeIn delay={0.2} className="relative aspect-video w-full overflow-hidden border border-[#EFECE7] grayscale hover:grayscale-0 transition-all duration-700">
+            <FadeIn delay={0.2} className="relative aspect-video w-full overflow-hidden border border-[#EFECE7] grayscale hover:grayscale-0 transition-all duration-700 rounded-xl">
               <iframe
-                title="Avighna Bangalore Boutique Map"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.9267258380816!2d77.60744797621183!3d12.976483487339178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae167e9cd575b5%3A0x8bae3d9ad2f447cf!2sM%20G%20Road%20Metro%20Station!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                title="Sri Avighna Collections Wanaparthy Boutique Map"
+                src="https://maps.google.com/maps?q=Sri+Avighna+Collections+Wanaparthy&t=&z=15&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

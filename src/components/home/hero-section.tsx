@@ -134,7 +134,7 @@ export function HeroSection() {
               custom={0.7}
               className="text-[11px] font-sans font-medium tracking-[0.3em] uppercase text-[#C5A880]"
             >
-              AVIGHNA COLLECTIONS
+              SRI AVIGHNA COLLECTIONS
             </motion.p>
 
             {/* Headline */}

@@ -11,7 +11,7 @@ export function Footer() {
       {/* Zone A: Brand Promise & Statement (Full Width Top) */}
       <div className="section-padding py-16 text-center max-w-4xl mx-auto border-b border-white/5">
         <p className="text-[10px] font-sans uppercase tracking-[0.4em] text-[#C5A880] mb-3">
-          The Avighna Promise
+          The Sri Avighna Promise
         </p>
         <h2 className="font-serif text-2xl md:text-3xl font-light italic text-[#FAF8F5] leading-relaxed max-w-2xl mx-auto">
           &ldquo;Crafted with reverence. Designed to make you feel like royalty every single day.&rdquo;

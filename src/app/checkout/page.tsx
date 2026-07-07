@@ -101,7 +101,7 @@ export default function CheckoutPage() {
           key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
           amount: data.amount,
           currency: "INR",
-          name: "Avighna Collections",
+          name: "Sri Avighna Collections",
           description: "Luxury Jewellery Purchase",
           order_id: data.orderId,
           handler: async (response) => {

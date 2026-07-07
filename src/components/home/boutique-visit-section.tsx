@@ -28,7 +28,7 @@ export function BoutiqueVisitSection() {
                       Boutique Address
                     </h4>
                     <p className="text-sm">
-                      Avighna Collections<br />
+                      Sri Avighna Collections<br />
                       Beside More Supermarket, Opp RR Complex,<br />
                       Polytechnic Road, Wanaparthy – 509103
                     </p>
@@ -75,7 +75,7 @@ export function BoutiqueVisitSection() {
 
               <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
                 <a
-                  href="https://maps.google.com/?q=Avighna+Collections+Wanaparthy"
+                  href="https://maps.google.com/?q=Sri+Avighna+Collections+Wanaparthy"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-4 text-[12px] font-dmsans tracking-[0.22em] uppercase text-[#121212] hover:text-[#C5A880] transition-colors duration-300 group"

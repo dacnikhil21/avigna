@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     "bridal jewellery",
     "gold jewellery",
     "diamond jewellery",
-    "Avighna Collections",
+    "Sri Avighna Collections",
     "Bengaluru jewellery",
     "BIS hallmarked gold",
   ],

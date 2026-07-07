@@ -7,7 +7,7 @@ import { Award, Gem, Heart, Users } from "lucide-react";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Discover the story of Avighna Collections — three decades of master craftsmanship, BIS hallmarked gold, and timeless Indian jewellery.",
+    "Discover the story of Sri Avighna Collections — three decades of master craftsmanship, BIS hallmarked gold, and timeless Indian jewellery.",
 };
 
 const values = [

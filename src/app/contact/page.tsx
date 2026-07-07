@@ -104,10 +104,10 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="rounded-3xl overflow-hidden h-64 bg-luxury-cream">
+            <div className="rounded-xl overflow-hidden h-64 bg-luxury-cream">
               <iframe
-                title="Avighna Collections Store Location"
-                src="https://maps.google.com/maps?q=MG+Road+Bengaluru&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                title="Sri Avighna Collections Store Location"
+                src="https://maps.google.com/maps?q=Sri+Avighna+Collections+Wanaparthy&t=&z=15&ie=UTF8&iwloc=&output=embed"
                 className="w-full h-full border-0"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

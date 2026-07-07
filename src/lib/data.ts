@@ -12,7 +12,7 @@ function makeImages(urls: string[]): ProductImage[] {
 }
 
 export const BRAND = {
-  name: "Avighna Collections",
+  name: "Sri Avighna Collections",
   tagline: "Timeless 1 Gram Gold Jewellery for Every Celebration",
   description:
     "Discover exquisite handcrafted 1 gram gold replica jewellery that celebrates India's rich heritage. From royal bridal masterpieces to daily wear and classical dance ornaments.",

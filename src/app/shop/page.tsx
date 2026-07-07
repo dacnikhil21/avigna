@@ -63,7 +63,7 @@ function ShopContent() {
       <div className="section-padding pb-16">
         {/* Header */}
         <FadeIn className="text-center max-w-2xl mx-auto mb-6">
-          <p className="label-luxury mb-1">Avighna Collections</p>
+          <p className="label-luxury mb-1">Sri Avighna Collections</p>
           <h1 className="heading-lg mb-1">
             {activeCategory ? activeCategory.name : "All Jewellery"}
           </h1>

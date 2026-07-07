@@ -165,7 +165,7 @@ export function Header() {
                     "font-serif text-xl md:text-2xl font-light tracking-[0.08em] transition-colors duration-300 leading-none",
                     isHeaderDark ? "text-white" : "text-[#121212]"
                   )}>
-                    Avighna
+                    Sri Avighna
                   </span>
                   <span className="hidden sm:block text-[8px] uppercase tracking-[0.3em] text-[#C5A880] mt-0.5 font-medium leading-none">
                     Collections
@@ -378,7 +378,7 @@ export function Header() {
             >
               <div className="flex items-center justify-between mb-8">
                 <div>
-                  <span className="font-serif text-2xl font-light">Avighna</span>
+                  <span className="font-serif text-2xl font-light">Sri Avighna</span>
                   <p className="text-[9px] uppercase tracking-[0.3em] text-[#C5A880]">
                     Collections
                   </p>
