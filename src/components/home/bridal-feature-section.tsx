@@ -11,7 +11,7 @@ export function BridalFeatureSection() {
       <div className="absolute inset-0">
         <Image
           src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1920&q=85"
-          alt="Avighna Collections Majestic Bridal Set Editorial"
+          alt="Sri Avighna 1 Gram Gold Jewellery Majestic Bridal Set Editorial"
           fill
           priority
           className="object-cover object-[center_35%]"

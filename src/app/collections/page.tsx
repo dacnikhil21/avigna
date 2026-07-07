@@ -5,7 +5,7 @@ import { CollectionsGrid } from "@/components/collections/collections-grid";
 export const metadata: Metadata = {
   title: "Collections",
   description:
-    "Explore Sri Avighna Collections — curated luxury jewellery collections for bridal, everyday elegance, temple gold, and diamond dreams.",
+    "Explore Sri Avighna 1 Gram Gold Jewellery — curated luxury jewellery collections for bridal, everyday elegance, temple gold, and diamond dreams.",
 };
 
 export default function CollectionsPage() {

@@ -16,7 +16,7 @@ const FAQ_GROUPS = [
         a: "1-gram gold jewellery uses a premium brass-copper base alloy core, coated with high-purity gold (22K or 18K) using advanced electroforming techniques. This results in the indistinguishable weight, warmth, and radiance of fine solid gold at an accessible price."
       },
       {
-        q: "How is Avighna Collections jewellery hallmarked?",
+        q: "How is Sri Avighna 1 Gram Gold Jewellery hallmarked?",
         a: "All our gold pieces carry official BIS Hallmark certification (916 for 22K, 750 for 18K) confirming gold purity standards. A physical certificate of authenticity is included inside every signature unboxing box."
       },
       {
@@ -45,15 +45,11 @@ const FAQ_GROUPS = [
   },
   {
     title: "Care & Guarantee",
-    description: "Our lifetime polish guarantee, return window, and simple care guidelines.",
+    description: "Our return window, exchange policy, and simple care guidelines.",
     items: [
       {
         q: "How do I care for my gold jewellery?",
         a: "To preserve the gold polish, store pieces separately in the custom velvet pouches provided. Avoid contact with perfumes, water, sanitisers, and cosmetics. Gently wipe clean with a soft dry microfiber cloth after each wear."
-      },
-      {
-        q: "What is your warranty and polish guarantee?",
-        a: "We provide a Lifetime Polish Guarantee. If your piece ever tarnishes or loses its radiance, you can send it to our Bangalore boutique for a complimentary professional re-polishing service."
       },
       {
         q: "What is your return and exchange policy?",

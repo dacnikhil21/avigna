@@ -41,7 +41,7 @@ export default function BridalSalonPage() {
       <section className="relative h-[90vh] min-h-[600px] flex items-end overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?w=1600&q=85"
-          alt="Avighna Bridal Salon"
+          alt="Sri Avighna 1 Gram Gold Jewellery Bridal Salon"
           fill
           priority
           className="object-cover object-top"
@@ -53,7 +53,7 @@ export default function BridalSalonPage() {
         <div className="relative z-10 w-full section-padding pb-20 md:pb-28">
           <FadeIn>
             <p className="text-[10px] font-sans uppercase tracking-[0.4em] text-[#C5A880] mb-4">
-              Avighna Collections — Prestige
+              Sri Avighna 1 Gram Gold Jewellery — Prestige
             </p>
             <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-light text-white mb-6 leading-[1.1] max-w-3xl">
               The Bridal<br />

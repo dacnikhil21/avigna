@@ -7,7 +7,7 @@ import { Award, Gem, Heart, Users } from "lucide-react";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Discover the story of Sri Avighna Collections — three decades of master craftsmanship, BIS hallmarked gold, and timeless Indian jewellery.",
+    "Discover the story of Sri Avighna 1 Gram Gold Jewellery — three decades of master craftsmanship, BIS hallmarked gold, and timeless Indian jewellery.",
 };
 
 const values = [
@@ -44,7 +44,7 @@ export default function AboutPage() {
       <section className="relative h-[60vh] min-h-[400px] flex items-end">
         <Image
           src="https://images.unsplash.com/photo-1603561596112-0a132b757442?w=1920&q=80"
-          alt="Avighna Collections craftsmanship"
+          alt="Sri Avighna 1 Gram Gold Jewellery craftsmanship"
           fill
           priority
           className="object-cover"
@@ -127,7 +127,7 @@ export default function AboutPage() {
             <h2 className="heading-md mb-6">BIS Hallmarked & GIA Certified</h2>
             <div className="space-y-4 body-lg">
               <p>
-                Every gold piece from Avighna Collections carries the BIS hallmark —
+                Every gold piece from Sri Avighna 1 Gram Gold Jewellery carries the BIS hallmark —
                 the Bureau of Indian Standards mark that guarantees purity. Our 22K
                 gold is 916 purity, and our 18K gold is 750 purity.
               </p>

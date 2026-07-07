@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Phone, MapPin, Mail } from "lucide-react";
+import { Phone, MapPin, Mail, Clock } from "lucide-react";
 import { BRAND } from "@/lib/data";
 import { Separator } from "@/components/ui/separator";
 
@@ -21,7 +21,7 @@ export function Footer() {
 
       {/* Main footer layout with Columns */}
       <div className="section-padding py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
           
           {/* Column 1: Quick Links */}
           <div className="space-y-4">
@@ -36,7 +36,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/shop" className="hover:text-white transition-colors duration-300">
-                  Shop All
+                  Shop
                 </Link>
               </li>
               <li>
@@ -51,7 +51,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/contact" className="hover:text-white transition-colors duration-300">
-                  Contact Us
+                  Contact
                 </Link>
               </li>
             </ul>
@@ -91,31 +91,7 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Column 3: Customer Care */}
-          <div className="space-y-4">
-            <h4 className="text-[10px] uppercase tracking-[0.25em] text-[#C5A880] font-sans font-medium">
-              Customer Care
-            </h4>
-            <ul className="space-y-2.5 text-xs text-white/50 font-light font-sans">
-              <li>
-                <Link href="/faq" className="hover:text-white transition-colors duration-300">
-                  Care &amp; Restoration Guide
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="hover:text-white transition-colors duration-300">
-                  Lifetime Polish Guarantee
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="hover:text-white transition-colors duration-300">
-                  Returns &amp; Exchange Policy
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 4: Store & Contact Info */}
+          {/* Column 3: Store & Contact Info */}
           <div className="space-y-4">
             <h4 className="text-[10px] uppercase tracking-[0.25em] text-[#C5A880] font-sans font-medium">
               Store Information
@@ -124,14 +100,22 @@ export function Footer() {
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#C5A880] mt-0.5 shrink-0" />
                 <span>
+                  Sri Avighna 1 Gram Gold Jewellery<br />
                   Beside More Supermarket,<br />
                   Opp RR Complex, Polytechnic Road,<br />
                   Wanaparthy – 509103
                 </span>
               </li>
+              <li className="flex items-start gap-2.5">
+                <Clock className="w-4 h-4 text-[#C5A880] mt-0.5 shrink-0" />
+                <span>
+                  Business Hours:<br />
+                  10:30 AM – 9:00 PM
+                </span>
+              </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#C5A880] shrink-0" />
-                <span>+91 70130 04127</span>
+                <span>7013004127</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#C5A880] shrink-0" />

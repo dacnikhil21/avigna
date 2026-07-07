@@ -12,11 +12,11 @@ function makeImages(urls: string[]): ProductImage[] {
 }
 
 export const BRAND = {
-  name: "Sri Avighna Collections",
+  name: "Sri Avighna 1 Gram Gold Jewellery",
   tagline: "Timeless 1 Gram Gold Jewellery for Every Celebration",
   description:
     "Discover exquisite handcrafted 1 gram gold replica jewellery that celebrates India's rich heritage. From royal bridal masterpieces to daily wear and classical dance ornaments.",
-  phone: "+91 70130 04127",
+  phone: "7013004127",
   whatsapp: "+91 70130 04127",
   email: "avighnacollections1@gmail.com",
   address: "Beside More Supermarket, Opp RR Complex, Polytechnic Road, Wanaparthy - 509103",
@@ -318,7 +318,7 @@ export const testimonials = [
     name: "Lakshmi Prasanna",
     role: "Bride",
     location: "Wanaparthy",
-    content: "My bridal set from Avighna Collections was the highlight of my wedding. Every relative asked where I got it from. The jewellery looked solid gold — no one could tell it was 1 gram!",
+    content: "My bridal set from Sri Avighna 1 Gram Gold Jewellery was the highlight of my wedding. Every relative asked where I got it from. The jewellery looked solid gold — no one could tell it was 1 gram!",
     rating: 5,
   },
   {
@@ -332,7 +332,7 @@ export const testimonials = [
     name: "Suhasini Reddy",
     role: "Festival Shopper",
     location: "Mahabubnagar",
-    content: "Bought Dasara jewellery for the whole family from Avighna Collections. The variety is amazing and the prices are very fair. The bangles set I got is absolutely stunning.",
+    content: "Bought Dasara jewellery for the whole family from Sri Avighna 1 Gram Gold Jewellery. The variety is amazing and the prices are very fair. The bangles set I got is absolutely stunning.",
     rating: 5,
   },
 ];

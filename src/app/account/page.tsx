@@ -3,8 +3,8 @@ import { User } from "lucide-react";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Account | Sri Avighna Collections",
-  description: "Your Sri Avighna Collections account.",
+  title: "Account | Sri Avighna 1 Gram Gold Jewellery",
+  description: "Your Sri Avighna 1 Gram Gold Jewellery account.",
 };
 
 export default function AccountPage() {

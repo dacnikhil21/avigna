@@ -75,7 +75,7 @@ export default function BoutiquePage() {
                     <p className="text-sm font-medium text-[#121212]">Boutique Hours</p>
                     <p className="text-sm text-[#6B6560] mt-1">
                       Monday – Sunday<br />
-                      11:00 AM – 8:00 PM
+                      10:30 AM – 9:00 PM
                     </p>
                   </div>
                 </div>
@@ -93,8 +93,8 @@ export default function BoutiquePage() {
             {/* Custom Grayscale Styled Map Iframe Container */}
             <FadeIn delay={0.2} className="relative aspect-video w-full overflow-hidden border border-[#EFECE7] grayscale hover:grayscale-0 transition-all duration-700 rounded-xl">
               <iframe
-                title="Sri Avighna Collections Wanaparthy Boutique Map"
-                src="https://maps.google.com/maps?q=Sri+Avighna+Collections+Wanaparthy&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                title="Sri Avighna 1 Gram Gold Jewellery Wanaparthy Boutique Map"
+                src="https://maps.google.com/maps?q=Sri+Avighna+1+Gram+Gold+Jewellery+Wanaparthy&t=&z=15&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

@@ -86,7 +86,7 @@ export default function ContactPage() {
                   {
                     icon: Clock,
                     label: "Hours",
-                    value: "Mon – Sat: 10:00 AM – 8:00 PM\nSun: 11:00 AM – 6:00 PM",
+                    value: "Daily: 10:30 AM – 9:00 PM",
                   },
                 ].map(({ icon: Icon, label, value }) => (
                   <div key={label} className="flex items-start gap-4">
@@ -106,8 +106,8 @@ export default function ContactPage() {
 
             <div className="rounded-xl overflow-hidden h-64 bg-luxury-cream">
               <iframe
-                title="Sri Avighna Collections Store Location"
-                src="https://maps.google.com/maps?q=Sri+Avighna+Collections+Wanaparthy&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                title="Sri Avighna 1 Gram Gold Jewellery Store Location"
+                src="https://maps.google.com/maps?q=Sri+Avighna+1+Gram+Gold+Jewellery+Wanaparthy&t=&z=15&ie=UTF8&iwloc=&output=embed"
                 className="w-full h-full border-0"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

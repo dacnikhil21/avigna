@@ -62,7 +62,7 @@ export function CraftsmanshipSection() {
               Crafted by Masters, Worn with Pride
             </h2>
             <p className="body-lg mb-6">
-              For over three decades, Avighna Collections has been the trusted name
+              For over three decades, Sri Avighna 1 Gram Gold Jewellery has been the trusted name
               for discerning jewellery lovers across India. Every piece is handcrafted
               by master artisans using techniques passed down through generations.
             </p>

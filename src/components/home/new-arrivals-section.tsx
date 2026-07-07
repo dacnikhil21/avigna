@@ -15,7 +15,7 @@ export function NewArrivalsSection() {
         </p>
         <h2 className="heading-md mb-3">New Arrivals</h2>
         <p className="text-sm text-[#6B6560]">
-          The latest additions to Avighna Collections — curated fresh from our atelier.
+          The latest additions to Sri Avighna 1 Gram Gold Jewellery — curated fresh from our atelier.
         </p>
       </FadeIn>
 

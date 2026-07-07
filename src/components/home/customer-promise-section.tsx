@@ -1,5 +1,5 @@
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/shared/motion";
-import { Shield, RefreshCcw, Star, Truck, MessageCircle, Award } from "lucide-react";
+import { Shield, Truck, MessageCircle, Award } from "lucide-react";
 
 const promises = [
   {
@@ -12,16 +12,7 @@ const promises = [
     title: "Free Shipping",
     description: "Complimentary insured delivery across India on all orders.",
   },
-  {
-    icon: RefreshCcw,
-    title: "Easy Returns",
-    description: "Hassle-free 7-day returns and exchange policy.",
-  },
-  {
-    icon: Star,
-    title: "Lifetime Polish",
-    description: "Free polishing service to keep your jewellery looking new.",
-  },
+
   {
     icon: MessageCircle,
     title: "Client Support",
@@ -40,14 +31,14 @@ export function CustomerPromiseSection() {
       <FadeIn className="text-center max-w-2xl mx-auto mb-6">
         <p className="text-[10px] uppercase tracking-[0.3em] text-[#C5A880] mb-1">The Sri Avighna Promise</p>
         <h2 className="font-serif text-3xl md:text-4xl font-light text-white mb-2">
-          Why Choose Sri Avighna Collections
+          Why Choose Sri Avighna 1 Gram Gold Jewellery
         </h2>
         <p className="text-white/50 text-sm leading-relaxed">
           Every piece we create carries our commitment to quality, heritage, and your happiness.
         </p>
       </FadeIn>
 
-      <StaggerContainer className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
+      <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
         {promises.map(({ icon: Icon, title, description }) => (
           <StaggerItem key={title}>
             <div className="flex flex-col items-start p-5 md:p-6 border border-white/10 rounded-2xl hover:border-[#C5A880]/40 transition-all duration-300 hover:bg-white/5">

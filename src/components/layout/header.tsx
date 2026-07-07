@@ -168,7 +168,7 @@ export function Header() {
                     Sri Avighna
                   </span>
                   <span className="hidden sm:block text-[8px] uppercase tracking-[0.3em] text-[#C5A880] mt-0.5 font-medium leading-none">
-                    Collections
+                    1 Gram Gold Jewellery
                   </span>
                 </div>
               </Link>
@@ -380,7 +380,7 @@ export function Header() {
                 <div>
                   <span className="font-serif text-2xl font-light">Sri Avighna</span>
                   <p className="text-[9px] uppercase tracking-[0.3em] text-[#C5A880]">
-                    Collections
+                    1 Gram Gold Jewellery
                   </p>
                 </div>
                 <button

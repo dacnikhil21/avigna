@@ -56,7 +56,7 @@ export function HeroSection() {
         >
           <Image
             src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1920&q=85"
-            alt="Avighna Collections Premium Bridal Editorial"
+            alt="Sri Avighna 1 Gram Gold Jewellery Premium Bridal Editorial"
             fill
             priority
             className="object-cover object-[center_35%]"
@@ -134,7 +134,7 @@ export function HeroSection() {
               custom={0.7}
               className="text-[11px] font-sans font-medium tracking-[0.3em] uppercase text-[#C5A880]"
             >
-              SRI AVIGHNA COLLECTIONS
+              SRI AVIGHNA 1 GRAM GOLD JEWELLERY
             </motion.p>
 
             {/* Headline */}

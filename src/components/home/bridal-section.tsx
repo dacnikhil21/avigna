@@ -33,7 +33,7 @@ export function BridalSection() {
           className="object-cover object-top brightness-50"
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-          <p className="text-white/60 text-xs uppercase tracking-[0.3em] mb-2">Avighna Bridal Salon</p>
+          <p className="text-white/60 text-xs uppercase tracking-[0.3em] mb-2">Sri Avighna 1 Gram Gold Jewellery Bridal Salon</p>
           <h3 className="font-serif text-2xl md:text-4xl font-light text-white italic mb-4">
             Complete Telugu Bridal Trousseau
           </h3>

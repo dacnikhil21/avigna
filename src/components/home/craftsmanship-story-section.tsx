@@ -16,7 +16,7 @@ export function CraftsmanshipStorySection() {
         >
           <Image
             src="https://images.unsplash.com/photo-1603561596112-0a132b757442?w=1200&q=85"
-            alt="Master artisan handcrafting jewellery at Avighna Collections"
+            alt="Master artisan handcrafting jewellery at Sri Avighna 1 Gram Gold Jewellery"
             fill
             className="object-cover"
             sizes="(max-width: 1024px) 100vw, 50vw"
@@ -43,7 +43,7 @@ export function CraftsmanshipStorySection() {
             <p className="font-sans font-light text-[15px] md:text-base text-[#6B6560] leading-[1.85] mb-6">
               Our 1 gram gold jewellery is not a compromise. It is a mastery. Each piece 
               begins as a sculptor&apos;s sketch — then passes through seven pairs of 
-              specialist hands before it earns the Avighna mark. The result is 
+              specialist hands before it earns the Sri Avighna 1 Gram Gold Jewellery mark. The result is 
               indistinguishable from solid gold in presence, weight, and warmth.
             </p>
 
@@ -60,7 +60,7 @@ export function CraftsmanshipStorySection() {
                 <br />The hands that shape it do.&rdquo;
               </p>
               <cite className="block mt-4 text-[10px] font-dmsans tracking-[0.25em] uppercase text-[#C5A880] not-italic">
-                — Master Artisan, 32 years with Avighna
+                — Master Artisan, 32 years with Sri Avighna 1 Gram Gold Jewellery
               </cite>
             </blockquote>
 
