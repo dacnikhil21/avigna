@@ -19,7 +19,11 @@ function ShopContent() {
 
   const filteredProducts = useMemo(() => {
     const result = categoryFilter
-      ? products.filter((p) => p.category.slug === categoryFilter)
+      ? products.filter((p) => {
+          // Match by slug (preferred) OR by categoryId if slug is stale
+          const cat = categories.find((c) => c.slug === categoryFilter);
+          return p.category?.slug === categoryFilter || (cat && p.categoryId === cat.id);
+        })
       : [...products];
 
     switch (sortBy) {
@@ -40,7 +44,7 @@ function ShopContent() {
     }
 
     return result;
-  }, [categoryFilter, sortBy]);
+  }, [categoryFilter, sortBy, products, categories]);
 
   const activeCategory = categories.find((c) => c.slug === categoryFilter);
 

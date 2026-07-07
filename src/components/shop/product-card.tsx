@@ -144,9 +144,11 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           {/* Pricing */}
           <div className="flex items-center gap-1.5 mb-2.5 flex-wrap">
             <span className="text-xs md:text-sm font-semibold text-[#121212]">
-              {product.salePrice ? formatPrice(product.salePrice) : formatPrice(product.price)}
+              {product.salePrice && product.salePrice < product.price
+                ? formatPrice(product.salePrice)
+                : formatPrice(product.price)}
             </span>
-            {product.salePrice && (
+            {product.salePrice && product.salePrice < product.price && (
               <span className="text-[10px] md:text-xs text-[#9a948f] line-through">
                 {formatPrice(product.price)}
               </span>

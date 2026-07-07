@@ -115,7 +115,7 @@ export function ProductsTab() {
     setFormCategory(product.categoryId);
     setFormDesc(product.description || "");
     setFormPrice(product.price.toString());
-    setFormDiscount(product.salePrice ? (product.price - product.salePrice).toString() : "");
+    setFormDiscount(product.salePrice && product.salePrice < product.price ? product.salePrice.toString() : "");
     setFormStock(product.stockQty.toString());
     
     // Map existing images securely
@@ -250,10 +250,11 @@ export function ProductsTab() {
     }
 
     const priceNum = parseFloat(formPrice);
-    const discountNum = formDiscount ? parseFloat(formDiscount) : 0;
+    // formDiscount now holds the final SALE PRICE directly
+    const salePriceInput = formDiscount ? parseFloat(formDiscount) : 0;
     const stockNum = parseInt(formStock);
-    // Use null explicitly so that editProduct spread clears old salePrice
-    const salePrice = (discountNum > 0 && discountNum < priceNum) ? priceNum - discountNum : null;
+    // Only set a salePrice if it is strictly less than the original price
+    const salePrice = (salePriceInput > 0 && salePriceInput < priceNum) ? salePriceInput : undefined;
 
     // Build formal images structures
     const formattedImages: ProductImage[] = formImages.map((img, idx) => ({
@@ -645,19 +646,25 @@ export function ProductsTab() {
                   />
                 </div>
 
-                {/* Discount */}
+                {/* Sale Price (Discount) */}
                 <div className="space-y-2">
                   <Label htmlFor="prod-discount" className="text-xs uppercase tracking-wider font-bold text-slate-900">
-                    Discount / Sale Cut (₹)
+                    Sale Price (₹) <span className="text-slate-500 text-[10px] font-normal normal-case tracking-normal">— optional, must be less than MRP</span>
                   </Label>
                   <Input
                     id="prod-discount"
                     type="number"
-                    placeholder="e.g. 500 (Sets salePrice to price minus discount)"
+                    placeholder={formPrice ? `e.g. ${Math.round(parseFloat(formPrice || "0") * 0.9)} (leave blank = no discount)` : "e.g. 1800"}
                     className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#C5A880] text-slate-900 font-bold"
                     value={formDiscount}
                     onChange={(e) => handleFieldChange(setFormDiscount, e.target.value)}
                   />
+                  {formDiscount && formPrice && parseFloat(formDiscount) >= parseFloat(formPrice) && (
+                    <p className="text-[10px] text-red-600 font-bold mt-1">⚠ Sale price must be less than MRP (₹{formPrice}). Discount will not apply.</p>
+                  )}
+                  {formDiscount && formPrice && parseFloat(formDiscount) > 0 && parseFloat(formDiscount) < parseFloat(formPrice) && (
+                    <p className="text-[10px] text-emerald-700 font-bold mt-1">✓ Customer saves ₹{(parseFloat(formPrice) - parseFloat(formDiscount)).toFixed(0)} ({Math.round(((parseFloat(formPrice) - parseFloat(formDiscount)) / parseFloat(formPrice)) * 100)}% off)</p>
+                  )}
                 </div>
 
                 {/* Stock Quantity */}
