@@ -146,7 +146,7 @@ export function Header() {
                 className="relative py-6 cursor-pointer"
               >
                 <span className="flex items-center gap-1 hover:text-[#C5A880] transition-colors duration-300">
-                  Shop <ChevronDown className="w-3.5 h-3.5" />
+                  Shop <ChevronDown className="w-3 h-3" />
                 </span>
               </div>
               <Link href="/shop" className="hover:text-[#C5A880] transition-colors duration-300 py-6">
@@ -154,12 +154,6 @@ export function Header() {
               </Link>
               <Link href="/collections" className="hover:text-[#C5A880] transition-colors duration-300 py-6">
                 Collections
-              </Link>
-              <Link href="/about" className="hover:text-[#C5A880] transition-colors duration-300 py-6">
-                About Us
-              </Link>
-              <Link href="/contact" className="hover:text-[#C5A880] transition-colors duration-300 py-6">
-                Contact
               </Link>
             </nav>
 
@@ -182,45 +176,55 @@ export function Header() {
 
             {/* Desktop Right Navigation Utilities (Column 3) */}
             <div className={cn(
-              "hidden lg:flex items-center gap-5 xl:gap-6 justify-end transition-colors duration-300",
+              "hidden lg:flex items-center gap-3 lg:gap-4 xl:gap-6 justify-end transition-colors duration-300 text-xs xl:text-[13px] tracking-[0.08em] uppercase font-sans font-medium",
               isHeaderDark ? "text-white" : "text-[#121212]"
             )}>
-              <button
-                onClick={() => setIsSearchOpen(true)}
-                className="flex items-center gap-1.5 hover:text-[#C5A880] transition-colors duration-300"
-                aria-label="Search"
-              >
-                <Search className="w-4.5 h-4.5" />
-              </button>
-
-              <Link
-                href="/wishlist"
-                className="flex items-center gap-1.5 hover:text-[#C5A880] transition-colors duration-300"
-                aria-label="Wishlist"
-              >
-                <Heart className="w-4.5 h-4.5" />
+              <Link href="/about" className="hover:text-[#C5A880] transition-colors duration-300 py-6">
+                About Us
+              </Link>
+              <Link href="/contact" className="hover:text-[#C5A880] transition-colors duration-300 py-6">
+                Contact
               </Link>
 
-              <button
-                onClick={openCart}
-                className="relative flex items-center gap-1.5 hover:text-[#C5A880] transition-colors duration-300"
-                aria-label="Cart"
-              >
-                <ShoppingBag className="w-4.5 h-4.5" />
-                {itemCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 flex items-center justify-center bg-[#C5A880] text-white text-[8px] font-bold rounded-full">
-                    {itemCount}
-                  </span>
-                )}
-              </button>
+              {/* Utility Icon Group */}
+              <div className="flex items-center gap-2 lg:gap-3 xl:gap-4 ml-2 border-l border-current/10 pl-4">
+                <button
+                  onClick={() => setIsSearchOpen(true)}
+                  className="flex items-center justify-center p-1.5 hover:text-[#C5A880] transition-colors duration-300"
+                  aria-label="Search"
+                >
+                  <Search className="w-4.5 h-4.5" />
+                </button>
 
-              <Link
-                href="/account"
-                className="flex items-center gap-1.5 hover:text-[#C5A880] transition-colors duration-300"
-                aria-label="Account"
-              >
-                <User className="w-4.5 h-4.5" />
-              </Link>
+                <Link
+                  href="/wishlist"
+                  className="flex items-center justify-center p-1.5 hover:text-[#C5A880] transition-colors duration-300"
+                  aria-label="Wishlist"
+                >
+                  <Heart className="w-4.5 h-4.5" />
+                </Link>
+
+                <button
+                  onClick={openCart}
+                  className="relative flex items-center justify-center p-1.5 hover:text-[#C5A880] transition-colors duration-300"
+                  aria-label="Cart"
+                >
+                  <ShoppingBag className="w-4.5 h-4.5" />
+                  {itemCount > 0 && (
+                    <span className="absolute -top-0.5 -right-0.5 w-4 h-4 flex items-center justify-center bg-[#C5A880] text-white text-[8px] font-bold rounded-full">
+                      {itemCount}
+                    </span>
+                  )}
+                </button>
+
+                <Link
+                  href="/account"
+                  className="flex items-center justify-center p-1.5 hover:text-[#C5A880] transition-colors duration-300"
+                  aria-label="Account"
+                >
+                  <User className="w-4.5 h-4.5" />
+                </Link>
+              </div>
             </div>
 
             {/* Mobile Header Right Utilities */}
