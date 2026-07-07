@@ -13,7 +13,8 @@ import {
   Upload,
   CheckCircle2,
   X,
-  AlertTriangle
+  AlertTriangle,
+  RefreshCw
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -345,27 +346,60 @@ export function CategoriesTab() {
                 <Label className="text-xs uppercase tracking-wider font-bold text-slate-900">
                   Category Banner Image
                 </Label>
-                <div className="flex gap-4 items-center">
-                  <label className="flex-1 flex flex-col items-center justify-center border border-dashed border-[#D1CFC9] hover:border-slate-400 py-3 rounded-xl cursor-pointer text-xs font-bold text-slate-700 gap-1 bg-slate-50 transition-colors">
-                    <Upload className="w-4 h-4 text-slate-400" />
-                    <span>Choose File</span>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      className="hidden"
-                      onChange={handleImageFileChange}
-                    />
-                  </label>
-                  {formImage && (
-                    <div className="w-12 h-12 rounded-lg border border-slate-200 overflow-hidden shrink-0 bg-slate-50 flex items-center justify-center">
+
+                {/* Upload trigger */}
+                <label className="flex flex-col items-center justify-center border border-dashed border-[#D1CFC9] hover:border-[#C5A880] py-4 rounded-xl cursor-pointer text-xs font-bold text-slate-700 gap-1.5 bg-slate-50 transition-colors">
+                  <Upload className="w-5 h-5 text-slate-400" />
+                  <span>Click to Choose File</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleImageFileChange}
+                  />
+                </label>
+
+                {/* Preview + Replace + Remove controls */}
+                {formImage && (
+                  <div className="flex items-center gap-4 mt-3 p-3 bg-slate-50 border border-slate-200 rounded-xl">
+                    <div className="w-14 h-14 rounded-lg border border-slate-200 overflow-hidden shrink-0 bg-white flex items-center justify-center">
                       <img
                         src={formImage}
-                        alt="Preview"
+                        alt="Category Preview"
                         className="object-cover w-full h-full"
                       />
                     </div>
-                  )}
-                </div>
+                    <div className="flex-grow min-w-0">
+                      <p className="text-xs font-bold text-slate-900 truncate">Image selected</p>
+                      <p className="text-[10px] text-slate-600 font-medium mt-0.5">Click Replace to change or Remove to delete</p>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      {/* Replace */}
+                      <label className="p-2 bg-white hover:bg-slate-100 text-slate-600 hover:text-slate-900 rounded-lg border border-slate-200 cursor-pointer transition-colors" title="Replace Image">
+                        <RefreshCw className="w-4 h-4" />
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={handleImageFileChange}
+                        />
+                      </label>
+                      {/* Remove */}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setFormImage("");
+                          setIsDirty(true);
+                          showToast("Image removed.");
+                        }}
+                        className="p-2 bg-white hover:bg-red-50 text-red-500 hover:text-red-700 rounded-lg border border-slate-200 hover:border-red-200 transition-colors"
+                        title="Remove Image"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Visibility Switch */}

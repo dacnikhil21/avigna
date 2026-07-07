@@ -252,7 +252,8 @@ export function ProductsTab() {
     const priceNum = parseFloat(formPrice);
     const discountNum = formDiscount ? parseFloat(formDiscount) : 0;
     const stockNum = parseInt(formStock);
-    const salePrice = discountNum > 0 ? priceNum - discountNum : undefined;
+    // Use null explicitly so that editProduct spread clears old salePrice
+    const salePrice = (discountNum > 0 && discountNum < priceNum) ? priceNum - discountNum : null;
 
     // Build formal images structures
     const formattedImages: ProductImage[] = formImages.map((img, idx) => ({
@@ -269,7 +270,7 @@ export function ProductsTab() {
       categoryId: formCategory,
       description: formDesc,
       price: priceNum,
-      salePrice: salePrice,
+      salePrice: salePrice === null ? undefined : salePrice,
       stockQty: stockNum,
       inStock: stockNum > 0,
       isFeatured: formIsFeatured,
@@ -572,11 +573,11 @@ export function ProductsTab() {
 
       {/* Add / Edit Form Modal Dialog Overlay */}
       {formOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto select-none">
-          <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-[#EFECE7] shadow-2xl p-8 flex flex-col relative animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start justify-center p-4 overflow-y-auto select-none">
+          <div className="bg-white rounded-2xl max-w-4xl w-full my-6 border border-[#EFECE7] shadow-2xl flex flex-col relative animate-in fade-in zoom-in-95 duration-200">
             
-            {/* Modal Header */}
-            <div className="flex items-center justify-between pb-4 border-b border-[#EFECE7] mb-6">
+            {/* Modal Header - sticky */}
+            <div className="flex items-center justify-between p-8 pb-4 border-b border-[#EFECE7] shrink-0">
               <h3 className="font-serif text-xl text-slate-950 font-bold">
                 {editingId ? "Edit Product Details" : "Create New Product"}
               </h3>
@@ -588,8 +589,9 @@ export function ProductsTab() {
               </button>
             </div>
 
-            {/* Modal Form */}
-            <form onSubmit={handleFormSave} className="space-y-6">
+            {/* Modal Form - scrollable body */}
+            <form onSubmit={handleFormSave} className="flex flex-col flex-1">
+              <div className="overflow-y-auto px-8 py-6 space-y-6 max-h-[65vh]">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
                 {/* Product Name */}
@@ -832,8 +834,10 @@ export function ProductsTab() {
                 </label>
               </div>
 
-              {/* Form Actions */}
-              <div className="flex justify-end gap-3.5 pt-6 border-t border-[#EFECE7]">
+              </div>
+
+              {/* Form Actions - always visible at bottom */}
+              <div className="flex justify-end gap-3.5 p-8 pt-5 border-t border-[#EFECE7] shrink-0 bg-white rounded-b-2xl">
                 <Button
                   type="button"
                   onClick={handleCloseAttempt}
