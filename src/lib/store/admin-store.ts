@@ -181,7 +181,7 @@ export const useAdminStore = create<AdminStore>()(
       },
 
       login: (username, password) => {
-        if (username === "admin" && password === "admin123") {
+        if (username.trim() === "admin" && password.trim() === "admin123") {
           set({ isLoggedIn: true });
           return true;
         }

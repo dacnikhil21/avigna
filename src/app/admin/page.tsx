@@ -66,7 +66,7 @@ export default function AdminPage() {
     setErrorMsg("");
 
     setTimeout(() => {
-      const success = login(usernameInput, passwordInput);
+      const success = login(usernameInput.trim(), passwordInput.trim());
       setIsSubmitting(false);
       if (!success) {
         setErrorMsg("Invalid Username or Password.");
