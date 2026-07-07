@@ -12,7 +12,8 @@ import {
   Folder,
   Upload,
   CheckCircle2,
-  X
+  X,
+  AlertTriangle
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -38,6 +39,11 @@ export function CategoriesTab() {
   const [formDesc, setFormDesc] = useState("");
   const [formImage, setFormImage] = useState("");
   const [formIsActive, setFormIsActive] = useState(true);
+  const [formSortOrder, setFormSortOrder] = useState<number>(1);
+
+  // Dirty state warning
+  const [isDirty, setIsDirty] = useState(false);
+  const [showDiscardWarning, setShowDiscardWarning] = useState(false);
 
   // Toast
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
@@ -47,12 +53,19 @@ export function CategoriesTab() {
     setTimeout(() => setToast(null), 3000);
   };
 
+  const handleFieldChange = <T,>(setter: (v: T) => void, val: T) => {
+    setter(val);
+    setIsDirty(true);
+  };
+
   const resetForm = () => {
     setFormName("");
     setFormDesc("");
     setFormImage("");
     setFormIsActive(true);
+    setFormSortOrder(categories.length + 1);
     setEditingId(null);
+    setIsDirty(false);
   };
 
   const handleOpenAdd = () => {
@@ -65,8 +78,25 @@ export function CategoriesTab() {
     setFormDesc(category.description || "");
     setFormImage(category.image || "");
     setFormIsActive(category.isActive);
+    setFormSortOrder(category.sortOrder);
     setEditingId(category.id);
     setFormOpen(true);
+    setIsDirty(false);
+  };
+
+  const handleCloseAttempt = () => {
+    if (isDirty) {
+      setShowDiscardWarning(true);
+    } else {
+      setFormOpen(false);
+      resetForm();
+    }
+  };
+
+  const confirmDiscard = () => {
+    setShowDiscardWarning(false);
+    setFormOpen(false);
+    resetForm();
   };
 
   // Image Upload File Reader
@@ -76,6 +106,7 @@ export function CategoriesTab() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setFormImage(reader.result as string);
+        setIsDirty(true);
       };
       reader.readAsDataURL(file);
     }
@@ -94,7 +125,7 @@ export function CategoriesTab() {
       description: formDesc,
       image: formImage || "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80",
       isActive: formIsActive,
-      sortOrder: categories.length + 1
+      sortOrder: formSortOrder
     };
 
     if (editingId) {
@@ -111,7 +142,6 @@ export function CategoriesTab() {
 
   const handleDeleteConfirm = () => {
     if (deleteId) {
-      // Check if any product is using this category
       const productCount = products.filter((p) => p.categoryId === deleteId).length;
       if (productCount > 0) {
         showToast(`Cannot delete: Category has ${productCount} associated products`, "error");
@@ -129,50 +159,53 @@ export function CategoriesTab() {
     showToast(`Category "${name}" is now ${currentlyActive ? "hidden" : "visible"}.`);
   };
 
+  // Sort categories by sortOrder ascending
+  const sortedCategories = [...categories].sort((a, b) => a.sortOrder - b.sortOrder);
+
   return (
-    <div className="space-y-6 font-sans">
+    <div className="space-y-6 font-sans antialiased text-[#1A1A1A]">
       
       {/* Toast Notification */}
       {toast && (
-        <div className={`fixed bottom-8 right-8 z-50 flex items-center gap-3 px-6 py-4 rounded-xl shadow-lg border text-xs uppercase tracking-wider font-medium transition-all duration-500 transform translate-y-0 ${
+        <div className={`fixed bottom-8 right-8 z-50 flex items-center gap-3 px-6 py-4 rounded-xl shadow-lg border text-xs uppercase tracking-wider font-semibold transition-all duration-300 transform translate-y-0 ${
           toast.type === "success" 
-            ? "bg-[#C5A880] text-white border-[#b8966f]" 
+            ? "bg-emerald-600 text-white border-emerald-700" 
             : "bg-red-600 text-white border-red-700"
         }`}>
-          <CheckCircle2 className="w-4 h-4" />
+          <CheckCircle2 className="w-5 h-5 shrink-0" />
           {toast.message}
         </div>
       )}
 
       {/* Control Banner */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between border-b border-[#EFECE7] pb-4">
         <div>
-          <p className="text-xs text-luxury-muted font-light">
-            Manage your jewellery categories and store collections structures.
+          <p className="text-xs text-slate-800 font-bold">
+            Configure your active showroom structures, category headers, and sort order layout display.
           </p>
         </div>
         <Button
           onClick={handleOpenAdd}
-          className="bg-[#121212] hover:bg-[#C5A880] text-white text-xs uppercase tracking-wider font-semibold py-3 px-5 rounded-xl transition-colors shrink-0"
+          className="bg-[#C5A880] hover:bg-[#b0936b] text-white text-xs uppercase tracking-wider font-bold py-3 px-5 rounded-xl transition-all shadow-md shrink-0 flex items-center gap-2"
         >
-          <Plus className="w-4 h-4 mr-2" /> Add Category
+          <Plus className="w-4 h-4 mr-1.5 stroke-[2.5]" /> Add Category
         </Button>
       </div>
 
       {/* Categories Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {categories.map((c) => {
+        {sortedCategories.map((c) => {
           const productCount = products.filter((p) => p.categoryId === c.id).length;
           return (
             <div
               key={c.id}
               className={`bg-white border rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col group ${
-                c.isActive ? "border-[#EFECE7]" : "border-dashed border-red-200 opacity-60"
+                c.isActive ? "border-[#EFECE7]" : "border-dashed border-red-300 opacity-80"
               }`}
             >
               
               {/* Image Banner */}
-              <div className="relative h-40 bg-gray-50 overflow-hidden shrink-0">
+              <div className="relative h-44 bg-slate-50 overflow-hidden shrink-0">
                 {c.image ? (
                   <img
                     src={c.image}
@@ -180,17 +213,22 @@ export function CategoriesTab() {
                     className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-400">
-                    <Folder className="w-8 h-8 stroke-[1.5]" />
+                  <div className="w-full h-full flex items-center justify-center text-slate-400">
+                    <Folder className="w-10 h-10 stroke-[1.5]" />
                   </div>
                 )}
-                <div className="absolute top-3 left-3">
-                  <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-medium uppercase tracking-wider border ${
+                
+                {/* Badges Overlay */}
+                <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+                  <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider border ${
                     c.isActive 
-                      ? "bg-emerald-50 text-emerald-700 border-emerald-200/50" 
-                      : "bg-red-50 text-red-700 border-red-200/50"
+                      ? "bg-emerald-50 text-emerald-800 border-emerald-200" 
+                      : "bg-red-50 text-red-800 border-red-200"
                   }`}>
                     {c.isActive ? "Active" : "Hidden"}
+                  </span>
+                  <span className="bg-slate-900/80 text-white px-2 py-0.5 rounded-full text-[8.5px] font-mono font-bold tracking-wide uppercase self-start">
+                    Order: {c.sortOrder}
                   </span>
                 </div>
               </div>
@@ -198,37 +236,37 @@ export function CategoriesTab() {
               {/* Card Contents */}
               <div className="p-5 flex-grow flex flex-col justify-between">
                 <div>
-                  <h4 className="font-serif text-base text-[#121212] font-normal tracking-wide">{c.name}</h4>
-                  <p className="text-xs text-luxury-muted mt-2 font-light line-clamp-2 leading-relaxed">
+                  <h4 className="font-serif text-base text-slate-950 font-bold tracking-wide">{c.name}</h4>
+                  <p className="text-xs text-slate-800 mt-2 font-medium line-clamp-2 leading-relaxed">
                     {c.description || "No description provided."}
                   </p>
                 </div>
                 
-                <div className="pt-5 border-t border-gray-100 flex items-center justify-between mt-4">
-                  <span className="text-[10px] uppercase tracking-wider text-luxury-muted font-sans font-light">
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-between mt-4">
+                  <span className="text-[10px] uppercase tracking-wider text-slate-900 font-bold">
                     {productCount} {productCount === 1 ? "Product" : "Products"}
                   </span>
                   
                   {/* Action Controls */}
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1.5">
                     <button
                       onClick={() => handleToggleHide(c.id, c.name, c.isActive)}
                       title={c.isActive ? "Hide Category" : "Show Category"}
-                      className="p-2 hover:bg-gray-100 text-gray-400 hover:text-gray-700 rounded-lg transition-colors"
+                      className="p-2 hover:bg-slate-100 text-slate-600 hover:text-slate-900 rounded-lg transition-colors border border-transparent hover:border-slate-200"
                     >
                       {c.isActive ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                     <button
                       onClick={() => handleOpenEdit(c)}
                       title="Edit Category"
-                      className="p-2 hover:bg-gray-100 text-gray-400 hover:text-gray-700 rounded-lg transition-colors"
+                      className="p-2 hover:bg-slate-100 text-slate-600 hover:text-slate-900 rounded-lg transition-colors border border-transparent hover:border-slate-200"
                     >
                       <Edit2 className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => setDeleteId(c.id)}
                       title="Delete Category"
-                      className="p-2 hover:bg-gray-100 text-gray-400 hover:text-red-600 rounded-lg transition-colors"
+                      className="p-2 hover:bg-slate-100 text-slate-600 hover:text-red-600 rounded-lg transition-colors border border-transparent hover:border-red-100"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -244,57 +282,72 @@ export function CategoriesTab() {
 
       {/* Add / Edit Form Modal */}
       {formOpen && (
-        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full border border-[#EFECE7] shadow-xl p-8 relative animate-in fade-in zoom-in-95 duration-250">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full border border-[#EFECE7] shadow-xl p-8 relative animate-in fade-in zoom-in-95 duration-200">
             <div className="flex items-center justify-between pb-4 border-b border-[#EFECE7] mb-6">
-              <h3 className="font-serif text-lg text-[#121212] font-light">
+              <h3 className="font-serif text-lg text-slate-950 font-bold">
                 {editingId ? "Edit Category Details" : "Create New Category"}
               </h3>
               <button
-                onClick={() => setFormOpen(false)}
-                className="p-1.5 hover:bg-gray-100 rounded-full transition-colors text-gray-400 hover:text-gray-800"
+                onClick={handleCloseAttempt}
+                className="p-1.5 hover:bg-slate-100 rounded-full transition-colors text-slate-600 hover:text-slate-900 border border-transparent hover:border-slate-200"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <form onSubmit={handleFormSave} className="space-y-5">
-              <div className="space-y-1.5">
-                <Label htmlFor="cat-name" className="text-xs uppercase tracking-wider font-light text-[#121212]">
+              <div className="space-y-2">
+                <Label htmlFor="cat-name" className="text-xs uppercase tracking-wider font-bold text-slate-900">
                   Category Name <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   id="cat-name"
                   required
                   placeholder="e.g. Earrings"
-                  className="input-luxury rounded-xl"
+                  className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#C5A880] text-slate-900 font-bold"
                   value={formName}
-                  onChange={(e) => setFormName(e.target.value)}
+                  onChange={(e) => handleFieldChange(setFormName, e.target.value)}
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <Label htmlFor="cat-desc" className="text-xs uppercase tracking-wider font-light text-[#121212]">
+              <div className="space-y-2">
+                <Label htmlFor="cat-desc" className="text-xs uppercase tracking-wider font-bold text-slate-900">
                   Description
                 </Label>
                 <textarea
                   id="cat-desc"
-                  placeholder="Enter category summary"
+                  placeholder="Enter category summary description"
                   rows={3}
-                  className="input-luxury rounded-xl resize-none mt-1"
+                  className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#C5A880] text-slate-900 font-bold resize-none mt-1"
                   value={formDesc}
-                  onChange={(e) => setFormDesc(e.target.value)}
+                  onChange={(e) => handleFieldChange(setFormDesc, e.target.value)}
+                />
+              </div>
+
+              {/* Display Sort Order */}
+              <div className="space-y-2">
+                <Label htmlFor="cat-sort" className="text-xs uppercase tracking-wider font-bold text-slate-900">
+                  Display Order Sort Order
+                </Label>
+                <Input
+                  id="cat-sort"
+                  type="number"
+                  required
+                  className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#C5A880] text-slate-900 font-bold"
+                  value={formSortOrder}
+                  onChange={(e) => handleFieldChange(setFormSortOrder, parseInt(e.target.value) || 1)}
                 />
               </div>
 
               {/* Image Upload */}
-              <div className="space-y-1.5">
-                <Label className="text-xs uppercase tracking-wider font-light text-[#121212]">
+              <div className="space-y-2">
+                <Label className="text-xs uppercase tracking-wider font-bold text-slate-900">
                   Category Banner Image
                 </Label>
                 <div className="flex gap-4 items-center">
-                  <label className="flex-1 flex flex-col items-center justify-center border border-dashed border-[#EFECE7] hover:border-gray-400 py-3 rounded-xl cursor-pointer text-xs text-luxury-muted gap-1 bg-gray-50 transition-colors">
-                    <Upload className="w-4 h-4 text-gray-400" />
+                  <label className="flex-1 flex flex-col items-center justify-center border border-dashed border-[#D1CFC9] hover:border-slate-400 py-3 rounded-xl cursor-pointer text-xs font-bold text-slate-700 gap-1 bg-slate-50 transition-colors">
+                    <Upload className="w-4 h-4 text-slate-400" />
                     <span>Choose File</span>
                     <input
                       type="file"
@@ -304,7 +357,7 @@ export function CategoriesTab() {
                     />
                   </label>
                   {formImage && (
-                    <div className="w-12 h-12 rounded-lg border border-gray-200 overflow-hidden shrink-0 bg-gray-50">
+                    <div className="w-12 h-12 rounded-lg border border-slate-200 overflow-hidden shrink-0 bg-slate-50 flex items-center justify-center">
                       <img
                         src={formImage}
                         alt="Preview"
@@ -316,12 +369,12 @@ export function CategoriesTab() {
               </div>
 
               {/* Visibility Switch */}
-              <label className="flex items-center gap-2.5 text-xs text-[#121212] select-none cursor-pointer p-3 bg-gray-50 rounded-xl">
+              <label className="flex items-center gap-2.5 text-xs text-slate-900 font-bold select-none cursor-pointer p-3 bg-slate-50 border border-slate-200 rounded-xl">
                 <input
                   type="checkbox"
-                  className="rounded border-gray-300 text-[#C5A880] focus:ring-[#C5A880] w-4 h-4"
+                  className="rounded border-slate-400 text-[#C5A880] focus:ring-[#C5A880] w-4.5 h-4.5"
                   checked={formIsActive}
-                  onChange={(e) => setFormIsActive(e.target.checked)}
+                  onChange={(e) => handleFieldChange(setFormIsActive, e.target.checked)}
                 />
                 Active &amp; Visible on Customer Website
               </label>
@@ -330,14 +383,14 @@ export function CategoriesTab() {
               <div className="flex justify-end gap-3 pt-4 border-t border-[#EFECE7] mt-6">
                 <Button
                   type="button"
-                  onClick={() => setFormOpen(false)}
-                  className="bg-white border border-[#EFECE7] text-[#121212] hover:bg-gray-50 text-xs uppercase tracking-wider font-medium py-3 px-5 rounded-xl"
+                  onClick={handleCloseAttempt}
+                  className="bg-white border border-[#D1CFC9] text-slate-800 hover:bg-slate-50 text-xs uppercase tracking-wider font-bold py-3 px-5 rounded-xl shadow-sm"
                 >
                   Cancel
                 </Button>
                 <Button
                   type="submit"
-                  className="bg-[#121212] hover:bg-[#C5A880] text-white text-xs uppercase tracking-wider font-semibold py-3 px-5 rounded-xl transition-colors"
+                  className="bg-[#C5A880] hover:bg-[#b0936b] text-white text-xs uppercase tracking-wider font-bold py-3 px-5 rounded-xl transition-all shadow-md"
                 >
                   Save Category
                 </Button>
@@ -347,24 +400,53 @@ export function CategoriesTab() {
         </div>
       )}
 
+      {/* Discard Warning Dialog */}
+      {showDiscardWarning && (
+        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-sm w-full border border-red-200 shadow-2xl p-6 relative animate-in fade-in zoom-in-95 duration-200">
+            <div className="flex items-center gap-3 text-red-600 mb-3">
+              <AlertTriangle className="w-6 h-6 stroke-[2]" />
+              <h3 className="font-serif text-lg font-bold">Unsaved Changes</h3>
+            </div>
+            <p className="text-xs text-slate-800 font-medium leading-relaxed mb-6">
+              You have made modifications to this category form. Closing now will discard all unsaved edits. Are you sure you want to exit?
+            </p>
+            <div className="flex justify-end gap-3">
+              <Button
+                onClick={() => setShowDiscardWarning(false)}
+                className="bg-white border border-[#D1CFC9] text-slate-800 hover:bg-slate-50 text-xs uppercase tracking-wider font-bold py-2.5 px-4 rounded-xl shadow-sm"
+              >
+                Keep Editing
+              </Button>
+              <Button
+                onClick={confirmDiscard}
+                className="bg-red-600 hover:bg-red-700 text-white text-xs uppercase tracking-wider font-bold py-2.5 px-4 rounded-xl shadow-md"
+              >
+                Discard Edits
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Delete Confirmation Modal */}
       {deleteId && (
-        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-sm w-full border border-[#EFECE7] shadow-xl p-6 relative animate-in fade-in zoom-in-95 duration-250">
-            <h3 className="font-serif text-lg text-[#121212] mb-2 font-normal">Delete Category</h3>
-            <p className="text-xs text-luxury-muted font-light leading-relaxed mb-6">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-sm w-full border border-[#EFECE7] shadow-xl p-6 relative animate-in fade-in zoom-in-95 duration-200">
+            <h3 className="font-serif text-lg text-slate-950 font-bold mb-2">Delete Category</h3>
+            <p className="text-xs text-slate-800 font-medium leading-relaxed mb-6">
               Are you sure you want to delete this category? This operation is blocked if there are products linked to it.
             </p>
             <div className="flex justify-end gap-3">
               <Button
                 onClick={() => setDeleteId(null)}
-                className="bg-white border border-[#EFECE7] text-[#121212] hover:bg-gray-50 text-xs uppercase tracking-wider font-medium py-2.5 px-4 rounded-xl"
+                className="bg-white border border-[#D1CFC9] text-slate-800 hover:bg-slate-50 text-xs uppercase tracking-wider font-bold py-2.5 px-4 rounded-xl shadow-sm"
               >
                 Cancel
               </Button>
               <Button
                 onClick={handleDeleteConfirm}
-                className="bg-red-600 hover:bg-red-700 text-white text-xs uppercase tracking-wider font-semibold py-2.5 px-4 rounded-xl"
+                className="bg-red-600 hover:bg-red-700 text-white text-xs uppercase tracking-wider font-bold py-2.5 px-4 rounded-xl shadow-md"
               >
                 Delete Category
               </Button>

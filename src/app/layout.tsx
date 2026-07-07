@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter, DM_Sans } from "next/font/google";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
-import { CartDrawer } from "@/components/layout/cart-drawer";
+import { CustomerLayoutWrapper } from "@/components/layout/customer-layout-wrapper";
 import { JsonLd } from "@/components/shared/json-ld";
 import { BRAND } from "@/lib/data";
 import "./globals.css";
@@ -73,10 +71,7 @@ export default function RootLayout({
         <JsonLd />
       </head>
       <body className="min-h-screen antialiased">
-        <Header />
-        <main className="pb-16 md:pb-0">{children}</main>
-        <Footer />
-        <CartDrawer />
+        <CustomerLayoutWrapper>{children}</CustomerLayoutWrapper>
       </body>
     </html>
   );
