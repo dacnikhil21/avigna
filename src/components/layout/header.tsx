@@ -118,7 +118,7 @@ export function Header() {
                 : "bg-transparent border-transparent h-20 md:h-[88px]"
           )}
         >
-          <div className="w-full h-full max-w-7xl mx-auto px-6 md:px-12 flex lg:grid lg:grid-cols-3 items-center justify-between relative">
+          <div className="w-full h-full max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between relative">
             
             {/* Mobile Menu Trigger */}
             <button
@@ -134,46 +134,46 @@ export function Header() {
 
             {/* Desktop Left Navigation (Column 1) */}
             <nav className={cn(
-              "hidden lg:flex items-center gap-6 justify-start text-[13px] tracking-[0.08em] uppercase font-sans font-medium transition-colors duration-300",
+              "hidden lg:flex items-center gap-3 lg:gap-4 xl:gap-6 text-xs xl:text-[13px] tracking-[0.08em] uppercase font-sans font-medium transition-colors duration-300",
               isHeaderDark ? "text-white" : "text-[#121212]"
             )}>
-              <Link href="/" className="hover:text-[#C5A880] transition-colors duration-300 py-8">
+              <Link href="/" className="hover:text-[#C5A880] transition-colors duration-300 py-6">
                 Home
               </Link>
               <div
                 onMouseEnter={() => handleShopHover(true)}
                 onMouseLeave={() => handleShopHover(false)}
-                className="relative py-8 cursor-pointer"
+                className="relative py-6 cursor-pointer"
               >
                 <span className="flex items-center gap-1 hover:text-[#C5A880] transition-colors duration-300">
                   Shop <ChevronDown className="w-3.5 h-3.5" />
                 </span>
               </div>
-              <Link href="/shop" className="hover:text-[#C5A880] transition-colors duration-300 py-8">
+              <Link href="/shop" className="hover:text-[#C5A880] transition-colors duration-300 py-6">
                 Categories
               </Link>
-              <Link href="/collections" className="hover:text-[#C5A880] transition-colors duration-300 py-8">
+              <Link href="/collections" className="hover:text-[#C5A880] transition-colors duration-300 py-6">
                 Collections
               </Link>
-              <Link href="/about" className="hover:text-[#C5A880] transition-colors duration-300 py-8">
+              <Link href="/about" className="hover:text-[#C5A880] transition-colors duration-300 py-6">
                 About Us
               </Link>
-              <Link href="/contact" className="hover:text-[#C5A880] transition-colors duration-300 py-8">
+              <Link href="/contact" className="hover:text-[#C5A880] transition-colors duration-300 py-6">
                 Contact
               </Link>
             </nav>
 
             {/* Centered Monogram / Logo (Column 2) */}
-            <div className="lg:flex lg:justify-center lg:items-center lg:relative lg:left-0 lg:translate-x-0 absolute left-1/2 -translate-x-1/2 z-10">
-              <Link href="/" className="text-center group">
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex items-center justify-center">
+              <Link href="/" className="text-center group block">
                 <div className="flex flex-col items-center">
                   <span className={cn(
-                    "font-serif text-xl md:text-2xl font-light tracking-[0.08em] transition-colors duration-300",
+                    "font-serif text-xl md:text-2xl font-light tracking-[0.08em] transition-colors duration-300 leading-none",
                     isHeaderDark ? "text-white" : "text-[#121212]"
                   )}>
                     Avighna
                   </span>
-                  <span className="hidden sm:block text-[9px] uppercase tracking-[0.3em] text-[#C5A880] mt-0.5 font-medium">
+                  <span className="hidden sm:block text-[8px] uppercase tracking-[0.3em] text-[#C5A880] mt-0.5 font-medium leading-none">
                     Collections
                   </span>
                 </div>
@@ -182,7 +182,7 @@ export function Header() {
 
             {/* Desktop Right Navigation Utilities (Column 3) */}
             <div className={cn(
-              "hidden lg:flex items-center gap-6 justify-end text-[13px] tracking-[0.08em] uppercase font-sans font-medium transition-colors duration-300",
+              "hidden lg:flex items-center gap-5 xl:gap-6 justify-end transition-colors duration-300",
               isHeaderDark ? "text-white" : "text-[#121212]"
             )}>
               <button
@@ -190,8 +190,7 @@ export function Header() {
                 className="flex items-center gap-1.5 hover:text-[#C5A880] transition-colors duration-300"
                 aria-label="Search"
               >
-                <Search className="w-4 h-4" />
-                <span className="hidden xl:inline text-[11px] tracking-wider">Search</span>
+                <Search className="w-4.5 h-4.5" />
               </button>
 
               <Link
@@ -199,8 +198,7 @@ export function Header() {
                 className="flex items-center gap-1.5 hover:text-[#C5A880] transition-colors duration-300"
                 aria-label="Wishlist"
               >
-                <Heart className="w-4 h-4" />
-                <span className="hidden xl:inline text-[11px] tracking-wider">Wishlist</span>
+                <Heart className="w-4.5 h-4.5" />
               </Link>
 
               <button
@@ -208,10 +206,9 @@ export function Header() {
                 className="relative flex items-center gap-1.5 hover:text-[#C5A880] transition-colors duration-300"
                 aria-label="Cart"
               >
-                <ShoppingBag className="w-4 h-4" />
-                <span className="hidden xl:inline text-[11px] tracking-wider">Cart</span>
+                <ShoppingBag className="w-4.5 h-4.5" />
                 {itemCount > 0 && (
-                  <span className="flex items-center justify-center bg-[#C5A880] text-white text-[9px] font-bold rounded-full w-4 h-4 -mt-1">
+                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 flex items-center justify-center bg-[#C5A880] text-white text-[8px] font-bold rounded-full">
                     {itemCount}
                   </span>
                 )}
@@ -222,8 +219,7 @@ export function Header() {
                 className="flex items-center gap-1.5 hover:text-[#C5A880] transition-colors duration-300"
                 aria-label="Account"
               >
-                <User className="w-4 h-4" />
-                <span className="hidden xl:inline text-[11px] tracking-wider">Account</span>
+                <User className="w-4.5 h-4.5" />
               </Link>
             </div>
 

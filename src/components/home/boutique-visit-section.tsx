@@ -5,7 +5,7 @@ import { FadeIn } from "@/components/shared/motion";
 
 export function BoutiqueVisitSection() {
   return (
-    <section className="bg-[#FAF8F5] py-20 md:py-24 border-t border-[#EFECE7]">
+    <section className="bg-[#FAF8F5] py-10 md:py-20 border-t border-[#EFECE7]">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 xl:px-28">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           

@@ -34,13 +34,13 @@ const OFFERS = [
 
 export function OffersSection() {
   return (
-    <section className="section-padding py-12 md:py-16 bg-[#FAF8F5]">
+    <section className="section-padding py-8 md:py-16 bg-[#FAF8F5]">
       <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {OFFERS.map((offer) => (
           <StaggerItem key={offer.title}>
             <Link
               href={offer.link}
-              className="group block relative h-64 md:h-80 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+              className="group block relative h-56 md:h-72 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
             >
               {/* Image */}
               <Image

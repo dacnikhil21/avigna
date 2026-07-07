@@ -8,7 +8,7 @@ const trendingProducts = products.filter((p) => p.isTrending).slice(0, 8);
 
 export function TrendingSection() {
   return (
-    <section className="section-padding py-12 md:py-16 bg-[#FAF8F5]">
+    <section className="section-padding py-8 md:py-16 bg-[#FAF8F5]">
       <FadeIn className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-6 gap-4">
         <div>
           <p className="label-luxury mb-1 flex items-center gap-2">

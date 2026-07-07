@@ -4,14 +4,14 @@ import { ProductCard } from "@/components/shop/product-card";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/shared/motion";
 import { ArrowRight } from "lucide-react";
 
-const featuredProducts = getFeaturedProducts().slice(0, 6);
+const featuredProducts = getFeaturedProducts().slice(0, 8);
 
 export function FeaturedProductsSection() {
   return (
-    <section className="section-padding py-16 md:py-24 bg-[#FAF8F5]">
-      <FadeIn className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-10 gap-4">
+    <section className="section-padding py-8 md:py-16 bg-white">
+      <FadeIn className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-6 gap-4">
         <div>
-          <p className="label-luxury mb-2">Handpicked</p>
+          <p className="label-luxury mb-1">Handpicked</p>
           <h2 className="heading-md">Featured Products</h2>
         </div>
         <Link
@@ -22,10 +22,10 @@ export function FeaturedProductsSection() {
         </Link>
       </FadeIn>
 
-      <StaggerContainer className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
+      <StaggerContainer className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
         {featuredProducts.map((product, i) => (
           <StaggerItem key={product.id}>
-            <ProductCard product={product} priority={i < 2} />
+            <ProductCard product={product} priority={i < 5} />
           </StaggerItem>
         ))}
       </StaggerContainer>

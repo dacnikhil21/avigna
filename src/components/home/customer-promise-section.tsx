@@ -36,7 +36,7 @@ const promises = [
 
 export function CustomerPromiseSection() {
   return (
-    <section className="bg-[#121212] section-padding py-16 md:py-24">
+    <section className="bg-[#121212] section-padding py-10 md:py-20">
       <FadeIn className="text-center max-w-2xl mx-auto mb-6">
         <p className="text-[10px] uppercase tracking-[0.3em] text-[#C5A880] mb-1">The Avighna Promise</p>
         <h2 className="font-serif text-3xl md:text-4xl font-light text-white mb-2">

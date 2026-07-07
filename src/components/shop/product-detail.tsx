@@ -85,7 +85,7 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
         {/* Gallery */}
         <FadeIn direction="left">
           <div className="sticky top-32">
-            <div className="relative aspect-square rounded-3xl overflow-hidden bg-luxury-cream mb-4">
+            <div className="relative aspect-square rounded-xl overflow-hidden bg-luxury-cream mb-4">
               <motion.div
                 key={selectedImage}
                 initial={{ opacity: 0 }}
@@ -110,7 +110,7 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
                   <button
                     key={i}
                     onClick={() => setSelectedImage(i)}
-                    className={`relative w-20 h-20 rounded-2xl overflow-hidden border-2 transition-all duration-300 ${
+                    className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
                       selectedImage === i
                         ? "border-luxury-gold shadow-gold"
                         : "border-transparent opacity-60 hover:opacity-100"
@@ -133,10 +133,10 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
         {/* Details */}
         <FadeIn direction="right" delay={0.1}>
           <div>
-            <p className="label-luxury mb-3">{product.category.name}</p>
-            <h1 className="heading-md mb-4">{product.name}</h1>
+            <p className="label-luxury mb-2">{product.category.name}</p>
+            <h1 className="heading-md mb-3">{product.name}</h1>
 
-            <div className="flex items-center gap-4 mb-6">
+            <div className="flex items-center gap-4 mb-4">
               <span className="text-2xl font-light">{formatPrice(product.price)}</span>
               {product.salePrice && (
                 <span className="text-lg text-luxury-muted line-through">
@@ -145,11 +145,11 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
               )}
             </div>
 
-            <p className="body-lg mb-8">{product.description}</p>
+            <p className="body-lg mb-6">{product.description}</p>
 
             {/* Specs */}
-            <div className="bg-luxury-cream/50 rounded-3xl p-6 mb-8">
-              <h3 className="text-xs uppercase tracking-[0.2em] text-luxury-gold mb-4">
+            <div className="bg-luxury-cream/50 rounded-xl p-6 mb-6">
+              <h3 className="text-xs uppercase tracking-[0.2em] text-luxury-gold mb-3">
                 Specifications
               </h3>
               <div className="grid grid-cols-2 gap-4">
@@ -164,10 +164,10 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
 
             {/* Quantity + Add to cart */}
             <div className="flex items-center gap-4 mb-6">
-              <div className="flex items-center gap-3 border border-luxury-beige/50 rounded-full px-2">
+              <div className="flex items-center gap-3 border border-luxury-beige/50 rounded-lg px-2">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="p-2 hover:bg-luxury-cream rounded-full transition-colors"
+                  className="p-2 hover:bg-luxury-cream rounded-lg transition-colors"
                   aria-label="Decrease quantity"
                 >
                   <Minus className="w-4 h-4" />
@@ -175,7 +175,7 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
                 <span className="text-sm w-8 text-center">{quantity}</span>
                 <button
                   onClick={() => setQuantity(quantity + 1)}
-                  className="p-2 hover:bg-luxury-cream rounded-full transition-colors"
+                  className="p-2 hover:bg-luxury-cream rounded-lg transition-colors"
                   aria-label="Increase quantity"
                 >
                   <Plus className="w-4 h-4" />
@@ -185,7 +185,7 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
               <Button
                 variant="gold"
                 size="lg"
-                className="flex-1"
+                className="flex-1 rounded-lg"
                 onClick={handleAddToCart}
               >
                 {added ? (
@@ -203,7 +203,7 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
               <Button 
                 variant="outline" 
                 size="sm" 
-                className={cn("flex-1 rounded-none", isWishlisted && "border-[#C5A880] text-[#C5A880] bg-[#C5A880]/5 hover:bg-[#C5A880]/10")}
+                className={cn("flex-1 rounded-lg", isWishlisted && "border-[#C5A880] text-[#C5A880] bg-[#C5A880]/5 hover:bg-[#C5A880]/10")}
                 onClick={() => toggleItem(product)}
               >
                 <Heart className={cn("w-4 h-4 mr-2 transition-transform active:scale-95", isWishlisted && "fill-[#C5A880]")} />
@@ -212,7 +212,7 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="flex-1 rounded-none"
+                className="flex-1 rounded-lg"
                 onClick={() => {
                   navigator.clipboard.writeText(window.location.href);
                   alert("Product link copied to clipboard!");

@@ -8,7 +8,7 @@ const latestProducts = products.filter((p) => p.isLatest).slice(0, 8);
 
 export function LatestCollectionsSection() {
   return (
-    <section className="section-padding py-12 md:py-16 bg-white">
+    <section className="section-padding py-8 md:py-16 bg-white">
       <FadeIn className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-6 gap-4">
         <div>
           <p className="label-luxury mb-1">Just Arrived</p>
