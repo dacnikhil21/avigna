@@ -134,9 +134,12 @@ export function Header() {
 
             {/* Desktop Left Navigation */}
             <nav className={cn(
-              "hidden lg:flex items-center gap-8 text-[13px] tracking-[0.08em] uppercase font-sans font-medium transition-colors duration-300",
+              "hidden lg:flex items-center gap-6 text-[13px] tracking-[0.08em] uppercase font-sans font-medium transition-colors duration-300",
               isHeaderDark ? "text-white" : "text-[#121212]"
             )}>
+              <Link href="/" className="hover:text-[#C5A880] transition-colors duration-300 py-8">
+                Home
+              </Link>
               <div
                 onMouseEnter={() => handleShopHover(true)}
                 onMouseLeave={() => handleShopHover(false)}
@@ -146,14 +149,20 @@ export function Header() {
                   Shop <ChevronDown className="w-3.5 h-3.5" />
                 </span>
               </div>
+              <Link href="/shop" className="hover:text-[#C5A880] transition-colors duration-300 py-8">
+                Categories
+              </Link>
               <Link href="/collections" className="hover:text-[#C5A880] transition-colors duration-300 py-8">
                 Collections
               </Link>
               <Link href="/bridal-salon" className="hover:text-[#C5A880] transition-colors duration-300 py-8">
-                Bridal Salon
+                Bridal
               </Link>
               <Link href="/about" className="hover:text-[#C5A880] transition-colors duration-300 py-8">
-                Our Story
+                About
+              </Link>
+              <Link href="/contact" className="hover:text-[#C5A880] transition-colors duration-300 py-8">
+                Contact
               </Link>
             </nav>
 
@@ -187,7 +196,7 @@ export function Header() {
               </button>
 
               <a
-                href="https://wa.me/919876543210"
+                href="https://wa.me/917013004127"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 hover:text-[#C5A880] transition-colors duration-300"
@@ -268,36 +277,45 @@ export function Header() {
                   <div className="col-span-6 grid grid-cols-3 gap-6">
                     <div>
                       <h4 className="font-sans font-semibold text-[11px] tracking-[0.1em] uppercase text-[#C5A880] mb-4">
-                        Shop by Category
+                        Necklaces &amp; Chains
                       </h4>
                       <ul className="space-y-2 text-[13px] text-[#121212] font-normal tracking-[0.02em]">
-                        <li><Link href="/shop?category=necklaces" className="hover:text-[#C5A880] transition-colors duration-250">Necklaces & Chokers</Link></li>
-                        <li><Link href="/shop?category=earrings" className="hover:text-[#C5A880] transition-colors duration-250">Earrings & Jhumkas</Link></li>
-                        <li><Link href="/shop?category=bangles" className="hover:text-[#C5A880] transition-colors duration-250">Bangles & Kadas</Link></li>
-                        <li><Link href="/shop?category=rings" className="hover:text-[#C5A880] transition-colors duration-250">Rings & Accessories</Link></li>
+                        <li><Link href="/shop?category=necklace" className="hover:text-[#C5A880] transition-colors duration-250">Necklace</Link></li>
+                        <li><Link href="/shop?category=long-haram" className="hover:text-[#C5A880] transition-colors duration-250">Long Haram</Link></li>
+                        <li><Link href="/shop?category=short-haram" className="hover:text-[#C5A880] transition-colors duration-250">Short Haram</Link></li>
+                        <li><Link href="/shop?category=thali-chains" className="hover:text-[#C5A880] transition-colors duration-250">Thali Chains</Link></li>
+                        <li><Link href="/shop?category=chandraharam-chains" className="hover:text-[#C5A880] transition-colors duration-250">Chandraharam Chains</Link></li>
+                        <li><Link href="/shop?category=long-black-beads" className="hover:text-[#C5A880] transition-colors duration-250">Long Black Beads</Link></li>
+                        <li><Link href="/shop?category=short-black-beads" className="hover:text-[#C5A880] transition-colors duration-250">Short Black Beads</Link></li>
                       </ul>
                     </div>
                     
                     <div>
                       <h4 className="font-sans font-semibold text-[11px] tracking-[0.1em] uppercase text-[#C5A880] mb-4">
-                        Shop by Occasion
+                        Bangles &amp; Rings
                       </h4>
                       <ul className="space-y-2 text-[13px] text-[#121212] font-normal tracking-[0.02em]">
-                        <li><Link href="/shop?occasion=wedding" className="hover:text-[#C5A880] transition-colors duration-250">Wedding Wear</Link></li>
-                        <li><Link href="/shop?occasion=festival" className="hover:text-[#C5A880] transition-colors duration-250">Festival Wear</Link></li>
-                        <li><Link href="/shop?occasion=daily" className="hover:text-[#C5A880] transition-colors duration-250">Daily Wear</Link></li>
-                        <li><Link href="/shop?occasion=office" className="hover:text-[#C5A880] transition-colors duration-250">Office Wear</Link></li>
+                        <li><Link href="/shop?category=earrings" className="hover:text-[#C5A880] transition-colors duration-250">Earrings</Link></li>
+                        <li><Link href="/shop?category=bangles" className="hover:text-[#C5A880] transition-colors duration-250">Bangles</Link></li>
+                        <li><Link href="/shop?category=glass-bangles" className="hover:text-[#C5A880] transition-colors duration-250">Glass Bangles</Link></li>
+                        <li><Link href="/shop?category=finger-rings" className="hover:text-[#C5A880] transition-colors duration-250">Finger Rings</Link></li>
+                        <li><Link href="/shop?category=bracelets" className="hover:text-[#C5A880] transition-colors duration-250">Bracelets</Link></li>
+                        <li><Link href="/shop?category=anklets" className="hover:text-[#C5A880] transition-colors duration-250">Anklets</Link></li>
                       </ul>
                     </div>
 
                     <div>
                       <h4 className="font-sans font-semibold text-[11px] tracking-[0.1em] uppercase text-[#C5A880] mb-4">
-                        Shop by Collection
+                        Special Collections
                       </h4>
                       <ul className="space-y-2 text-[13px] text-[#121212] font-normal tracking-[0.02em]">
-                        <li><Link href="/collections/temple-gold" className="hover:text-[#C5A880] transition-colors duration-250">Temple Gold</Link></li>
-                        <li><Link href="/collections/antique-royal" className="hover:text-[#C5A880] transition-colors duration-250">Antique Royal</Link></li>
-                        <li><Link href="/collections/modern-minimalist" className="hover:text-[#C5A880] transition-colors duration-250">Modern Minimalist</Link></li>
+                        <li><Link href="/shop?category=bridal-collection" className="hover:text-[#C5A880] transition-colors duration-250">Bridal Collection</Link></li>
+                        <li><Link href="/shop?category=classical-dance-jewellery" className="hover:text-[#C5A880] transition-colors duration-250">Classical Dance</Link></li>
+                        <li><Link href="/shop?category=panchaloham-jewellery" className="hover:text-[#C5A880] transition-colors duration-250">Panchaloham</Link></li>
+                        <li><Link href="/shop?category=vaddanam" className="hover:text-[#C5A880] transition-colors duration-250">Vaddanam</Link></li>
+                        <li><Link href="/shop?category=mens-collection" className="hover:text-[#C5A880] transition-colors duration-250">Men&apos;s Collection</Link></li>
+                        <li><Link href="/shop?category=kids-collection" className="hover:text-[#C5A880] transition-colors duration-250">Kids Collection</Link></li>
+                        <li><Link href="/shop?category=latest-collections" className="hover:text-[#C5A880] transition-colors duration-250">Latest Collections</Link></li>
                       </ul>
                     </div>
                   </div>
@@ -413,6 +431,10 @@ export function Header() {
                   </AnimatePresence>
                 </div>
 
+                <Link href="/" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40">
+                  Home
+                </Link>
+
                 <Link href="/collections" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40">
                   Collections
                 </Link>
@@ -422,7 +444,11 @@ export function Header() {
                 </Link>
 
                 <Link href="/about" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40">
-                  Our Story
+                  About Us
+                </Link>
+
+                <Link href="/contact" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40">
+                  Contact
                 </Link>
 
                 <button
@@ -437,7 +463,7 @@ export function Header() {
                 </button>
 
                 <a
-                  href="https://wa.me/919876543210"
+                  href="https://wa.me/917013004127"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40 flex items-center gap-2"
@@ -490,41 +516,55 @@ export function Header() {
         )}
       </AnimatePresence>
 
-      {/* Mobile Sticky Bottom Utility Bar (Search, Wishlist, Shop, Account) */}
+      {/* Mobile Sticky Bottom Navigation Bar */}
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-[#EFECE7] h-[64px] flex items-center justify-around md:hidden pb-safe">
-        <button
-          onClick={() => setIsSearchOpen(true)}
-          className="flex flex-col items-center justify-center p-2 text-[#121212] hover:text-[#C5A880] transition-colors duration-250 w-16"
-          aria-label="Search"
-        >
-          <Search className="w-4.5 h-4.5" />
-          <span className="text-[9px] tracking-wider uppercase font-medium mt-1 font-sans">Search</span>
-        </button>
-
         <Link
-          href="/wishlist"
-          className="flex flex-col items-center justify-center p-2 text-[#121212] hover:text-[#C5A880] transition-colors duration-250 w-16"
-          aria-label="Wishlist"
+          href="/"
+          className="flex flex-col items-center justify-center p-2 text-[#121212] hover:text-[#C5A880] transition-colors duration-250 w-14"
+          aria-label="Home"
         >
-          <Heart className="w-4.5 h-4.5" />
-          <span className="text-[9px] tracking-wider uppercase font-medium mt-1 font-sans">Wishlist</span>
+          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
+          <span className="text-[9px] tracking-wider uppercase font-medium mt-1 font-sans">Home</span>
         </Link>
 
         <Link
           href="/shop"
-          className="flex flex-col items-center justify-center p-2 text-[#121212] hover:text-[#C5A880] transition-colors duration-250 w-16"
-          aria-label="Shop"
+          className="flex flex-col items-center justify-center p-2 text-[#121212] hover:text-[#C5A880] transition-colors duration-250 w-14"
+          aria-label="Categories"
         >
-          <ShoppingBag className="w-4.5 h-4.5" />
-          <span className="text-[9px] tracking-wider uppercase font-medium mt-1 font-sans">Shop</span>
+          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>
+          <span className="text-[9px] tracking-wider uppercase font-medium mt-1 font-sans">Categories</span>
         </Link>
 
         <Link
+          href="/wishlist"
+          className="flex flex-col items-center justify-center p-2 text-[#121212] hover:text-[#C5A880] transition-colors duration-250 w-14"
+          aria-label="Wishlist"
+        >
+          <Heart className="w-5 h-5" />
+          <span className="text-[9px] tracking-wider uppercase font-medium mt-1 font-sans">Wishlist</span>
+        </Link>
+
+        <button
+          onClick={openCart}
+          className="relative flex flex-col items-center justify-center p-2 text-[#121212] hover:text-[#C5A880] transition-colors duration-250 w-14"
+          aria-label="Cart"
+        >
+          <ShoppingBag className="w-5 h-5" />
+          {itemCount > 0 && (
+            <span className="absolute top-1 right-2 w-4 h-4 flex items-center justify-center bg-[#C5A880] text-white text-[8px] font-bold rounded-full">
+              {itemCount}
+            </span>
+          )}
+          <span className="text-[9px] tracking-wider uppercase font-medium mt-1 font-sans">Cart</span>
+        </button>
+
+        <Link
           href="/account"
-          className="flex flex-col items-center justify-center p-2 text-[#121212] hover:text-[#C5A880] transition-colors duration-250 w-16"
+          className="flex flex-col items-center justify-center p-2 text-[#121212] hover:text-[#C5A880] transition-colors duration-250 w-14"
           aria-label="Account"
         >
-          <User className="w-4.5 h-4.5" />
+          <User className="w-5 h-5" />
           <span className="text-[9px] tracking-wider uppercase font-medium mt-1 font-sans">Account</span>
         </Link>
       </div>

@@ -74,7 +74,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen antialiased">
         <Header />
-        <main>{children}</main>
+        <main className="pb-16 md:pb-0">{children}</main>
         <Footer />
         <CartDrawer />
       </body>

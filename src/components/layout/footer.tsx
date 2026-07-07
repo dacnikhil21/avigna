@@ -46,7 +46,7 @@ export function Footer() {
               </li>
               <li className="pt-2">
                 <a
-                  href="https://wa.me/919876543210"
+                  href="https://wa.me/917013004127"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-[#C5A880] hover:text-white transition-all duration-300 font-medium"
@@ -95,13 +95,14 @@ export function Footer() {
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#C5A880] mt-0.5 shrink-0" />
                 <span>
-                  123, MG Road, Ashok Nagar,<br />
-                  Bengaluru, Karnataka 560001
+                  Beside More Supermarket,<br />
+                  Opp RR Complex, Polytechnic Road,<br />
+                  Wanaparthy – 509103
                 </span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#C5A880] shrink-0" />
-                <span>+91 98765 43210</span>
+                <span>+91 70130 04127</span>
               </li>
               <li className="pt-2">
                 <Link

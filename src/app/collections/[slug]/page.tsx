@@ -6,7 +6,7 @@ import { collections, products } from "@/lib/data";
 import { ProductCard } from "@/components/shop/product-card";
 import { FadeIn } from "@/components/shared/motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -37,6 +37,17 @@ export default async function CollectionDetailPage({ params }: Props) {
 
   return (
     <>
+      {/* Breadcrumbs */}
+      <div className="section-padding pt-28 md:pt-32 pb-4">
+        <nav className="flex items-center gap-1.5 text-xs text-[#9a948f]">
+          <Link href="/" className="hover:text-[#C5A880] transition-colors">Home</Link>
+          <ChevronRight className="w-3 h-3" />
+          <Link href="/collections" className="hover:text-[#C5A880] transition-colors">Collections</Link>
+          <ChevronRight className="w-3 h-3" />
+          <span className="text-[#121212] font-medium">{collection.name}</span>
+        </nav>
+      </div>
+
       <section className="relative h-[50vh] min-h-[350px] flex items-end">
         <Image
           src={collection.coverImage ?? collection.image ?? ""}
@@ -72,7 +83,7 @@ export default async function CollectionDetailPage({ params }: Props) {
           </Button>
         </FadeIn>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
           {collectionProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

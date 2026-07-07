@@ -121,7 +121,7 @@ export default function BridalSalonPage() {
         </FadeIn>
 
         {bridalProducts.length > 0 ? (
-          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {bridalProducts.map((product) => (
               <StaggerItem key={product.id}>
                 <ProductCard product={product} priority />
@@ -130,7 +130,7 @@ export default function BridalSalonPage() {
           </StaggerContainer>
         ) : (
           /* Showcase fallback using all featured products styled as bridal */
-          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {products.filter(p => p.isFeatured).slice(0, 3).map((product) => (
               <StaggerItem key={product.id}>
                 <div className="group block">
@@ -178,7 +178,7 @@ export default function BridalSalonPage() {
               title: "WhatsApp Stylist",
               description: "Send us your lehenga colour and a photo. Within 24 hours, your personal stylist will share a curated collection of matching sets, with video walkthroughs under natural light.",
               cta: "Chat on WhatsApp",
-              href: "https://wa.me/919876543210",
+              href: "https://wa.me/917013004127",
               external: true,
             },
             {
@@ -251,7 +251,7 @@ export default function BridalSalonPage() {
                 </p>
                 <div className="flex flex-wrap gap-4 justify-center">
                   <a
-                    href="https://wa.me/919876543210"
+                    href="https://wa.me/917013004127"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#121212] text-white text-xs uppercase tracking-[0.15em] hover:bg-[#C5A880] transition-all duration-500"
