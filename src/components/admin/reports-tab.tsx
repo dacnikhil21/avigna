@@ -1,12 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { useAdminStore } from "@/lib/store/admin-store";
-import { FileDown, CheckCircle2, Loader2, ArrowUpRight, BarChart2, PieChart } from "lucide-react";
+import { FileDown, CheckCircle2, Loader2, BarChart2, PieChart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function ReportsTab() {
-  const { products, categories, orders } = useAdminStore();
   const [downloadingPdf, setDownloadingPdf] = useState(false);
   const [downloadingExcel, setDownloadingExcel] = useState(false);
   const [toastMsg, setToastMsg] = useState("");
@@ -32,7 +30,7 @@ export function ReportsTab() {
     }, 1500);
   };
 
-  // Mock reporting tables
+  // Mock reporting data
   const bestSellers = [
     { rank: 1, name: "Temple Kemp Jhumka Earrings", category: "Earrings", sold: 48, rev: 72000 },
     { rank: 2, name: "Antique Lakshmi Haram Set", category: "Necklaces", sold: 34, rev: 221000 },
@@ -49,12 +47,12 @@ export function ReportsTab() {
   ];
 
   return (
-    <div className="space-y-8 font-sans">
+    <div className="space-y-8 font-sans antialiased text-[#1A1A1A]">
       
       {/* Toast */}
       {toastMsg && (
-        <div className="fixed bottom-8 right-8 z-50 flex items-center gap-3 px-6 py-4 rounded-xl shadow-lg border bg-[#C5A880] text-white border-[#b8966f] text-xs uppercase tracking-wider font-medium transition-all duration-300">
-          <CheckCircle2 className="w-4 h-4" />
+        <div className="fixed bottom-8 right-8 z-50 flex items-center gap-3 px-6 py-4 rounded-xl shadow-lg border bg-emerald-600 text-white border-emerald-700 text-xs uppercase tracking-wider font-semibold transition-all duration-300">
+          <CheckCircle2 className="w-5 h-5 shrink-0" />
           {toastMsg}
         </div>
       )}
@@ -62,8 +60,8 @@ export function ReportsTab() {
       {/* Action Banner */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white border border-[#EFECE7] rounded-2xl p-6 shadow-sm">
         <div>
-          <h3 className="font-serif text-lg text-[#121212] font-light font-normal">Business Analytics &amp; Reports</h3>
-          <p className="text-xs text-luxury-muted mt-1">Export transaction logs and category charts for offline auditing.</p>
+          <h3 className="font-serif text-xl text-slate-950 font-bold">Business Analytics &amp; Reports</h3>
+          <p className="text-xs text-slate-800 font-bold mt-1.5">Export transaction logs and category charts for offline auditing.</p>
         </div>
         
         {/* Export Buttons */}
@@ -71,12 +69,12 @@ export function ReportsTab() {
           <Button
             onClick={handleExportPdf}
             disabled={downloadingPdf}
-            className="bg-white border border-[#EFECE7] hover:border-gray-400 text-[#121212] text-xs uppercase tracking-wider font-medium py-2.5 px-4 rounded-xl transition-all flex items-center gap-2"
+            className="bg-white border border-[#D1CFC9] hover:border-slate-400 text-slate-900 text-xs uppercase tracking-wider font-bold py-3 px-5 rounded-xl transition-all flex items-center gap-2 shadow-sm"
           >
             {downloadingPdf ? (
-              <Loader2 className="w-4 h-4 animate-spin text-gray-500" />
+              <Loader2 className="w-4 h-4 animate-spin text-slate-500" />
             ) : (
-              <FileDown className="w-4 h-4 text-gray-400" />
+              <FileDown className="w-4 h-4 text-slate-500" />
             )}
             Export PDF
           </Button>
@@ -84,12 +82,12 @@ export function ReportsTab() {
           <Button
             onClick={handleExportExcel}
             disabled={downloadingExcel}
-            className="bg-[#121212] hover:bg-[#C5A880] text-white text-xs uppercase tracking-wider font-semibold py-2.5 px-4 rounded-xl transition-all flex items-center gap-2 shadow-sm"
+            className="bg-[#C5A880] hover:bg-[#b0936b] text-white text-xs uppercase tracking-wider font-bold py-3.5 px-5 rounded-xl transition-all flex items-center gap-2 shadow-md"
           >
             {downloadingExcel ? (
               <Loader2 className="w-4 h-4 animate-spin text-white" />
             ) : (
-              <FileDown className="w-4 h-4 text-white/70" />
+              <FileDown className="w-4 h-4 text-white" />
             )}
             Export Excel
           </Button>
@@ -108,14 +106,14 @@ export function ReportsTab() {
           return (
             <div key={idx} className="bg-white border border-[#EFECE7] rounded-2xl p-5 shadow-sm space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-xs text-luxury-muted font-light">{item.label}</span>
-                <div className="w-8 h-8 rounded-xl bg-[#C5A880]/10 flex items-center justify-center text-[#C5A880]">
-                  <Icon className="w-4 h-4" />
+                <span className="text-[11px] text-slate-900 font-extrabold uppercase tracking-wider leading-none">{item.label}</span>
+                <div className="w-8 h-8 rounded-xl bg-[#C5A880]/15 flex items-center justify-center text-[#8C6D3F]">
+                  <Icon className="w-4.5 h-4.5 stroke-[2.5]" />
                 </div>
               </div>
               <div>
-                <h4 className="font-serif text-xl font-normal text-[#121212] tracking-wide">{item.val}</h4>
-                <p className="text-[10px] text-luxury-muted font-light mt-1">{item.sub}</p>
+                <h4 className="font-sans text-2xl font-black text-slate-950 leading-none">{item.val}</h4>
+                <p className="text-[11px] text-slate-800 font-bold mt-2">{item.sub}</p>
               </div>
             </div>
           );
@@ -127,28 +125,28 @@ export function ReportsTab() {
         
         {/* Best Selling Products */}
         <div className="bg-white border border-[#EFECE7] rounded-2xl p-6 shadow-sm space-y-5">
-          <div className="flex items-center justify-between">
-            <h3 className="font-serif text-base text-[#121212] font-light">Best Selling Products</h3>
-            <span className="text-[10px] uppercase tracking-wider text-luxury-muted font-light">By Units Sold</span>
+          <div className="flex items-center justify-between border-b border-[#EFECE7] pb-3.5">
+            <h3 className="font-serif text-lg text-slate-950 font-bold">Best Selling Products</h3>
+            <span className="text-[10px] uppercase tracking-wider text-slate-900 font-extrabold bg-slate-100 px-2 py-0.5 rounded">By Units Sold</span>
           </div>
 
-          <div className="overflow-x-auto border border-gray-100 rounded-xl">
-            <table className="w-full text-left border-collapse text-xs">
+          <div className="overflow-x-auto border border-[#EFECE7] rounded-xl">
+            <table className="w-full text-left border-collapse text-xs table-fixed">
               <thead>
-                <tr className="bg-[#FAF8F5] text-luxury-muted uppercase tracking-wider text-[10px] border-b border-gray-100">
-                  <th className="py-3.5 px-4 font-medium text-center w-12">Rank</th>
-                  <th className="py-3.5 px-4 font-medium">Product</th>
-                  <th className="py-3.5 px-4 font-medium text-center">Units Sold</th>
-                  <th className="py-3.5 px-4 font-medium text-right">Revenue</th>
+                <tr className="bg-slate-100 text-slate-950 uppercase tracking-wider text-[10px] border-b border-[#EFECE7]">
+                  <th className="py-3 px-4 font-extrabold text-center w-12">Rank</th>
+                  <th className="py-3 px-4 font-extrabold">Product</th>
+                  <th className="py-3 px-4 font-extrabold text-center w-24">Units Sold</th>
+                  <th className="py-3 px-4 font-extrabold text-right w-28">Revenue</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100 font-light text-slate-600">
+              <tbody className="divide-y divide-[#EFECE7] font-bold text-slate-900">
                 {bestSellers.map((p) => (
-                  <tr key={p.rank} className="hover:bg-gray-50/50 transition-colors">
-                    <td className="py-3.5 px-4 text-center font-medium text-[#121212]">{p.rank}</td>
-                    <td className="py-3.5 px-4 font-medium text-[#121212]">{p.name}</td>
-                    <td className="py-3.5 px-4 text-center">{p.sold}</td>
-                    <td className="py-3.5 px-4 text-right font-semibold text-[#121212]">₹{p.rev.toLocaleString("en-IN")}</td>
+                  <tr key={p.rank} className="hover:bg-slate-50/50 transition-colors">
+                    <td className="py-3 px-4 text-center font-extrabold text-slate-950">{p.rank}</td>
+                    <td className="py-3 px-4 font-bold text-slate-950 truncate">{p.name}</td>
+                    <td className="py-3 px-4 text-center">{p.sold}</td>
+                    <td className="py-3 px-4 text-right font-extrabold text-slate-950">₹{p.rev.toLocaleString("en-IN")}</td>
                   </tr>
                 ))}
               </tbody>
@@ -158,28 +156,28 @@ export function ReportsTab() {
 
         {/* Top Categories */}
         <div className="bg-white border border-[#EFECE7] rounded-2xl p-6 shadow-sm space-y-5">
-          <div className="flex items-center justify-between">
-            <h3 className="font-serif text-base text-[#121212] font-light">Top Performing Categories</h3>
-            <span className="text-[10px] uppercase tracking-wider text-luxury-muted font-light">By Revenue Volume</span>
+          <div className="flex items-center justify-between border-b border-[#EFECE7] pb-3.5">
+            <h3 className="font-serif text-lg text-slate-950 font-bold">Top Performing Categories</h3>
+            <span className="text-[10px] uppercase tracking-wider text-slate-900 font-extrabold bg-slate-100 px-2 py-0.5 rounded">By Revenue Volume</span>
           </div>
 
-          <div className="overflow-x-auto border border-gray-100 rounded-xl">
-            <table className="w-full text-left border-collapse text-xs">
+          <div className="overflow-x-auto border border-[#EFECE7] rounded-xl">
+            <table className="w-full text-left border-collapse text-xs table-fixed">
               <thead>
-                <tr className="bg-[#FAF8F5] text-luxury-muted uppercase tracking-wider text-[10px] border-b border-gray-100">
-                  <th className="py-3.5 px-4 font-medium text-center w-12">Rank</th>
-                  <th className="py-3.5 px-4 font-medium">Category</th>
-                  <th className="py-3.5 px-4 font-medium text-center">Items Count</th>
-                  <th className="py-3.5 px-4 font-medium text-right">Revenue</th>
+                <tr className="bg-slate-100 text-slate-950 uppercase tracking-wider text-[10px] border-b border-[#EFECE7]">
+                  <th className="py-3 px-4 font-extrabold text-center w-12">Rank</th>
+                  <th className="py-3 px-4 font-extrabold">Category</th>
+                  <th className="py-3 px-4 font-extrabold text-center w-28">Items Count</th>
+                  <th className="py-3 px-4 font-extrabold text-right w-28">Revenue</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100 font-light text-slate-600">
+              <tbody className="divide-y divide-[#EFECE7] font-bold text-slate-900">
                 {topCategories.map((cat) => (
-                  <tr key={cat.rank} className="hover:bg-gray-50/50 transition-colors">
-                    <td className="py-3.5 px-4 text-center font-medium text-[#121212]">{cat.rank}</td>
-                    <td className="py-3.5 px-4 font-medium text-[#121212] uppercase tracking-wider">{cat.name}</td>
-                    <td className="py-3.5 px-4 text-center">{cat.items}</td>
-                    <td className="py-3.5 px-4 text-right font-semibold text-[#121212]">₹{cat.rev.toLocaleString("en-IN")}</td>
+                  <tr key={cat.rank} className="hover:bg-slate-50/50 transition-colors">
+                    <td className="py-3 px-4 text-center font-extrabold text-slate-950">{cat.rank}</td>
+                    <td className="py-3 px-4 font-bold text-slate-950 uppercase tracking-wider truncate">{cat.name}</td>
+                    <td className="py-3 px-4 text-center">{cat.items}</td>
+                    <td className="py-3 px-4 text-right font-extrabold text-slate-950">₹{cat.rev.toLocaleString("en-IN")}</td>
                   </tr>
                 ))}
               </tbody>
