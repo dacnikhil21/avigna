@@ -1,14 +1,9 @@
-import type { Metadata } from "next";
+"use client";
+
 import Image from "next/image";
-import { BRAND } from "@/lib/data";
+import { useWebsiteData } from "@/lib/store/admin-store";
 import { FadeIn } from "@/components/shared/motion";
 import { Award, Gem, Heart, Users } from "lucide-react";
-
-export const metadata: Metadata = {
-  title: "About Us",
-  description:
-    "Discover the story of Sri Avighna 1 Gram Gold Jewellery — three decades of master craftsmanship, BIS hallmarked gold, and timeless Indian jewellery.",
-};
 
 const values = [
   {
@@ -38,6 +33,7 @@ const values = [
 ];
 
 export default function AboutPage() {
+  const { brand } = useWebsiteData();
   return (
     <>
       {/* Hero */}
@@ -66,7 +62,7 @@ export default function AboutPage() {
             <h2 className="heading-md mb-8">Three Decades of Trust</h2>
             <div className="space-y-6 body-lg text-left">
               <p>
-                Founded in 1994 in the heart of Bengaluru, {BRAND.name} began as a
+                Founded in 1994 in the heart of Bengaluru, {brand.businessName} began as a
                 small family workshop with a singular vision: to create jewellery that
                 honours India&apos;s rich artistic heritage while embracing contemporary
                 elegance.
@@ -127,7 +123,7 @@ export default function AboutPage() {
             <h2 className="heading-md mb-6">BIS Hallmarked & GIA Certified</h2>
             <div className="space-y-4 body-lg">
               <p>
-                Every gold piece from Sri Avighna 1 Gram Gold Jewellery carries the BIS hallmark —
+                Every gold piece from {brand.businessName} carries the BIS hallmark —
                 the Bureau of Indian Standards mark that guarantees purity. Our 22K
                 gold is 916 purity, and our 18K gold is 750 purity.
               </p>

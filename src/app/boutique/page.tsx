@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Clock, MapPin, Phone, CheckCircle2 } from "lucide-react";
 import { FadeIn } from "@/components/shared/motion";
 import { Button } from "@/components/ui/button";
+import { useWebsiteData } from "@/lib/store/admin-store";
 
 const BOOKING_SERVICES = [
   { id: "boutique-styling", label: "In-Store Boutique Styling", duration: "60 Mins" },
@@ -16,6 +17,7 @@ const TIME_SLOTS = [
 ];
 
 export default function BoutiquePage() {
+  const { brand } = useWebsiteData();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     service: "",
@@ -63,8 +65,7 @@ export default function BoutiquePage() {
                   <div>
                     <p className="text-sm font-medium text-[#121212]">Address</p>
                     <p className="text-sm text-[#6B6560] mt-1">
-                      Beside More Supermarket, Opp RR Complex,<br />
-                      Polytechnic Road, Wanaparthy – 509103
+                      {brand.address}
                     </p>
                   </div>
                 </div>
@@ -75,7 +76,7 @@ export default function BoutiquePage() {
                     <p className="text-sm font-medium text-[#121212]">Boutique Hours</p>
                     <p className="text-sm text-[#6B6560] mt-1">
                       Monday – Sunday<br />
-                      10:30 AM – 9:00 PM
+                      {brand.storeTimings}
                     </p>
                   </div>
                 </div>
@@ -93,8 +94,8 @@ export default function BoutiquePage() {
             {/* Custom Grayscale Styled Map Iframe Container */}
             <FadeIn delay={0.2} className="relative aspect-video w-full overflow-hidden border border-[#EFECE7] grayscale hover:grayscale-0 transition-all duration-700 rounded-xl">
               <iframe
-                title="Sri Avighna 1 Gram Gold Jewellery Wanaparthy Boutique Map"
-                src="https://maps.google.com/maps?q=Sri+Avighna+1+Gram+Gold+Jewellery+Wanaparthy&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                title={`${brand.businessName} Wanaparthy Boutique Map`}
+                src={`https://maps.google.com/maps?q=${encodeURIComponent(brand.businessName)}+Wanaparthy&t=&z=15&ie=UTF8&iwloc=&output=embed`}
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

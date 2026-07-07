@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus, HelpCircle } from "lucide-react";
 import { FadeIn } from "@/components/shared/motion";
+import { useWebsiteData } from "@/lib/store/admin-store";
 
 const FAQ_GROUPS = [
   {
@@ -60,7 +61,16 @@ const FAQ_GROUPS = [
 ];
 
 export default function FaqPage() {
+  const { brand } = useWebsiteData();
   const [activeId, setActiveId] = useState<string | null>(null);
+
+  const dynamicFaqGroups = FAQ_GROUPS.map(group => ({
+    ...group,
+    items: group.items.map(item => ({
+      q: item.q.replaceAll("Sri Avighna 1 Gram Gold Jewellery", brand.businessName),
+      a: item.a.replaceAll("Sri Avighna 1 Gram Gold Jewellery", brand.businessName)
+    }))
+  }));
 
   const toggleAccordion = (id: string) => {
     setActiveId(activeId === id ? null : id);
@@ -93,7 +103,7 @@ export default function FaqPage() {
 
         {/* Categories / Groups */}
         <div className="space-y-16">
-          {FAQ_GROUPS.map((group, groupIdx) => (
+          {dynamicFaqGroups.map((group, groupIdx) => (
             <div key={group.title} className="space-y-6">
               <div className="border-b border-[#EFECE7] pb-4">
                 <h2 className="font-serif text-xl font-light text-[#121212]">{group.title}</h2>
@@ -155,7 +165,7 @@ export default function FaqPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wa.me/919876543210"
+              href={`https://wa.me/91${brand.phone.replace(/\s+/g, "")}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center px-8 py-4 bg-[#121212] text-white text-xs uppercase tracking-[0.2em] font-medium hover:bg-[#C5A880] transition-all duration-500 rounded-none"

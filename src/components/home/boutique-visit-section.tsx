@@ -2,8 +2,10 @@
 
 import { MapPin, Clock, Phone, Mail } from "lucide-react";
 import { FadeIn } from "@/components/shared/motion";
+import { useWebsiteData } from "@/lib/store/admin-store";
 
 export function BoutiqueVisitSection() {
+  const { brand } = useWebsiteData();
   return (
     <section className="bg-[#FAF8F5] py-10 md:py-20 border-t border-[#EFECE7]">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 xl:px-28">
@@ -28,9 +30,8 @@ export function BoutiqueVisitSection() {
                       Boutique Address
                     </h4>
                     <p className="text-sm">
-                      Sri Avighna 1 Gram Gold Jewellery<br />
-                      Beside More Supermarket, Opp RR Complex,<br />
-                      Polytechnic Road, Wanaparthy – 509103
+                      <strong>{brand.businessName}</strong><br />
+                      {brand.address}
                     </p>
                   </div>
                 </div>
@@ -43,7 +44,7 @@ export function BoutiqueVisitSection() {
                     </h4>
                     <p className="text-sm">
                       Monday — Sunday<br />
-                      10:30 AM — 9:00 PM
+                      {brand.storeTimings}
                     </p>
                   </div>
                 </div>
@@ -55,7 +56,7 @@ export function BoutiqueVisitSection() {
                       Phone Number
                     </h4>
                     <p className="text-sm">
-                      +91 70130 04127
+                      {brand.phone}
                     </p>
                   </div>
                 </div>
@@ -67,7 +68,7 @@ export function BoutiqueVisitSection() {
                       Email Address
                     </h4>
                     <p className="text-sm">
-                      avighnacollections1@gmail.com
+                      {brand.email}
                     </p>
                   </div>
                 </div>
@@ -75,7 +76,7 @@ export function BoutiqueVisitSection() {
 
               <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
                 <a
-                  href="https://maps.google.com/?q=Sri+Avighna+1+Gram+Gold+Jewellery+Wanaparthy"
+                  href={`https://maps.google.com/?q=${encodeURIComponent(brand.businessName)}+Wanaparthy`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-4 text-[12px] font-dmsans tracking-[0.22em] uppercase text-[#121212] hover:text-[#C5A880] transition-colors duration-300 group"

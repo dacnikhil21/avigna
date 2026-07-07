@@ -2,14 +2,15 @@
 
 import { useMemo, Suspense } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { products, categories } from "@/lib/data";
 import { ProductCard } from "@/components/shop/product-card";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/shared/motion";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { ChevronRight, SlidersHorizontal } from "lucide-react";
+import { useWebsiteData } from "@/lib/store/admin-store";
 
 function ShopContent() {
+  const { products, categories } = useWebsiteData();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();

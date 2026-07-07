@@ -1,0 +1,11 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About Us",
+  description:
+    "Discover the story of Sri Avighna 1 Gram Gold Jewellery — three decades of master craftsmanship, BIS hallmarked gold, and timeless Indian jewellery.",
+};
+
+export default function AboutLayout({ children }: { children: React.ReactNode }) {
+  return children;
+}

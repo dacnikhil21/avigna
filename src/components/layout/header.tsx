@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ShoppingBag, Search, Heart, User, ChevronDown, MapPin, HelpCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/lib/store/cart";
+import { useWebsiteData } from "@/lib/store/admin-store";
 
 const MESSAGES = [
   "Complimentary Insured Shipping Across India",
@@ -17,11 +18,18 @@ const MESSAGES = [
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const { brand } = useWebsiteData();
   const [isShopExpanded, setIsShopExpanded] = useState(false);
   const [showAnnouncement, setShowAnnouncement] = useState(true);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const dynamicMessages = [
+    brand.offerBannerText,
+    "Pristine 1 Gram Gold Replica Jewellery",
+    "Visit Our Boutique – Wanaparthy, Telangana"
+  ];
 
   const { totalItems, openCart } = useCartStore();
   const itemCount = totalItems();
@@ -31,10 +39,10 @@ export function Header() {
   useEffect(() => {
     if (!showAnnouncement) return;
     const timer = setInterval(() => {
-      setCurrentMessageIndex((prev) => (prev + 1) % MESSAGES.length);
+      setCurrentMessageIndex((prev) => (prev + 1) % dynamicMessages.length);
     }, 8000);
     return () => clearInterval(timer);
-  }, [showAnnouncement]);
+  }, [showAnnouncement, dynamicMessages.length]);
 
   // Handle scrolling height & backgrounds
   useEffect(() => {
@@ -92,7 +100,7 @@ export function Header() {
                     transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
                     className="text-[12px] font-medium tracking-[0.08em] font-dmsans text-[#121212] uppercase text-center"
                   >
-                    {MESSAGES[currentMessageIndex]}
+                    {dynamicMessages[currentMessageIndex]}
                   </motion.div>
                 </AnimatePresence>
               </div>
@@ -165,10 +173,10 @@ export function Header() {
                     "font-serif text-xl md:text-2xl font-light tracking-[0.08em] transition-colors duration-300 leading-none",
                     isHeaderDark ? "text-white" : "text-[#121212]"
                   )}>
-                    Sri Avighna
+                    {brand.logoText}
                   </span>
                   <span className="hidden sm:block text-[8px] uppercase tracking-[0.3em] text-[#C5A880] mt-0.5 font-medium leading-none">
-                    1 Gram Gold Jewellery
+                    {brand.logoSubText}
                   </span>
                 </div>
               </Link>
@@ -378,9 +386,9 @@ export function Header() {
             >
               <div className="flex items-center justify-between mb-8">
                 <div>
-                  <span className="font-serif text-2xl font-light">Sri Avighna</span>
+                  <span className="font-serif text-2xl font-light">{brand.logoText}</span>
                   <p className="text-[9px] uppercase tracking-[0.3em] text-[#C5A880]">
-                    1 Gram Gold Jewellery
+                    {brand.logoSubText}
                   </p>
                 </div>
                 <button

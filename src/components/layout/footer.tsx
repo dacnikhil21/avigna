@@ -4,8 +4,10 @@ import Link from "next/link";
 import { Phone, MapPin, Mail, Clock } from "lucide-react";
 import { BRAND } from "@/lib/data";
 import { Separator } from "@/components/ui/separator";
+import { useWebsiteData } from "@/lib/store/admin-store";
 
 export function Footer() {
+  const { brand } = useWebsiteData();
   return (
     <footer className="bg-[#121212] text-white border-t border-white/5">
       {/* Zone A: Brand Promise & Statement (Full Width Top) */}
@@ -100,26 +102,24 @@ export function Footer() {
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#C5A880] mt-0.5 shrink-0" />
                 <span>
-                  Sri Avighna 1 Gram Gold Jewellery<br />
-                  Beside More Supermarket,<br />
-                  Opp RR Complex, Polytechnic Road,<br />
-                  Wanaparthy – 509103
+                  <strong>{brand.businessName}</strong><br />
+                  {brand.address}
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
                 <Clock className="w-4 h-4 text-[#C5A880] mt-0.5 shrink-0" />
                 <span>
                   Business Hours:<br />
-                  10:30 AM – 9:00 PM
+                  {brand.storeTimings}
                 </span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#C5A880] shrink-0" />
-                <span>7013004127</span>
+                <span>{brand.phone}</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#C5A880] shrink-0" />
-                <span>avighnacollections1@gmail.com</span>
+                <span>{brand.email}</span>
               </li>
             </ul>
           </div>
@@ -142,7 +142,7 @@ export function Footer() {
       <div className="section-padding py-6 bg-[#0C0C0C]">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-[10px] font-sans font-light text-white/30 tracking-wider">
           <p>
-            &copy; {new Date().getFullYear()} {BRAND.name}. Designed with reverence. All rights reserved.
+            &copy; {new Date().getFullYear()} {brand.businessName}. Designed with reverence. All rights reserved.
           </p>
           <div className="flex gap-6">
             <Link href="#" className="hover:text-white/50 transition-colors">

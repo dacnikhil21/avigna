@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { BRAND } from "@/lib/data";
+import { useWebsiteData } from "@/lib/store/admin-store";
 import { FadeIn } from "@/components/shared/motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 export default function ContactPage() {
+  const { brand } = useWebsiteData();
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -80,13 +81,13 @@ export default function ContactPage() {
               <h2 className="font-serif text-2xl font-light mb-6">Visit Our Showroom</h2>
               <div className="space-y-5">
                 {[
-                  { icon: MapPin, label: "Address", value: BRAND.address },
-                  { icon: Phone, label: "Phone", value: BRAND.phone },
-                  { icon: Mail, label: "Email", value: BRAND.email },
+                  { icon: MapPin, label: "Address", value: brand.address },
+                  { icon: Phone, label: "Phone", value: brand.phone },
+                  { icon: Mail, label: "Email", value: brand.email },
                   {
                     icon: Clock,
                     label: "Hours",
-                    value: "Daily: 10:30 AM – 9:00 PM",
+                    value: brand.storeTimings,
                   },
                 ].map(({ icon: Icon, label, value }) => (
                   <div key={label} className="flex items-start gap-4">
@@ -106,8 +107,8 @@ export default function ContactPage() {
 
             <div className="rounded-xl overflow-hidden h-64 bg-luxury-cream">
               <iframe
-                title="Sri Avighna 1 Gram Gold Jewellery Store Location"
-                src="https://maps.google.com/maps?q=Sri+Avighna+1+Gram+Gold+Jewellery+Wanaparthy&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                title={`${brand.businessName} Store Location`}
+                src={`https://maps.google.com/maps?q=${encodeURIComponent(brand.businessName)}+Wanaparthy&t=&z=15&ie=UTF8&iwloc=&output=embed`}
                 className="w-full h-full border-0"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

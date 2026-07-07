@@ -4,8 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { useWebsiteData } from "@/lib/store/admin-store";
 
 export function HeroSection() {
+  const { brand } = useWebsiteData();
   const containerRef = useRef<HTMLDivElement>(null);
   
   // Track scroll progress of the hero section relative to viewport scroll
@@ -134,7 +136,7 @@ export function HeroSection() {
               custom={0.7}
               className="text-[11px] font-sans font-medium tracking-[0.3em] uppercase text-[#C5A880]"
             >
-              SRI AVIGHNA 1 GRAM GOLD JEWELLERY
+              {brand.heroSubtitle}
             </motion.p>
 
             {/* Headline */}
@@ -143,10 +145,9 @@ export function HeroSection() {
               initial="hidden"
               animate="visible"
               custom={1.0}
-              className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-[#FAF8F5] leading-[1.1] md:leading-[1.0] italic tracking-wide text-balance"
+              className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-[#FAF8F5] leading-[1.1] md:leading-[1.0] italic tracking-wide text-balance animate-pulse"
             >
-              Where Sacred Heritage<br className="hidden sm:block" />
-              Meets Timeless Celebration
+              {brand.heroTitle}
             </motion.h1>
 
             {/* Supporting Paragraph */}
