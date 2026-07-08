@@ -1,14 +1,39 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
 import { useWebsiteData } from "@/lib/store/admin-store";
+import { cn } from "@/lib/utils";
+
+const HERO_SLIDES = [
+  {
+    url: "https://images.unsplash.com/photo-1610030469668-93535c17b6b3?w=1920&q=85",
+    alt: "Sri Avighna Traditional Bridal Model wearing red saree and elegant 1 Gram Gold Jewellery",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1920&q=85",
+    alt: "Sri Avighna elegant close-up showcasing premium necklaces and jewellery",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=1920&q=85",
+    alt: "Sri Avighna Family and guests inside a jewellery showroom exploring collections together",
+  }
+];
 
 export function HeroSection() {
   const { brand } = useWebsiteData();
   const containerRef = useRef<HTMLDivElement>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Auto transition every 10 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 10000);
+    return () => clearInterval(timer);
+  }, []);
   
   // Track scroll progress of the hero section relative to viewport scroll
   const { scrollYProgress } = useScroll({
@@ -56,14 +81,21 @@ export function HeroSection() {
           style={{ y: imageY, scale: imageScale }}
           className="relative w-full h-full"
         >
-          <Image
-            src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1920&q=85"
-            alt="Sri Avighna 1 Gram Gold Jewellery Premium Bridal Editorial"
-            fill
-            priority
-            className="object-cover object-[center_35%]"
-            sizes="100vw"
-          />
+          {HERO_SLIDES.map((slide, idx) => (
+            <Image
+              key={slide.url}
+              src={slide.url}
+              alt={slide.alt}
+              fill
+              priority={idx === 0}
+              className={cn(
+                "object-cover transition-opacity duration-1000 ease-in-out absolute inset-0",
+                idx === currentSlide ? "opacity-100" : "opacity-0"
+              )}
+              style={{ objectPosition: "50% 35%" }}
+              sizes="100vw"
+            />
+          ))}
         </motion.div>
         
         {/* Soft, rich ambient overlay */}

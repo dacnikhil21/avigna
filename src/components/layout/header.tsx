@@ -4,17 +4,13 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ShoppingBag, Search, Heart, User, ChevronDown, MapPin, HelpCircle } from "lucide-react";
+import { Menu, X, ShoppingBag, Search, Heart, User, ChevronDown, MapPin, HelpCircle, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/lib/store/cart";
 import { useWebsiteData } from "@/lib/store/admin-store";
 import { useWishlistStore } from "@/lib/store/wishlist";
-
-const MESSAGES = [
-  "Complimentary Insured Shipping Across India",
-  "Pristine 1 Gram Gold Replica Jewellery",
-  "Visit Our Boutique – Wanaparthy, Telangana"
-];
+import { useRouter } from "next/navigation";
+import type { Product } from "@/types";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -26,10 +22,79 @@ export function Header() {
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
+  // Search states
+  const [searchVal, setSearchVal] = useState("");
+  const [searchResults, setSearchResults] = useState<Product[]>([]);
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const router = useRouter();
+
+  // Load recent searches from localStorage
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("avighna-recent-searches");
+      if (stored) {
+        try {
+          setRecentSearches(JSON.parse(stored));
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    }
+  }, []);
+
+  const saveRecentSearch = (term: string) => {
+    if (!term.trim()) return;
+    const cleanTerm = term.trim();
+    setRecentSearches((prev) => {
+      const filtered = prev.filter((t) => t.toLowerCase() !== cleanTerm.toLowerCase());
+      const next = [cleanTerm, ...filtered].slice(0, 5);
+      localStorage.setItem("avighna-recent-searches", JSON.stringify(next));
+      return next;
+    });
+  };
+
+  const deleteRecentSearch = (term: string) => {
+    setRecentSearches((prev) => {
+      const next = prev.filter((t) => t !== term);
+      localStorage.setItem("avighna-recent-searches", JSON.stringify(next));
+      return next;
+    });
+  };
+
+  const handleSearchSubmit = (term: string) => {
+    if (!term.trim()) return;
+    saveRecentSearch(term);
+    setIsSearchOpen(false);
+    setSearchVal("");
+    router.push(`/shop?q=${encodeURIComponent(term)}`);
+  };
+
+  // Debounced search results
+  useEffect(() => {
+    if (!searchVal.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    const delayDebounce = setTimeout(async () => {
+      setSearchLoading(true);
+      try {
+        const res = await fetch(`/api/products?search=${encodeURIComponent(searchVal)}&limit=6`);
+        const data = await res.json();
+        setSearchResults(data.items || []);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setSearchLoading(false);
+      }
+    }, 300);
+    return () => clearTimeout(delayDebounce);
+  }, [searchVal]);
+
   const dynamicMessages = [
     brand.offerBannerText,
     "Pristine 1 Gram Gold Replica Jewellery",
-    "Visit Our Boutique – Wanaparthy, Telangana"
+    "Explore Our 1 Gram Gold Jewellery – Wanaparthy, Telangana"
   ];
 
   const { totalItems, openCart } = useCartStore();
@@ -262,7 +327,6 @@ export function Header() {
               </button>
             </div>
 
-
           </div>
 
           {/* Luxury Mega Menu (Desktop Only) */}
@@ -428,10 +492,10 @@ export function Header() {
                         className="pl-4 overflow-hidden flex flex-col gap-2.5 mt-2 border-l border-[#EFECE7]"
                       >
                         <Link href="/shop" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#C5A880] font-normal">All Jewelry</Link>
-                        <Link href="/shop?category=necklaces" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#C5A880] font-normal">Necklaces & Chokers</Link>
+                        <Link href="/shop?category=necklace" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#C5A880] font-normal">Necklaces & Chokers</Link>
                         <Link href="/shop?category=earrings" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#C5A880] font-normal">Earrings & Jhumkas</Link>
                         <Link href="/shop?category=bangles" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#C5A880] font-normal">Bangles & Kadas</Link>
-                        <Link href="/shop?category=rings" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#C5A880] font-normal">Rings & Accessories</Link>
+                        <Link href="/shop?category=finger-rings" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#C5A880] font-normal">Rings & Accessories</Link>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -457,24 +521,10 @@ export function Header() {
                   Contact
                 </Link>
 
-                <button
-                  onClick={() => {
-                    setIsMobileOpen(false);
-                    setIsSearchOpen(true);
-                  }}
-                  className="py-2 hover:text-[#C5A880] transition-colors duration-300 text-left border-b border-[#EFECE7]/40 flex items-center gap-2"
-                >
-                  <Search className="w-4.5 h-4.5" />
-                  <span>Search</span>
-                </button>
-
                 <Link href="/wishlist" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40 flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2">
-                    <Heart className="w-4.5 h-4.5" />
-                    <span>Wishlist</span>
-                  </div>
+                  <span>Wishlist</span>
                   {wishlistCount > 0 && (
-                    <span className="w-4.5 h-4.5 flex items-center justify-center bg-[#C5A880] text-white text-[8px] font-bold rounded-full">
+                    <span className="w-5 h-5 flex items-center justify-center bg-[#C5A880] text-white text-[10px] font-bold rounded-full">
                       {wishlistCount}
                     </span>
                   )}
@@ -494,7 +544,7 @@ export function Header() {
                   className="flex items-center gap-2 text-sm text-[#121212] hover:text-[#C5A880] transition-colors"
                 >
                   <MapPin className="w-4 h-4 text-[#C5A880]" />
-                  <span>Boutique Locator</span>
+                  <span>1 Gram Gold Store Locator</span>
                 </Link>
                 <Link
                   href="/faq"
@@ -568,48 +618,189 @@ export function Header() {
         </Link>
       </div>
 
-      {/* Full-screen Search Overlay */}
+      {/* Premium Search Overlay */}
       <AnimatePresence>
         {isSearchOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[100] bg-[#FAF8F5]/98 flex flex-col items-center justify-start pt-32 px-6"
-          >
-            <button
+          <>
+            {/* Backdrop with dark overlay and blur */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
               onClick={() => setIsSearchOpen(false)}
-              className="absolute top-8 right-8 p-3 hover:bg-black/5 rounded-full transition-colors duration-300"
-              aria-label="Close search"
+              className="fixed inset-0 z-[95] bg-black/45 backdrop-blur-sm"
+            />
+
+            {/* Premium centered search panel */}
+            <motion.div
+              initial={{ opacity: 0, y: -40, x: "-50%" }}
+              animate={{ opacity: 1, y: 0, x: "-50%" }}
+              exit={{ opacity: 0, y: -40, x: "-50%" }}
+              transition={{ type: "spring", damping: 28, stiffness: 220 }}
+              className="fixed top-6 left-1/2 z-[100] w-[92%] max-w-2xl bg-white shadow-2xl rounded-2xl border border-[#EFECE7] font-sans antialiased text-[#1A1A1A] overflow-hidden"
             >
-              <X className="w-6 h-6 text-[#121212]" />
-            </button>
-            <div className="w-full max-w-2xl text-center">
-              <h3 className="font-serif text-2xl font-light text-[#121212] mb-8 uppercase tracking-wider">Search Our Boutique</h3>
-              <input
-                type="text"
-                placeholder="What are you seeking today?"
-                className="w-full border-b border-[#121212] py-4 text-2xl md:text-3xl font-light text-[#121212] placeholder:text-gray-400 bg-transparent focus:outline-none text-center"
-                autoFocus
-              />
-              <div className="mt-12">
-                <h4 className="font-sans font-medium text-xs tracking-[0.1em] uppercase text-[#C5A880] mb-4">Suggested Discoveries</h4>
-                <div className="flex flex-wrap justify-center gap-4">
-                  {["Temple Chokers", "Polki Earrings", "Bridal Sets", "Gold Bangles"].map((item) => (
-                    <Link
-                      key={item}
-                      href={`/shop?q=${encodeURIComponent(item)}`}
-                      onClick={() => setIsSearchOpen(false)}
-                      className="px-4 py-2 border border-[#EFECE7] hover:border-[#C5A880] hover:text-[#C5A880] text-sm text-[#121212] transition-colors duration-250 font-sans"
-                    >
-                      {item}
-                    </Link>
-                  ))}
-                </div>
+              {/* Input Row */}
+              <div className="flex items-center gap-3 px-5 py-4 border-b border-[#EFECE7]">
+                <Search className="w-5 h-5 text-[#C5A880] shrink-0" />
+                <input
+                  type="text"
+                  value={searchVal}
+                  onChange={(e) => setSearchVal(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit(searchVal)}
+                  placeholder="Search Our 1 Gram Gold Jewellery..."
+                  className="flex-grow text-base font-light text-[#121212] placeholder:text-gray-400 focus:outline-none bg-transparent"
+                  autoFocus
+                />
+                <button
+                  onClick={() => setIsSearchOpen(false)}
+                  className="p-1.5 hover:bg-black/5 rounded-full transition-colors shrink-0"
+                  aria-label="Close search"
+                >
+                  <X className="w-5 h-5 text-[#1A1A1A]" />
+                </button>
               </div>
-            </div>
-          </motion.div>
+
+              {/* Dynamic results or Suggestions layout */}
+              {!searchVal ? (
+                <div className="p-6 space-y-6 max-h-[70vh] overflow-y-auto no-scrollbar">
+                  {recentSearches.length > 0 && (
+                    <div>
+                      <h4 className="text-[10px] uppercase tracking-widest font-semibold text-[#C5A880] mb-2.5 flex items-center gap-1.5 select-none">
+                        <Clock className="w-3.5 h-3.5" /> Recent Searches
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {recentSearches.map((term) => (
+                          <div
+                            key={term}
+                            className="group flex items-center gap-1.5 px-3 py-1 bg-[#FAF8F5] border border-[#EFECE7] rounded-full text-xs text-[#4A4A4A] hover:border-[#C5A880] transition-colors"
+                          >
+                            <button
+                              onClick={() => handleSearchSubmit(term)}
+                              className="hover:text-[#C5A880] font-medium"
+                            >
+                              {term}
+                            </button>
+                            <button
+                              onClick={() => deleteRecentSearch(term)}
+                              className="p-0.5 rounded-full hover:bg-[#EFECE7] transition-colors"
+                              aria-label={`Remove ${term}`}
+                            >
+                              <X className="w-2.5 h-2.5 text-gray-400 hover:text-red-500" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-1">
+                    <div>
+                      <h4 className="text-[10px] uppercase tracking-widest font-semibold text-[#C5A880] mb-3 select-none">Popular Categories</h4>
+                      <ul className="space-y-2">
+                        {[
+                          { name: "Earrings", slug: "earrings" },
+                          { name: "Necklace", slug: "necklace" },
+                          { name: "Long Haram", slug: "long-haram" },
+                          { name: "Bangles", slug: "bangles" },
+                          { name: "Finger Rings", slug: "finger-rings" }
+                        ].map((cat) => (
+                          <li key={cat.slug}>
+                            <Link
+                              href={`/shop?category=${cat.slug}`}
+                              onClick={() => {
+                                saveRecentSearch(cat.name);
+                                setIsSearchOpen(false);
+                              }}
+                              className="text-xs text-[#4A4A4A] hover:text-[#C5A880] font-medium flex items-center gap-2 transition-colors group"
+                            >
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#EFECE7] group-hover:bg-[#C5A880] transition-colors" />
+                              {cat.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h4 className="text-[10px] uppercase tracking-widest font-semibold text-[#C5A880] mb-3 select-none">Trending Searches</h4>
+                      <ul className="space-y-2">
+                        {[
+                          "1 Gram Gold Necklace",
+                          "Bridal Choker",
+                          "Ruby Earrings",
+                          "Kemp Vaddanam",
+                          "Panchaloham Rings"
+                        ].map((term) => (
+                          <li key={term}>
+                            <button
+                              onClick={() => handleSearchSubmit(term)}
+                              className="text-xs text-[#4A4A4A] hover:text-[#C5A880] font-medium flex items-center gap-2 text-left transition-colors group"
+                            >
+                              <Search className="w-3 h-3 text-gray-400 group-hover:text-[#C5A880] transition-colors" />
+                              {term}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="p-6 max-h-[70vh] overflow-y-auto no-scrollbar space-y-4">
+                  <h4 className="text-[10px] uppercase tracking-widest font-semibold text-[#C5A880] select-none">Search Results</h4>
+                  {searchLoading ? (
+                    <div className="flex items-center justify-center py-10">
+                      <div className="w-6 h-6 border-2 border-[#C5A880] border-t-transparent rounded-full animate-spin" />
+                    </div>
+                  ) : searchResults.length > 0 ? (
+                    <div className="divide-y divide-[#EFECE7]">
+                      {searchResults.map((prod) => (
+                        <Link
+                          key={prod.id}
+                          href={`/product/${prod.slug}`}
+                          onClick={() => {
+                            saveRecentSearch(searchVal);
+                            setIsSearchOpen(false);
+                            setSearchVal("");
+                          }}
+                          className="flex items-center gap-4 py-3 group cursor-pointer"
+                        >
+                          <div className="relative w-12 h-12 bg-[#FAF8F5] border border-[#EFECE7] rounded-md overflow-hidden flex-shrink-0">
+                            <Image
+                              src={prod.images?.[0]?.url || "/images/placeholder.jpg"}
+                              alt={prod.name}
+                              fill
+                              className="object-cover"
+                              sizes="48px"
+                            />
+                          </div>
+                          <div className="flex-grow min-w-0">
+                            <h5 className="text-xs font-semibold text-[#1A1A1A] truncate group-hover:text-[#C5A880] transition-colors">
+                              {prod.name}
+                            </h5>
+                            <p className="text-[10px] text-gray-400 truncate uppercase tracking-wider">{prod.sku}</p>
+                          </div>
+                          <div className="text-right flex-shrink-0">
+                            {prod.salePrice ? (
+                              <div>
+                                <span className="text-xs font-semibold text-[#C5A880]">₹{prod.salePrice.toLocaleString()}</span>
+                                <span className="text-[10px] text-gray-400 line-through ml-1.5">₹{prod.price.toLocaleString()}</span>
+                              </div>
+                            ) : (
+                              <span className="text-xs font-semibold text-[#1A1A1A]">₹{prod.price.toLocaleString()}</span>
+                            )}
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-xs text-gray-400 py-6 text-center select-none">No products found matching &ldquo;{searchVal}&rdquo;</p>
+                  )}
+                </div>
+              )}
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>

@@ -286,7 +286,7 @@ export function WebsiteTab() {
 
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="web-address" className="text-xs uppercase tracking-wider font-bold text-slate-900 flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-slate-500" /> Wanaparthy Boutique Address <span className="text-red-500">*</span>
+                <MapPin className="w-3.5 h-3.5 text-slate-500" /> Wanaparthy Showroom Address <span className="text-red-500">*</span>
               </Label>
               <Input
                 id="web-address"

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { StaggerContainer, StaggerItem } from "@/components/shared/motion";
@@ -11,7 +12,11 @@ const OFFERS = [
     subtitle: "Pristine 1 Gram Gold",
     tagline: "Explore New Season Releases",
     link: "/shop?category=latest-collections",
-    image: "https://images.unsplash.com/photo-1603561596112-0a132b757442?w=800&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1603561596112-0a132b757442?w=800&q=80",
+      "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80",
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80"
+    ],
     badge: "New Season",
   },
   {
@@ -19,7 +24,11 @@ const OFFERS = [
     subtitle: "Celebrate in Radiance",
     tagline: "Up to 20% Off on Heritage Sets",
     link: "/shop?sort=featured",
-    image: "https://images.unsplash.com/photo-1601628828688-632f38a5a7d0?w=800&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1601628828688-632f38a5a7d0?w=800&q=80",
+      "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=800&q=80",
+      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80"
+    ],
     badge: "Limited Offer",
   },
   {
@@ -27,10 +36,43 @@ const OFFERS = [
     subtitle: "Modern Simplicity",
     tagline: "Fresh Designs Added Daily",
     link: "/shop?sort=newest",
-    image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&q=80",
+      "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80",
+      "https://images.unsplash.com/photo-1576016770956-debb63d900ad?w=800&q=80"
+    ],
     badge: "Trending",
   },
 ];
+
+function OfferCardImage({ images, alt }: { images: string[]; alt: string }) {
+  const [currentIdx, setCurrentIdx] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIdx((prev) => (prev + 1) % images.length);
+    }, 6000); // Cycles every 6 seconds
+    return () => clearInterval(interval);
+  }, [images.length]);
+
+  return (
+    <div className="absolute inset-0 w-full h-full">
+      {images.map((img, idx) => (
+        <Image
+          key={img}
+          src={img}
+          alt={alt}
+          fill
+          className={`object-cover transition-opacity duration-1000 ease-in-out ${
+            idx === currentIdx ? "opacity-100" : "opacity-0 pointer-events-none"
+          } transition-transform duration-700 ease-out group-hover:scale-105`}
+          sizes="(max-width: 768px) 100vw, 33vw"
+          priority={idx === 0}
+        />
+      ))}
+    </div>
+  );
+}
 
 export function OffersSection() {
   return (
@@ -42,25 +84,19 @@ export function OffersSection() {
               href={offer.link}
               className="group block relative h-56 md:h-72 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
             >
-              {/* Image */}
-              <Image
-                src={offer.image}
-                alt={offer.title}
-                fill
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                sizes="(max-width: 768px) 100vw, 33vw"
-              />
+              {/* Slideshow of optimized images */}
+              <OfferCardImage images={offer.images} alt={offer.title} />
 
               {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/20" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/20 z-[1] pointer-events-none" />
 
               {/* Badge */}
-              <span className="absolute top-4 left-4 px-2.5 py-1 bg-[#C5A880] text-white text-[9px] uppercase tracking-widest font-medium rounded-md">
+              <span className="absolute top-4 left-4 px-2.5 py-1 bg-[#C5A880] text-white text-[9px] uppercase tracking-widest font-medium rounded-md z-[2]">
                 {offer.badge}
               </span>
 
               {/* Content */}
-              <div className="absolute inset-0 p-6 flex flex-col justify-end">
+              <div className="absolute inset-0 p-6 flex flex-col justify-end z-[2] pointer-events-none">
                 <p className="text-[10px] uppercase tracking-[0.2em] text-[#C5A880] mb-1 font-medium">
                   {offer.subtitle}
                 </p>

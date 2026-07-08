@@ -27,7 +27,7 @@ export function BoutiqueVisitSection() {
                   <MapPin className="w-5 h-5 text-[#C5A880] shrink-0 mt-0.5" />
                   <div>
                     <h4 className="font-serif text-base font-normal text-[#121212] mb-1">
-                      Boutique Address
+                      1 Gram Gold Jewellery Showroom Address
                     </h4>
                     <p className="text-sm">
                       <strong>{brand.businessName}</strong><br />

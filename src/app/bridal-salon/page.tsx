@@ -191,9 +191,9 @@ export default function BridalSalonPage() {
             },
             {
               number: "03",
-              title: "Boutique Appointment",
+              title: "Showroom Appointment",
               description: "Visit our Wanaparthy flagship. A dedicated stylist's desk is reserved for you, with pieces laid out on velvet trays under warm lighting that mirrors how they will look on your wedding day.",
-              cta: "Book Boutique Visit",
+              cta: "Book Showroom Visit",
               href: "/boutique",
               external: false,
             },

@@ -44,12 +44,19 @@ function ShopContent() {
   }, []);
 
   const filteredProducts = useMemo(() => {
-    let result = categoryFilter
-      ? products.filter((p) => {
-          const cat = categories.find((c) => c.slug === categoryFilter);
-          return p.category?.slug === categoryFilter || (cat && p.categoryId === cat.id);
-        })
-      : [...products];
+    let result = [...products];
+
+    if (categoryFilter) {
+      const normalizedFilter = categoryFilter === "necklaces" ? "necklace" : (categoryFilter === "rings" ? "finger-rings" : categoryFilter);
+      if (normalizedFilter === "latest-collections" || normalizedFilter === "latest") {
+        result = result.filter((p) => p.isLatest);
+      } else {
+        result = result.filter((p) => {
+          const cat = categories.find((c) => c.slug === normalizedFilter);
+          return p.category?.slug === normalizedFilter || (cat && p.categoryId === cat.id);
+        });
+      }
+    }
 
     if (searchQuery) {
       const q = searchQuery.toLowerCase();

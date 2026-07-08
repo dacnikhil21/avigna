@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useWebsiteData } from "@/lib/store/admin-store";
 
 const BOOKING_SERVICES = [
-  { id: "boutique-styling", label: "In-Store Boutique Styling", duration: "60 Mins" },
+  { id: "boutique-styling", label: "In-Store 1 Gram Gold Styling", duration: "60 Mins" },
   { id: "virtual-styling", label: "Virtual Video Consultation", duration: "45 Mins" },
   { id: "wedding-trousseau", label: "Bridal Trousseau Curation", duration: "90 Mins" },
 ];
@@ -49,7 +49,7 @@ export default function BoutiquePage() {
               </p>
               <h1 className="font-serif text-3xl md:text-4xl font-light text-[#121212] mb-6">
                 The Wanaparthy <br />
-                <em>Boutique</em>
+                <em>Showroom</em>
               </h1>
               <p className="font-sans text-sm text-[#6B6560] leading-relaxed mb-8">
                 Step away from the digital noise. Visit our flagship sanctuary in Wanaparthy for an unhurried, personal jewellery discovery.
@@ -73,7 +73,7 @@ export default function BoutiquePage() {
                 <div className="flex items-start gap-4">
                   <Clock className="w-5 h-5 text-[#C5A880] shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-sm font-medium text-[#121212]">Boutique Hours</p>
+                    <p className="text-sm font-medium text-[#121212]">Showroom Hours</p>
                     <p className="text-sm text-[#6B6560] mt-1">
                       Monday – Sunday<br />
                       {brand.storeTimings}

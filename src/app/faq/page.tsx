@@ -36,7 +36,7 @@ const FAQ_GROUPS = [
       },
       {
         q: "Are shipments safe and insured?",
-        a: "Yes. Every shipment is fully insured in transit from our Bangalore boutique to your doorstep. We partner only with premium logistics couriers and require a secure OTP or signature verification upon delivery."
+        a: "Yes. Every shipment is fully insured in transit from our Bangalore 1 Gram Gold Jewellery Showroom to your doorstep. We partner only with premium logistics couriers and require a secure OTP or signature verification upon delivery."
       },
       {
         q: "How can I track my shipment?",
@@ -94,7 +94,7 @@ export default function FaqPage() {
             Customer Lounge
           </p>
           <h1 className="font-serif text-3xl md:text-5xl font-light text-[#121212] mb-6">
-            Boutique <em>FAQ</em>
+            1 Gram Gold Jewellery <em>FAQ</em>
           </h1>
           <p className="font-sans font-light text-[#6B6560] max-w-2xl leading-relaxed">
             Discover details about our artisanal composition, secure insured shipping, and lifetime support care.
@@ -176,7 +176,7 @@ export default function FaqPage() {
               href="/contact"
               className="inline-flex items-center justify-center px-8 py-4 border border-[#121212] text-[#121212] text-xs uppercase tracking-[0.2em] font-medium hover:bg-[#121212] hover:text-white transition-all duration-500 rounded-none"
             >
-              Contact Boutique
+              Contact Showroom
             </Link>
           </div>
         </div>
