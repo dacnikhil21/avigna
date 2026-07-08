@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, ShoppingBag, ArrowUpRight, Eye, Zap } from "lucide-react";
+import { Heart, ShoppingBag, ArrowUpRight, Eye } from "lucide-react";
 import { useState } from "react";
 import type { Product } from "@/types";
 import { formatPrice, cn } from "@/lib/utils";

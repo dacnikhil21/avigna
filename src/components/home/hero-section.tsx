@@ -10,15 +10,15 @@ import { cn } from "@/lib/utils";
 const HERO_SLIDES = [
   {
     url: "https://images.unsplash.com/photo-1610030469668-93535c17b6b3?w=1920&q=85",
-    alt: "Sri Avighna Traditional Bridal Model wearing red saree and elegant 1 Gram Gold Jewellery",
+    alt: "Indian bridal model wearing a traditional red saree with elegant 1 Gram Gold Jewellery, gently posing with her necklace",
   },
   {
-    url: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1920&q=85",
-    alt: "Sri Avighna elegant close-up showcasing premium necklaces and jewellery",
+    url: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=1920&q=85",
+    alt: "Luxury close-up of premium necklaces, bangles and earrings",
   },
   {
-    url: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=1920&q=85",
-    alt: "Sri Avighna Family and guests inside a jewellery showroom exploring collections together",
+    url: "https://images.unsplash.com/photo-1603561596112-0a132b757442?w=1920&q=85",
+    alt: "Happy family inside a jewellery showroom browsing collections together",
   }
 ];
 

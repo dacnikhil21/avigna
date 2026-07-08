@@ -178,3 +178,17 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Premium Gold Shine Animation */
+@keyframes shine-sweep {
+  0% {
+    transform: translateX(-150%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(250%) skewX(-15deg);
+  }
+}
+
+.animate-shine-hover:hover .shine-element {
+  animation: shine-sweep 1s ease-in-out;
+}

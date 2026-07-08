@@ -29,10 +29,15 @@ export function BoutiqueVisitSection() {
                     <h4 className="font-serif text-base font-normal text-[#121212] mb-1">
                       1 Gram Gold Jewellery Showroom Address
                     </h4>
-                    <p className="text-sm">
+                    <a
+                      href="https://www.google.com/maps/search/?api=1&query=Sri+Avighna+1+Gram+Gold+Jewellery+Beside+More+Supermarket+Opp+RR+Complex+Polytechnic+Road+Wanaparthy+Telangana+509103"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-[#C5A880] transition-colors duration-300 block mt-1"
+                    >
                       <strong>{brand.businessName}</strong><br />
                       {brand.address}
-                    </p>
+                    </a>
                   </div>
                 </div>
 

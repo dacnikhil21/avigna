@@ -64,7 +64,7 @@ export function CategoriesSection() {
             >
               <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden bg-[#FAF8F5] border border-[#EFECE7] transition-all duration-500 group-hover:border-[#C5A880] group-hover:scale-105 shadow-sm">
                 <Image
-                  src={cat.image || "/images/placeholder.jpg"}
+                  src={cat.image || "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&q=80"}
                   alt={cat.name}
                   fill
                   sizes="(max-width: 768px) 64px, 80px"

@@ -768,7 +768,7 @@ export function Header() {
                         >
                           <div className="relative w-12 h-12 bg-[#FAF8F5] border border-[#EFECE7] rounded-md overflow-hidden flex-shrink-0">
                             <Image
-                              src={prod.images?.[0]?.url || "/images/placeholder.jpg"}
+                              src={prod.images?.[0]?.url || "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&q=80"}
                               alt={prod.name}
                               fill
                               className="object-cover"

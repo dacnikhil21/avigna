@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { Phone, MapPin, Mail, Clock } from "lucide-react";
-import { BRAND } from "@/lib/data";
 import { Separator } from "@/components/ui/separator";
 import { useWebsiteData } from "@/lib/store/admin-store";
 
@@ -101,10 +100,15 @@ export function Footer() {
             <ul className="space-y-3.5 text-xs text-white/50 font-light font-sans">
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#C5A880] mt-0.5 shrink-0" />
-                <span>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Sri+Avighna+1+Gram+Gold+Jewellery+Beside+More+Supermarket+Opp+RR+Complex+Polytechnic+Road+Wanaparthy+Telangana+509103"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors duration-300 block"
+                >
                   <strong>{brand.businessName}</strong><br />
                   {brand.address}
-                </span>
+                </a>
               </li>
               <li className="flex items-start gap-2.5">
                 <Clock className="w-4 h-4 text-[#C5A880] mt-0.5 shrink-0" />

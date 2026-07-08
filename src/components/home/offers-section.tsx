@@ -51,7 +51,7 @@ function OfferCardImage({ images, alt }: { images: string[]; alt: string }) {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIdx((prev) => (prev + 1) % images.length);
-    }, 6000); // Cycles every 6 seconds
+    }, 4500); // Cycles every 4.5 seconds for final polish
     return () => clearInterval(interval);
   }, [images.length]);
 
@@ -65,7 +65,7 @@ function OfferCardImage({ images, alt }: { images: string[]; alt: string }) {
           fill
           className={`object-cover transition-opacity duration-1000 ease-in-out ${
             idx === currentIdx ? "opacity-100" : "opacity-0 pointer-events-none"
-          } transition-transform duration-700 ease-out group-hover:scale-105`}
+          } transition-transform duration-1000 ease-out group-hover:scale-[1.04]`}
           sizes="(max-width: 768px) 100vw, 33vw"
           priority={idx === 0}
         />
@@ -82,7 +82,7 @@ export function OffersSection() {
           <StaggerItem key={offer.title}>
             <Link
               href={offer.link}
-              className="group block relative h-56 md:h-72 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+              className="animate-shine-hover group block relative h-56 md:h-72 rounded-xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 ease-out transform-gpu"
             >
               {/* Slideshow of optimized images */}
               <OfferCardImage images={offer.images} alt={offer.title} />
@@ -106,10 +106,16 @@ export function OffersSection() {
                 <p className="text-xs text-white/70 mb-4 line-clamp-1">
                   {offer.tagline}
                 </p>
-                <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.15em] text-white group-hover:text-[#C5A880] transition-colors font-medium">
-                  Discover Now
-                  <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
-                </span>
+                
+                {/* Micro-animated CTA with gold shine effect */}
+                <div className="self-start">
+                  <span className="relative overflow-hidden inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.15em] text-white group-hover:text-[#C5A880] transition-colors font-medium py-1.5 px-3 bg-black/45 border border-white/20 rounded-md backdrop-blur-sm">
+                    Discover Now
+                    <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
+                    {/* Animated Shine layer */}
+                    <span className="absolute inset-0 w-1/3 h-full bg-white/25 blur-[1px] -translate-x-[250%] shine-element pointer-events-none" />
+                  </span>
+                </div>
               </div>
             </Link>
           </StaggerItem>

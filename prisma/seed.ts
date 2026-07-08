@@ -13,7 +13,7 @@ const IMG = {
   earrings4: "https://images.unsplash.com/photo-1590548784585-645d8b9f887e?w=800&q=80",
   earrings5: "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=800&q=80",
   earrings6: "https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?w=800&q=80",
-  earrings7: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=80",
+  earrings7: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80", // replaced bag
   
   // Necklaces
   necklace1: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80",
@@ -26,48 +26,48 @@ const IMG = {
 
   // Long / Short Harams
   haram1: "https://images.unsplash.com/photo-1601628828688-632f38a5a7d0?w=800&q=80",
-  haram2: "https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=800&q=80",
-  haram3: "https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?w=800&q=80",
-  haram4: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=800&q=80",
+  haram2: "https://images.unsplash.com/photo-1601628828688-632f38a5a7d0?w=800&q=80", // replaced living room
+  haram3: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80", // replaced coffee
+  haram4: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80", // replaced record player
   
   // Bangles
   bangle1: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80",
   bangle2: "https://images.unsplash.com/photo-1615655406736-b37892a30a40?w=800&q=80",
   bangle3: "https://images.unsplash.com/photo-1615655406736-b37892a30a40?w=800&q=80",
   bangle4: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80",
-  bangle5: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=80",
+  bangle5: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80", // replaced bag
   bangle6: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80",
 
   // Rings
   ring1: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80",
   ring2: "https://images.unsplash.com/photo-1603561519411-07134e71a2a9?w=800&q=80",
   ring3: "https://images.unsplash.com/photo-1598560917505-59a3ad559071?w=800&q=80",
-  ring4: "https://images.unsplash.com/photo-1543294001-f7cd5d7fb516?w=800&q=80",
+  ring4: "https://images.unsplash.com/photo-1603561519411-07134e71a2a9?w=800&q=80", // replaced watch
 
   // Pendants & Nose Pins & Anklets
   pendant1: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&q=80",
-  pendant2: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=800&q=80",
+  pendant2: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80", // replaced record player
   pendant3: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80",
   nospin1: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80",
-  nospin2: "https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=800&q=80",
+  nospin2: "https://images.unsplash.com/photo-1601628828688-632f38a5a7d0?w=800&q=80", // replaced living room
   anklet1: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80",
-  anklet2: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=800&q=80",
+  anklet2: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80", // replaced record player
   bracelet1: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80",
-  bracelet2: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=80",
+  bracelet2: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80", // replaced bag
 
   // Hair Accessories
-  hair1: "https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=800&q=80",
-  hair2: "https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=800&q=80",
-  hair3: "https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?w=800&q=80",
+  hair1: "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=800&q=80", // replaced cosmetics
+  hair2: "https://images.unsplash.com/photo-1601628828688-632f38a5a7d0?w=800&q=80", // replaced living room
+  hair3: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80", // replaced coffee
 
   // Bridal / Dance Sets
-  bridal1: "https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=800&q=80",
+  bridal1: "https://images.unsplash.com/photo-1601628828688-632f38a5a7d0?w=800&q=80", // replaced living room
   bridal2: "https://images.unsplash.com/photo-1601628828688-632f38a5a7d0?w=800&q=80",
-  bridal3: "https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?w=800&q=80",
+  bridal3: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80", // replaced coffee
 
   // Miscellaneous / Care / Box
-  misc1: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=800&q=80",
-  misc2: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=80",
+  misc1: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80", // replaced record player
+  misc2: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80", // replaced bag
 };
 
 async function main() {
