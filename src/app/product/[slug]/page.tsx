@@ -9,8 +9,13 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  const result = await getProducts({ limit: 100 });
-  return result.items.map((p) => ({ slug: p.slug }));
+  try {
+    const result = await getProducts({ limit: 100 });
+    return result.items.map((p) => ({ slug: p.slug }));
+  } catch (error) {
+    console.warn("Prisma: database not available during build time, bypassing products pre-render", error);
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

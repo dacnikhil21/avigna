@@ -15,11 +15,16 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  const dbCollections = await prisma.collection.findMany({
-    where: { isActive: true },
-    select: { slug: true },
-  });
-  return dbCollections.map((c) => ({ slug: c.slug }));
+  try {
+    const dbCollections = await prisma.collection.findMany({
+      where: { isActive: true },
+      select: { slug: true },
+    });
+    return dbCollections.map((c) => ({ slug: c.slug }));
+  } catch (error) {
+    console.warn("Prisma: database not available during build time, bypassing collections pre-render", error);
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
