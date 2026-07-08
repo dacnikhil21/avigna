@@ -17,9 +17,9 @@ const HERO_SLIDES = [
     alt: "Luxury close-up of premium necklaces, bangles and earrings",
   },
   {
-    url: "https://images.unsplash.com/photo-1603561596112-0a132b757442?w=1920&q=85",
-    alt: "Happy family inside a jewellery showroom browsing collections together",
-  }
+    url: "/images/hero-bridal-bride.jpg",
+    alt: "South Indian bride in red silk saree adorned with gold jewellery — necklace, earrings and tikka",
+  },
 ];
 
 export function HeroSection() {

@@ -208,6 +208,19 @@ async function main() {
       imageAlt: "Temple gold necklace",
       sortOrder: 2,
     },
+    {
+      id: "hero-3",
+      eyebrow: "Bridal Edit 2025",
+      title: "Dressed in Gold, Made for Your Big Day",
+      subtitle: "Complete bridal sets — necklace, earrings, tikka & more — crafted for the bride who deserves the best.",
+      ctaText: "Book Bridal Session",
+      ctaUrl: "/bridal-salon",
+      secondaryCtaText: "Explore Bridal",
+      secondaryCtaUrl: "/collections/bridal-heritage",
+      imageUrl: "/images/hero-bridal-bride.jpg",
+      imageAlt: "South Indian bride in red silk saree wearing gold jewellery",
+      sortOrder: 3,
+    },
   ];
   for (const slide of heroSlides) {
     await prisma.heroSlide.upsert({ where: { id: slide.id }, update: slide, create: slide });
