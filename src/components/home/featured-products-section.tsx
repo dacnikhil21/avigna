@@ -3,9 +3,18 @@ import { getFeaturedProducts } from "@/lib/db/products";
 import { ProductCard } from "@/components/shop/product-card";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/shared/motion";
 import { ArrowRight } from "lucide-react";
+import { products as staticProducts } from "@/lib/data";
+import type { Product } from "@/types";
 
 export async function FeaturedProductsSection() {
-  const featuredProducts = await getFeaturedProducts(8);
+  let featuredProducts: Product[] = [];
+  try {
+    const dbProducts = await getFeaturedProducts(8);
+    featuredProducts = dbProducts as Product[];
+  } catch (error) {
+    console.error("Failed to load featured products, falling back to static data:", error);
+    featuredProducts = staticProducts.filter((p) => p.isFeatured).slice(0, 8) as unknown as Product[];
+  }
   return (
     <section className="section-padding py-8 md:py-16 bg-white">
       <FadeIn className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-6 gap-4">

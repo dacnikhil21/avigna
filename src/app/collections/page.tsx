@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { CollectionsGrid } from "@/components/collections/collections-grid";
 import type { Collection } from "@/types";
+import { collections as staticCollections } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
 
@@ -12,16 +13,20 @@ export const metadata: Metadata = {
 };
 
 export default async function CollectionsPage() {
-  const dbCollections = await prisma.collection.findMany({
-    where: { isActive: true },
-    orderBy: { sortOrder: "asc" },
-  });
-
-  // Map coverImage to image for compatibility with the frontend component
-  const collections = dbCollections.map((c) => ({
-    ...c,
-    image: c.coverImage || undefined,
-  }));
+  let collections: Collection[] = [];
+  try {
+    const dbCollections = await prisma.collection.findMany({
+      where: { isActive: true },
+      orderBy: { sortOrder: "asc" },
+    });
+    collections = dbCollections.map((c) => ({
+      ...c,
+      image: c.coverImage || undefined,
+    })) as Collection[];
+  } catch (error) {
+    console.error("Failed to load live collections, falling back to static:", error);
+    collections = staticCollections as unknown as Collection[];
+  }
 
   return (
     <div className="section-padding pt-32 md:pt-36 pb-20">
@@ -33,7 +38,7 @@ export default async function CollectionsPage() {
           designed for the extraordinary moments in your life.
         </p>
       </div>
-      <CollectionsGrid collections={collections as Collection[]} />
+      <CollectionsGrid collections={collections} />
     </div>
   );
 }

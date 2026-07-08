@@ -3,9 +3,18 @@ import { getLatestProducts } from "@/lib/db/products";
 import { ProductCard } from "@/components/shop/product-card";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/shared/motion";
 import { ArrowRight } from "lucide-react";
+import { products as staticProducts } from "@/lib/data";
+import type { Product } from "@/types";
 
 export async function LatestCollectionsSection() {
-  const latestProducts = await getLatestProducts(8);
+  let latestProducts: Product[] = [];
+  try {
+    const dbProducts = await getLatestProducts(8);
+    latestProducts = dbProducts as Product[];
+  } catch (error) {
+    console.error("Failed to load latest products, falling back to static data:", error);
+    latestProducts = staticProducts.filter((p) => p.isLatest).slice(0, 8) as unknown as Product[];
+  }
   return (
     <section className="section-padding py-8 md:py-16 bg-white">
       <FadeIn className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-6 gap-4">

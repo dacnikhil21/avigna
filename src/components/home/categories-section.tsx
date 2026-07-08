@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FadeIn } from "@/components/shared/motion";
 import type { Category } from "@/types";
+import { categories as staticCategories } from "@/lib/data";
 
 export function CategoriesSection() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -22,9 +23,22 @@ export function CategoriesSection() {
           ];
           // Filter to only display these 15 categories on homepage scroll
           setCategories(data.filter((c: Category) => displaySlugs.includes(c.slug)));
+        } else {
+          // fallback if response isn't array
+          setCategories(staticCategories.filter((c) => [
+            "earrings", "necklace", "long-haram", "short-haram", "bangles",
+            "glass-bangles", "thali-chains", "panchaloham-jewellery", "vaddanam",
+            "hair-accessories", "pendants", "bracelets", "finger-rings", "nose-pins", "anklets"
+          ].includes(c.slug)) as unknown as Category[]);
         }
       } catch (error) {
-        console.error("Error fetching homepage categories:", error);
+        console.error("Error fetching homepage categories, falling back to static:", error);
+        const displaySlugs = [
+          "earrings", "necklace", "long-haram", "short-haram", "bangles",
+          "glass-bangles", "thali-chains", "panchaloham-jewellery", "vaddanam",
+          "hair-accessories", "pendants", "bracelets", "finger-rings", "nose-pins", "anklets"
+        ];
+        setCategories(staticCategories.filter((c) => displaySlugs.includes(c.slug)) as unknown as Category[]);
       }
     }
     fetchCategories();
@@ -44,24 +58,21 @@ export function CategoriesSection() {
         <div className="flex gap-4 md:gap-6 overflow-x-auto pb-3 pt-1 px-6 md:px-12 no-scrollbar scroll-smooth">
           {categories.map((cat) => (
             <Link
-              key={cat.slug}
+              key={cat.id}
               href={`/shop?category=${cat.slug}`}
-              className="flex flex-col items-center text-center group shrink-0 w-16 md:w-20 transition-all"
+              className="flex-shrink-0 flex flex-col items-center group cursor-pointer"
             >
-              {/* Circular Container */}
-              <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden border border-[#EFECE7] group-hover:border-[#C5A880] shadow-sm transition-all duration-300 mb-2 bg-[#FAF8F5]">
-                {cat.image && (
-                  <Image
-                    src={cat.image}
-                    alt={cat.name}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    sizes="(max-width: 768px) 56px, 64px"
-                  />
-                )}
+              <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden bg-[#FAF8F5] border border-[#EFECE7] transition-all duration-500 group-hover:border-[#C5A880] group-hover:scale-105 shadow-sm">
+                <Image
+                  src={cat.image || "/images/placeholder.jpg"}
+                  alt={cat.name}
+                  fill
+                  sizes="(max-width: 768px) 64px, 80px"
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-[#1A1A1A]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
-              {/* Name Label */}
-              <span className="text-[9px] md:text-[10px] font-sans tracking-wide text-[#121212] group-hover:text-[#C5A880] font-medium leading-tight line-clamp-1 w-full transition-colors duration-300">
+              <span className="mt-2 text-[10px] md:text-xs font-sans font-medium tracking-wider text-[#4A4A4A] group-hover:text-[#C5A880] transition-colors duration-300 uppercase">
                 {cat.name}
               </span>
             </Link>
