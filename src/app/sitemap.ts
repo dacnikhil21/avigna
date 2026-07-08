@@ -1,17 +1,28 @@
 import type { MetadataRoute } from "next";
-import { products, collections } from "@/lib/data";
+import { prisma } from "@/lib/prisma";
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://avighnacollections.com";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const productEntries = products.map((p) => ({
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [dbProducts, dbCollections] = await Promise.all([
+    prisma.product.findMany({
+      where: { isActive: true },
+      select: { slug: true },
+    }),
+    prisma.collection.findMany({
+      where: { isActive: true },
+      select: { slug: true },
+    }),
+  ]);
+
+  const productEntries = dbProducts.map((p) => ({
     url: `${BASE_URL}/product/${p.slug}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.8,
   }));
 
-  const collectionEntries = collections.map((c) => ({
+  const collectionEntries = dbCollections.map((c) => ({
     url: `${BASE_URL}/collections/${c.slug}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,

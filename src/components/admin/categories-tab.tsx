@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useAdminStore } from "@/lib/store/admin-store";
-import type { Category } from "@/types";
+import { useState, useEffect } from "react";
+import type { Category, Product } from "@/types";
 import {
   Plus,
   Edit2,
@@ -21,14 +20,32 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
 export function CategoriesTab() {
-  const {
-    categories,
-    products,
-    addCategory,
-    editCategory,
-    deleteCategory,
-    toggleHideCategory
-  } = useAdminStore();
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+
+  const fetchCategories = async () => {
+    try {
+      const res = await fetch("/api/admin/categories");
+      const data = await res.json();
+      setCategories(data || []);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const fetchProducts = async () => {
+    try {
+      const res = await fetch("/api/admin/products?limit=250");
+      const data = await res.json();
+      setProducts(data.items || []);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    Promise.all([fetchCategories(), fetchProducts()]);
+  }, []);
 
   // Modal Views
   const [formOpen, setFormOpen] = useState(false);
@@ -113,7 +130,7 @@ export function CategoriesTab() {
     }
   };
 
-  const handleFormSave = (e: React.FormEvent) => {
+  const handleFormSave = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formName) {
@@ -126,22 +143,45 @@ export function CategoriesTab() {
       description: formDesc,
       image: formImage || "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80",
       isActive: formIsActive,
-      sortOrder: formSortOrder
+      sortOrder: Number(formSortOrder)
     };
 
-    if (editingId) {
-      editCategory(editingId, payload);
-      showToast("Category updated successfully!");
-    } else {
-      addCategory(payload);
-      showToast("Category created successfully!");
+    try {
+      if (editingId) {
+        const res = await fetch(`/api/admin/categories/${editingId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        if (res.ok) {
+          showToast("Category updated successfully!");
+          fetchCategories();
+        } else {
+          showToast("Failed to update category.", "error");
+        }
+      } else {
+        const res = await fetch("/api/admin/categories", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        if (res.ok) {
+          showToast("Category created successfully!");
+          fetchCategories();
+        } else {
+          showToast("Failed to create category.", "error");
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      showToast("Error saving category.", "error");
     }
 
     setFormOpen(false);
     resetForm();
   };
 
-  const handleDeleteConfirm = () => {
+  const handleDeleteConfirm = async () => {
     if (deleteId) {
       const productCount = products.filter((p) => p.categoryId === deleteId).length;
       if (productCount > 0) {
@@ -149,15 +189,41 @@ export function CategoriesTab() {
         setDeleteId(null);
         return;
       }
-      deleteCategory(deleteId);
+      try {
+        const res = await fetch(`/api/admin/categories/${deleteId}`, {
+          method: "DELETE",
+        });
+        if (res.ok) {
+          showToast("Category deleted successfully!");
+          fetchCategories();
+        } else {
+          const errData = await res.json();
+          showToast(errData.error || "Failed to delete category.", "error");
+        }
+      } catch (err) {
+        console.error(err);
+        showToast("Error deleting category.", "error");
+      }
       setDeleteId(null);
-      showToast("Category deleted successfully!");
     }
   };
 
-  const handleToggleHide = (id: string, name: string, currentlyActive: boolean) => {
-    toggleHideCategory(id);
-    showToast(`Category "${name}" is now ${currentlyActive ? "hidden" : "visible"}.`);
+  const handleToggleHide = async (id: string, name: string, currentlyActive: boolean) => {
+    try {
+      const res = await fetch(`/api/admin/categories/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isActive: !currentlyActive }),
+      });
+      if (res.ok) {
+        showToast(`Category "${name}" is now ${currentlyActive ? "hidden" : "visible"}.`);
+        fetchCategories();
+      } else {
+        showToast("Failed to toggle visibility.", "error");
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   // Sort categories by sortOrder ascending

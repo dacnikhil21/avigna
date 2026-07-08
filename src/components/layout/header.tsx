@@ -8,6 +8,7 @@ import { Menu, X, ShoppingBag, Search, Heart, User, ChevronDown, MapPin, HelpCir
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/lib/store/cart";
 import { useWebsiteData } from "@/lib/store/admin-store";
+import { useWishlistStore } from "@/lib/store/wishlist";
 
 const MESSAGES = [
   "Complimentary Insured Shipping Across India",
@@ -33,6 +34,8 @@ export function Header() {
 
   const { totalItems, openCart } = useCartStore();
   const itemCount = totalItems();
+  const wishlistItems = useWishlistStore((s) => s.items);
+  const wishlistCount = wishlistItems.length;
   const menuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Rotate announcement messages
@@ -206,10 +209,15 @@ export function Header() {
 
                 <Link
                   href="/wishlist"
-                  className="flex items-center justify-center p-1.5 hover:text-[#C5A880] transition-colors duration-300"
+                  className="relative flex items-center justify-center p-1.5 hover:text-[#C5A880] transition-colors duration-300"
                   aria-label="Wishlist"
                 >
                   <Heart className="w-4.5 h-4.5" />
+                  {wishlistCount > 0 && (
+                    <span className="absolute top-0.5 right-0.5 w-3.5 h-3.5 flex items-center justify-center bg-[#C5A880] text-white text-[8px] font-bold rounded-full animate-in zoom-in duration-200">
+                      {wishlistCount}
+                    </span>
+                  )}
                 </Link>
 
                 <button
@@ -460,9 +468,16 @@ export function Header() {
                   <span>Search</span>
                 </button>
 
-                <Link href="/wishlist" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40 flex items-center gap-2">
-                  <Heart className="w-4.5 h-4.5" />
-                  <span>Wishlist</span>
+                <Link href="/wishlist" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40 flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <Heart className="w-4.5 h-4.5" />
+                    <span>Wishlist</span>
+                  </div>
+                  {wishlistCount > 0 && (
+                    <span className="w-4.5 h-4.5 flex items-center justify-center bg-[#C5A880] text-white text-[8px] font-bold rounded-full">
+                      {wishlistCount}
+                    </span>
+                  )}
                 </Link>
 
                 <Link href="/account" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 flex items-center gap-2">
@@ -517,10 +532,15 @@ export function Header() {
 
         <Link
           href="/wishlist"
-          className="flex flex-col items-center justify-center p-2 text-[#121212] hover:text-[#C5A880] transition-colors duration-250 w-14"
+          className="relative flex flex-col items-center justify-center p-2 text-[#121212] hover:text-[#C5A880] transition-colors duration-250 w-14"
           aria-label="Wishlist"
         >
           <Heart className="w-5 h-5" />
+          {wishlistCount > 0 && (
+            <span className="absolute top-1 right-2.5 w-4 h-4 flex items-center justify-center bg-[#C5A880] text-white text-[8px] font-bold rounded-full animate-in zoom-in duration-200">
+              {wishlistCount}
+            </span>
+          )}
           <span className="text-[9px] tracking-wider uppercase font-medium mt-1 font-sans">Wishlist</span>
         </Link>
 

@@ -2,23 +2,31 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { collections, products } from "@/lib/data";
+import { prisma } from "@/lib/prisma";
+import { getProducts } from "@/lib/db/products";
 import { ProductCard } from "@/components/shop/product-card";
 import { FadeIn } from "@/components/shared/motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronRight } from "lucide-react";
+import type { Product } from "@/types";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return collections.map((c) => ({ slug: c.slug }));
+  const dbCollections = await prisma.collection.findMany({
+    where: { isActive: true },
+    select: { slug: true },
+  });
+  return dbCollections.map((c) => ({ slug: c.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const collection = collections.find((c) => c.slug === slug);
+  const collection = await prisma.collection.findUnique({
+    where: { slug },
+  });
   if (!collection) return { title: "Collection Not Found" };
 
   return {
@@ -29,11 +37,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CollectionDetailPage({ params }: Props) {
   const { slug } = await params;
-  const collection = collections.find((c) => c.slug === slug);
+  const collection = await prisma.collection.findUnique({
+    where: { slug },
+  });
 
   if (!collection) notFound();
 
-  const collectionProducts = products.filter((p) => p.collection?.slug === slug);
+  // Fetch products in this collection
+  const result = await getProducts({
+    collectionSlug: slug,
+    limit: 100,
+  });
 
   return (
     <>
@@ -50,7 +64,7 @@ export default async function CollectionDetailPage({ params }: Props) {
 
       <section className="relative h-[50vh] min-h-[350px] flex items-end">
         <Image
-          src={collection.coverImage ?? collection.image ?? ""}
+          src={collection.coverImage ?? ""}
           alt={collection.name}
           fill
           priority
@@ -84,8 +98,8 @@ export default async function CollectionDetailPage({ params }: Props) {
         </FadeIn>
 
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
-          {collectionProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+          {result.items.map((product) => (
+            <ProductCard key={product.id} product={product as Product} />
           ))}
         </div>
       </section>

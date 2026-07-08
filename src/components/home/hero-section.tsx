@@ -145,7 +145,7 @@ export function HeroSection() {
               initial="hidden"
               animate="visible"
               custom={1.0}
-              className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-[#FAF8F5] leading-[1.1] md:leading-[1.0] italic tracking-wide text-balance animate-pulse"
+              className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-[#FAF8F5] leading-[1.1] md:leading-[1.0] italic tracking-wide text-balance"
             >
               {brand.heroTitle}
             </motion.h1>

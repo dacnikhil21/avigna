@@ -1,32 +1,37 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { categories } from "@/lib/data";
 import { FadeIn } from "@/components/shared/motion";
-
-// Display the most popular 15 categories in the circular horizontal scrolling section
-const DISPLAY_CATEGORIES = categories.filter(c => 
-  [
-    "earrings",
-    "necklace",
-    "long-haram",
-    "short-haram",
-    "bangles",
-    "glass-bangles",
-    "thali-chains",
-    "panchaloham-jewellery",
-    "vaddanam",
-    "hair-accessories",
-    "pendants",
-    "bracelets",
-    "finger-rings",
-    "nose-pins",
-    "anklets"
-  ].includes(c.slug)
-);
+import type { Category } from "@/types";
 
 export function CategoriesSection() {
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const res = await fetch("/api/categories");
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          const displaySlugs = [
+            "earrings", "necklace", "long-haram", "short-haram", "bangles",
+            "glass-bangles", "thali-chains", "panchaloham-jewellery", "vaddanam",
+            "hair-accessories", "pendants", "bracelets", "finger-rings", "nose-pins", "anklets"
+          ];
+          // Filter to only display these 15 categories on homepage scroll
+          setCategories(data.filter((c: Category) => displaySlugs.includes(c.slug)));
+        }
+      } catch (error) {
+        console.error("Error fetching homepage categories:", error);
+      }
+    }
+    fetchCategories();
+  }, []);
+
+  if (categories.length === 0) return null;
+
   return (
     <section className="py-8 md:py-12 bg-white border-b border-[#EFECE7]">
       <FadeIn className="text-center max-w-2xl mx-auto mb-5 px-6">
@@ -37,7 +42,7 @@ export function CategoriesSection() {
       <div className="relative w-full">
         {/* Horizontal Scroll Wrapper */}
         <div className="flex gap-4 md:gap-6 overflow-x-auto pb-3 pt-1 px-6 md:px-12 no-scrollbar scroll-smooth">
-          {DISPLAY_CATEGORIES.map((cat) => (
+          {categories.map((cat) => (
             <Link
               key={cat.slug}
               href={`/shop?category=${cat.slug}`}
@@ -45,13 +50,15 @@ export function CategoriesSection() {
             >
               {/* Circular Container */}
               <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden border border-[#EFECE7] group-hover:border-[#C5A880] shadow-sm transition-all duration-300 mb-2 bg-[#FAF8F5]">
-                <Image
-                  src={cat.image!}
-                  alt={cat.name}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                  sizes="(max-width: 768px) 56px, 64px"
-                />
+                {cat.image && (
+                  <Image
+                    src={cat.image}
+                    alt={cat.name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    sizes="(max-width: 768px) 56px, 64px"
+                  />
+                )}
               </div>
               {/* Name Label */}
               <span className="text-[9px] md:text-[10px] font-sans tracking-wide text-[#121212] group-hover:text-[#C5A880] font-medium leading-tight line-clamp-1 w-full transition-colors duration-300">

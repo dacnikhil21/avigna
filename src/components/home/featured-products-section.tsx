@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { getFeaturedProducts } from "@/lib/data";
+import { getFeaturedProducts } from "@/lib/db/products";
 import { ProductCard } from "@/components/shop/product-card";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/shared/motion";
 import { ArrowRight } from "lucide-react";
 
-const featuredProducts = getFeaturedProducts().slice(0, 8);
-
-export function FeaturedProductsSection() {
+export async function FeaturedProductsSection() {
+  const featuredProducts = await getFeaturedProducts(8);
   return (
     <section className="section-padding py-8 md:py-16 bg-white">
       <FadeIn className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-6 gap-4">

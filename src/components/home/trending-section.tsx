@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { products } from "@/lib/data";
+import { getTrendingProducts } from "@/lib/db/products";
 import { ProductCard } from "@/components/shop/product-card";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/shared/motion";
 import { ArrowRight, TrendingUp } from "lucide-react";
 
-const trendingProducts = products.filter((p) => p.isTrending).slice(0, 8);
-
-export function TrendingSection() {
+export async function TrendingSection() {
+  const trendingProducts = await getTrendingProducts(8);
   return (
     <section className="section-padding py-8 md:py-16 bg-[#FAF8F5]">
       <FadeIn className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-6 gap-4">

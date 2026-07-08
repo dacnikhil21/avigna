@@ -9,7 +9,13 @@ export function CollectionsGrid({ collections }: { collections: Collection[] }) 
     <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
       {collections.map((collection) => (
         <StaggerItem key={collection.slug}>
-          <CollectionCard {...collection} />
+          <CollectionCard
+            name={collection.name}
+            slug={collection.slug}
+            description={collection.description || undefined}
+            image={collection.image || undefined}
+            tagline={collection.tagline || undefined}
+          />
         </StaggerItem>
       ))}
     </StaggerContainer>

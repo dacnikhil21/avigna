@@ -108,7 +108,7 @@ export default function ContactPage() {
             <div className="rounded-xl overflow-hidden h-64 bg-luxury-cream">
               <iframe
                 title={`${brand.businessName} Store Location`}
-                src={`https://maps.google.com/maps?q=${encodeURIComponent(brand.businessName)}+Wanaparthy&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+                src={`https://maps.google.com/maps?q=${encodeURIComponent("Sri Avighna 1 Gram Gold Jewellery, Beside More Supermarket, Opp RR Complex, Polytechnic Road, Wanaparthy - 509103")}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
                 className="w-full h-full border-0"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

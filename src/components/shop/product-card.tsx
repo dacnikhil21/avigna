@@ -168,8 +168,8 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
               href={`/product/${product.slug}`}
               className="w-full flex items-center justify-center gap-1 py-1.5 bg-[#C5A880] text-white text-[8px] md:text-[9px] uppercase tracking-wider rounded-md hover:bg-[#b8966f] transition-all duration-300 font-medium"
             >
-              <Zap className="w-2.5 h-2.5" />
-              Buy Now
+              <ArrowUpRight className="w-2.5 h-2.5" />
+              View Details
             </Link>
           </div>
         </div>

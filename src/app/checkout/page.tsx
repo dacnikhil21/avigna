@@ -43,6 +43,7 @@ interface RazorpayInstance {
 export default function CheckoutPage() {
   const { items, subtotal, clearCart, isGift, giftMessage, setGiftOptions } = useCartStore();
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [shippingForm, setShippingForm] = useState({
     name: "",
     email: "",
@@ -128,7 +129,8 @@ export default function CheckoutPage() {
       document.body.appendChild(script);
     } catch (err) {
       console.error(err);
-      alert("Payment initialization failed. Please try again.");
+      setErrorMsg("Payment initialization failed. Please try again.");
+      setTimeout(() => setErrorMsg(null), 4000);
     } finally {
       setLoading(false);
     }
@@ -335,6 +337,12 @@ export default function CheckoutPage() {
           </div>
         </FadeIn>
       </form>
+      {/* Floating Error Toast */}
+      {errorMsg && (
+        <div className="fixed bottom-8 right-8 z-50 flex items-center gap-3 px-6 py-4 rounded-xl shadow-lg border text-xs uppercase tracking-wider font-semibold bg-red-600 text-white border-red-700 animate-in fade-in slide-in-from-bottom-4 duration-300">
+          {errorMsg}
+        </div>
+      )}
     </div>
   );
 }

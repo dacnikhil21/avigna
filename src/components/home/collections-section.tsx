@@ -1,12 +1,32 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { collections } from "@/lib/data";
 import { CollectionCard } from "@/components/shop/product-card";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/shared/motion";
+import type { Collection } from "@/types";
 
 export function CollectionsSection() {
+  const [collectionsList, setCollectionsList] = useState<Collection[]>([]);
+
+  useEffect(() => {
+    async function loadCollections() {
+      try {
+        const res = await fetch("/api/collections");
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setCollectionsList(data);
+        }
+      } catch (err) {
+        console.error("Error loading home collections:", err);
+      }
+    }
+    loadCollections();
+  }, []);
+
+  if (collectionsList.length === 0) return null;
+
   return (
     <section className="section-padding py-24 md:py-32">
       <FadeIn className="text-center max-w-2xl mx-auto mb-16">
@@ -19,9 +39,15 @@ export function CollectionsSection() {
       </FadeIn>
 
       <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-        {collections.map((collection) => (
+        {collectionsList.map((collection) => (
           <StaggerItem key={collection.slug}>
-            <CollectionCard {...collection} />
+            <CollectionCard
+              name={collection.name}
+              slug={collection.slug}
+              description={collection.description || undefined}
+              image={collection.coverImage || undefined}
+              tagline={collection.tagline || undefined}
+            />
           </StaggerItem>
         ))}
       </StaggerContainer>

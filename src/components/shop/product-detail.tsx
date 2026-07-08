@@ -32,6 +32,7 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
+  const [copied, setCopied] = useState(false);
   const addItem = useCartStore((s) => s.addItem);
   const { toggleItem, items } = useWishlistStore();
   const isWishlisted = items.some((i) => i.id === product.id);
@@ -137,11 +138,15 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
             <h1 className="heading-md mb-3">{product.name}</h1>
 
             <div className="flex items-center gap-4 mb-4">
-              <span className="text-2xl font-light">{formatPrice(product.price)}</span>
-              {product.salePrice && (
-                <span className="text-lg text-luxury-muted line-through">
-                  {formatPrice(product.salePrice)}
-                </span>
+              {product.salePrice ? (
+                <>
+                  <span className="text-2xl font-medium text-red-700">{formatPrice(product.salePrice)}</span>
+                  <span className="text-lg text-luxury-muted line-through font-light">
+                    {formatPrice(product.price)}
+                  </span>
+                </>
+              ) : (
+                <span className="text-2xl font-light">{formatPrice(product.price)}</span>
               )}
             </div>
 
@@ -215,7 +220,8 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
                 className="flex-1 rounded-lg"
                 onClick={() => {
                   navigator.clipboard.writeText(window.location.href);
-                  alert("Product link copied to clipboard!");
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 2000);
                 }}
               >
                 <Share2 className="w-4 h-4 mr-2" />
@@ -255,6 +261,12 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
             ))}
           </div>
         </section>
+      )}
+      {/* Floating Custom Toast for Link Sharing */}
+      {copied && (
+        <div className="fixed bottom-8 right-8 z-50 flex items-center gap-3 px-6 py-4 rounded-xl shadow-lg border text-xs uppercase tracking-wider font-semibold bg-[#121212] text-white border-[#C5A880] animate-in fade-in slide-in-from-bottom-4 duration-300">
+          Link copied to clipboard!
+        </div>
       )}
     </div>
   );

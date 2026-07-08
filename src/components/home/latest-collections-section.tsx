@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { products } from "@/lib/data";
+import { getLatestProducts } from "@/lib/db/products";
 import { ProductCard } from "@/components/shop/product-card";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/shared/motion";
 import { ArrowRight } from "lucide-react";
 
-const latestProducts = products.filter((p) => p.isLatest).slice(0, 8);
-
-export function LatestCollectionsSection() {
+export async function LatestCollectionsSection() {
+  const latestProducts = await getLatestProducts(8);
   return (
     <section className="section-padding py-8 md:py-16 bg-white">
       <FadeIn className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-6 gap-4">

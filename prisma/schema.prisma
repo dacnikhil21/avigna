@@ -143,6 +143,11 @@ model SiteSettings {
   youtubeUrl      String?
   pinterestUrl    String?
   razorpayKeyId   String?  // public key for frontend
+  // Brand Display
+  logoText        String?  // e.g. "Sri Avighna"
+  logoSubText     String?  // e.g. "1 Gram Gold Jewellery"
+  storeTimings    String?  // e.g. "10:30 AM – 9:00 PM"
+  gstNumber       String?
   // SEO Defaults
   defaultMetaTitle    String?
   defaultMetaDesc     String?  @db.Text

@@ -327,9 +327,57 @@ function useWebsiteDataInternal(store: {
   categories: Category[];
 } {
   const [mounted, setMounted] = React.useState(false);
+  const [brand, setBrand] = React.useState<WebsiteSettings>({
+    businessName: "Sri Avighna 1 Gram Gold Jewellery",
+    logoText: "Sri Avighna",
+    logoSubText: "1 Gram Gold Jewellery",
+    phone: "7013004127",
+    email: "avighnacollections1@gmail.com",
+    address: "Beside More Supermarket, Opp RR Complex, Polytechnic Road, Wanaparthy - 509103",
+    storeTimings: "10:30 AM – 9:00 PM",
+    heroTitle: "Where Sacred Heritage Meets Timeless Celebration",
+    heroSubtitle: "SRI AVIGHNA 1 GRAM GOLD JEWELLERY",
+    offerBannerText: "FREE SHIPPING ON ALL ORDERS | BIS 916 CERTIFIED",
+    gst: "36AAAAA1111A1Z1",
+  });
 
   React.useEffect(() => {
     setMounted(true);
+    async function loadCMSData() {
+      try {
+        const res = await fetch("/api/content");
+        const data = await res.json();
+        if (data.settings) {
+          setBrand((prev) => ({
+            ...prev,
+            businessName: data.settings.brandName || prev.businessName,
+            logoText: data.settings.logoText || prev.logoText,
+            logoSubText: data.settings.logoSubText || prev.logoSubText,
+            phone: data.settings.phone || prev.phone,
+            email: data.settings.email || prev.email,
+            address: data.settings.addressLine1 || prev.address,
+            storeTimings: data.settings.storeTimings || prev.storeTimings,
+            gst: data.settings.gstNumber || prev.gst,
+          }));
+        }
+        if (data.heroSlides && data.heroSlides.length > 0) {
+          setBrand((prev) => ({
+            ...prev,
+            heroTitle: data.heroSlides[0].title || prev.heroTitle,
+            heroSubtitle: data.heroSlides[0].subtitle || prev.heroSubtitle,
+          }));
+        }
+        if (data.announcements && data.announcements.length > 0) {
+          setBrand((prev) => ({
+            ...prev,
+            offerBannerText: data.announcements.map((a: { text: string }) => a.text).join(" | "),
+          }));
+        }
+      } catch (err) {
+        console.error("Error fetching CMS settings:", err);
+      }
+    }
+    loadCMSData();
   }, []);
 
   const defaultBrand = {
@@ -349,13 +397,15 @@ function useWebsiteDataInternal(store: {
   if (!mounted) {
     return {
       brand: defaultBrand,
-      products: initialProducts,
-      categories: initialCategories,
+      products: store.products,
+      categories: store.categories,
     };
   }
 
+  // Fallback to store's products/categories if database fetch isn't ready
+  // Admin panel will use this since store.products is kept in sync with admin operations
   return {
-    brand: store.websiteSettings,
+    brand,
     products: store.products,
     categories: store.categories,
   };

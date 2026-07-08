@@ -1,73 +1,101 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useAdminStore } from "@/lib/store/admin-store";
 import { CheckCircle2, Save, Globe, Info, Clock, Mail, Phone, MapPin, AlertTriangle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
 export function WebsiteTab() {
-  const { websiteSettings, updateWebsiteSettings } = useAdminStore();
+  const [formBusinessName, setFormBusinessName] = useState("");
+  const [formLogoText, setFormLogoText] = useState("");
+  const [formLogoSubText, setFormLogoSubText] = useState("");
+  const [formPhone, setFormPhone] = useState("");
+  const [formEmail, setFormEmail] = useState("");
+  const [formAddress, setFormAddress] = useState("");
+  const [formStoreTimings, setFormStoreTimings] = useState("");
+  const [formHeroTitle, setFormHeroTitle] = useState("");
+  const [formHeroSubtitle, setFormHeroSubtitle] = useState("");
+  const [formOfferBannerText, setFormOfferBannerText] = useState("");
 
-  // Local Form States
-  const [formBusinessName, setFormBusinessName] = useState(websiteSettings.businessName);
-  const [formLogoText, setFormLogoText] = useState(websiteSettings.logoText);
-  const [formLogoSubText, setFormLogoSubText] = useState(websiteSettings.logoSubText);
-  const [formPhone, setFormPhone] = useState(websiteSettings.phone);
-  const [formEmail, setFormEmail] = useState(websiteSettings.email);
-  const [formAddress, setFormAddress] = useState(websiteSettings.address);
-  const [formStoreTimings, setFormStoreTimings] = useState(websiteSettings.storeTimings);
-  const [formHeroTitle, setFormHeroTitle] = useState(websiteSettings.heroTitle);
-  const [formHeroSubtitle, setFormHeroSubtitle] = useState(websiteSettings.heroSubtitle);
-  const [formOfferBannerText, setFormOfferBannerText] = useState(websiteSettings.offerBannerText);
-
+  const [loading, setLoading] = useState(true);
   const [isDirty, setIsDirty] = useState(false);
   const [toastMsg, setToastMsg] = useState("");
+
+  const loadSettings = async () => {
+    try {
+      const res = await fetch("/api/admin/settings");
+      const data = await res.json();
+      if (data) {
+        setFormBusinessName(data.brandName || "");
+        setFormLogoText(data.logoText || "");
+        setFormLogoSubText(data.logoSubText || "");
+        setFormPhone(data.phone || "");
+        setFormEmail(data.email || "");
+        setFormAddress(data.addressLine1 || "");
+        setFormStoreTimings(data.storeTimings || "");
+        setFormHeroTitle(data.defaultMetaTitle || "");
+        setFormHeroSubtitle(data.tagline || "");
+        setFormOfferBannerText(data.defaultOgImage || "");
+      }
+    } catch (err) {
+      console.error("Error loading settings:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadSettings();
+  }, []);
 
   const handleFieldChange = <T,>(setter: (v: T) => void, val: T) => {
     setter(val);
     setIsDirty(true);
   };
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formBusinessName || !formLogoText || !formPhone || !formEmail || !formAddress || !formStoreTimings) {
-      setToastMsg("Please fill in all required fields marked with *");
-      setTimeout(() => setToastMsg(""), 3000);
+      showToastLocal("Please fill in all required fields marked with *");
       return;
     }
 
-    updateWebsiteSettings({
-      businessName: formBusinessName,
+    const payload = {
+      brandName: formBusinessName,
       logoText: formLogoText,
       logoSubText: formLogoSubText,
       phone: formPhone,
       email: formEmail,
-      address: formAddress,
+      addressLine1: formAddress,
       storeTimings: formStoreTimings,
-      heroTitle: formHeroTitle,
-      heroSubtitle: formHeroSubtitle,
-      offerBannerText: formOfferBannerText,
-    });
+      defaultMetaTitle: formHeroTitle,
+      tagline: formHeroSubtitle,
+      defaultOgImage: formOfferBannerText,
+    };
 
-    setIsDirty(false);
-    setToastMsg("Website settings saved! Changes reflect immediately on customer pages.");
-    setTimeout(() => setToastMsg(""), 3000);
+    try {
+      const res = await fetch("/api/admin/settings", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        setIsDirty(false);
+        showToastLocal("Website settings saved successfully to active showroom DB!");
+      } else {
+        showToastLocal("Failed to save website settings.");
+      }
+    } catch (err) {
+      console.error(err);
+      showToastLocal("An error occurred while saving.");
+    }
   };
 
   const handleReset = () => {
-    setFormBusinessName(websiteSettings.businessName);
-    setFormLogoText(websiteSettings.logoText);
-    setFormLogoSubText(websiteSettings.logoSubText);
-    setFormPhone(websiteSettings.phone);
-    setFormEmail(websiteSettings.email);
-    setFormAddress(websiteSettings.address);
-    setFormStoreTimings(websiteSettings.storeTimings);
-    setFormHeroTitle(websiteSettings.heroTitle);
-    setFormHeroSubtitle(websiteSettings.heroSubtitle);
-    setFormOfferBannerText(websiteSettings.offerBannerText);
+    loadSettings();
     setIsDirty(false);
     showToastLocal("Changes discarded.");
   };
@@ -76,6 +104,15 @@ export function WebsiteTab() {
     setToastMsg(msg);
     setTimeout(() => setToastMsg(""), 3000);
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center p-20">
+        <div className="w-8 h-8 border-2 border-[#C5A880] border-t-transparent rounded-full animate-spin mr-3" />
+        <span className="text-xs uppercase tracking-widest font-semibold text-[#1A1A1A]">Loading configurations...</span>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8 font-sans antialiased text-[#1A1A1A] max-w-4xl">
@@ -94,7 +131,7 @@ export function WebsiteTab() {
         <div>
           <h4 className="font-serif text-[#1A1A1A] font-extrabold text-sm mb-1 uppercase tracking-wide">Live Content Syncing</h4>
           <p>
-            Any modifications saved here are stored in your active session and will immediately update the customer-facing headers, footers, boutique visit sections, and pages.
+            Any modifications saved here are stored in your active PostgreSQL database and will immediately update the customer-facing headers, footers, boutique visit sections, and pages.
           </p>
         </div>
       </div>
@@ -200,7 +237,7 @@ export function WebsiteTab() {
 
             <div className="space-y-2">
               <Label htmlFor="web-logo-sub" className="text-xs uppercase tracking-wider font-bold text-slate-900">
-                Logo Subtitle / Tagline
+                Logo Sub Text
               </Label>
               <Input
                 id="web-logo-sub"
@@ -212,17 +249,17 @@ export function WebsiteTab() {
           </div>
         </div>
 
-        {/* Section 3: Contact & Showroom */}
+        {/* Section 3: Contact & Store Visit Details */}
         <div className="bg-white border border-[#EFECE7] rounded-2xl p-6 shadow-sm space-y-6">
           <h3 className="font-serif text-base text-slate-950 font-bold border-b pb-2 flex items-center gap-2 uppercase tracking-wide">
             <Globe className="w-4.5 h-4.5 text-[#C5A880] stroke-[2]" />
-            Contact &amp; Showroom Details
+            Location &amp; Contact Information
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <Label htmlFor="web-phone" className="text-xs uppercase tracking-wider font-bold text-slate-900 flex items-center gap-1.5">
-                <Phone className="w-4 h-4 text-slate-500" /> Phone Number <span className="text-red-500">*</span>
+                <Phone className="w-3.5 h-3.5 text-slate-500" /> Phone Number <span className="text-red-500">*</span>
               </Label>
               <Input
                 id="web-phone"
@@ -235,34 +272,21 @@ export function WebsiteTab() {
 
             <div className="space-y-2">
               <Label htmlFor="web-email" className="text-xs uppercase tracking-wider font-bold text-slate-900 flex items-center gap-1.5">
-                <Mail className="w-4 h-4 text-slate-500" /> Contact Email <span className="text-red-500">*</span>
+                <Mail className="w-3.5 h-3.5 text-slate-500" /> Email Support <span className="text-red-500">*</span>
               </Label>
               <Input
                 id="web-email"
-                type="email"
                 required
+                type="email"
                 className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#C5A880] text-slate-900 font-bold"
                 value={formEmail}
                 onChange={(e) => handleFieldChange(setFormEmail, e.target.value)}
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="web-hours" className="text-xs uppercase tracking-wider font-bold text-slate-900 flex items-center gap-1.5">
-                <Clock className="w-4 h-4 text-slate-500" /> Business Hours <span className="text-red-500">*</span>
-              </Label>
-              <Input
-                id="web-hours"
-                required
-                className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#C5A880] text-slate-900 font-bold"
-                value={formStoreTimings}
-                onChange={(e) => handleFieldChange(setFormStoreTimings, e.target.value)}
-              />
-            </div>
-
-            <div className="space-y-2">
+            <div className="space-y-2 md:col-span-2">
               <Label htmlFor="web-address" className="text-xs uppercase tracking-wider font-bold text-slate-900 flex items-center gap-1.5">
-                <MapPin className="w-4 h-4 text-slate-500" /> Store Address <span className="text-red-500">*</span>
+                <MapPin className="w-3.5 h-3.5 text-slate-500" /> Wanaparthy Boutique Address <span className="text-red-500">*</span>
               </Label>
               <Input
                 id="web-address"
@@ -272,30 +296,42 @@ export function WebsiteTab() {
                 onChange={(e) => handleFieldChange(setFormAddress, e.target.value)}
               />
             </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="web-timings" className="text-xs uppercase tracking-wider font-bold text-slate-900 flex items-center gap-1.5">
+                <Clock className="w-3.5 h-3.5 text-slate-500" /> Showroom Opening Timings <span className="text-red-500">*</span>
+              </Label>
+              <Input
+                id="web-timings"
+                required
+                className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#C5A880] text-slate-900 font-bold"
+                value={formStoreTimings}
+                onChange={(e) => handleFieldChange(setFormStoreTimings, e.target.value)}
+              />
+            </div>
           </div>
         </div>
 
         {/* Submit Actions */}
-        <div className="flex justify-end gap-3.5 pt-4 border-t border-[#EFECE7]">
-          {isDirty && (
-            <Button
-              type="button"
-              onClick={handleReset}
-              className="bg-white border border-[#D1CFC9] text-slate-800 hover:bg-slate-50 text-xs uppercase tracking-wider font-bold py-3.5 px-6 rounded-xl shadow-sm"
-            >
-              Discard Changes
-            </Button>
-          )}
+        <div className="flex justify-end gap-3.5 border-t border-[#EFECE7] pt-6 select-none">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handleReset}
+            disabled={!isDirty}
+            className="border-[#D1CFC9] text-slate-700 hover:bg-slate-50 font-bold uppercase tracking-wider px-6 py-3 rounded-xl transition-all"
+          >
+            Discard
+          </Button>
           <Button
             type="submit"
-            className="bg-[#C5A880] hover:bg-[#b0936b] text-white text-xs uppercase tracking-wider font-bold py-4 px-8 rounded-xl transition-all shadow-md flex items-center gap-2"
+            disabled={!isDirty}
+            className="bg-[#C5A880] hover:bg-[#b0936b] text-white font-bold uppercase tracking-wider px-6 py-3 rounded-xl transition-all shadow-md flex items-center gap-2"
           >
-            <Save className="w-4 h-4" /> Save Website Changes
+            <Save className="w-4 h-4" /> Save Configurations
           </Button>
         </div>
-
       </form>
-
     </div>
   );
 }

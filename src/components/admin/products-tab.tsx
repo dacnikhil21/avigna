@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { useAdminStore } from "@/lib/store/admin-store";
-import type { Product, ProductImage } from "@/types";
+import { useState, useMemo, useEffect } from "react";
+import type { Product, ProductImage, Category } from "@/types";
 import {
   Search,
   Plus,
@@ -27,14 +26,32 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
 export function ProductsTab() {
-  const {
-    products,
-    categories,
-    addProduct,
-    editProduct,
-    deleteProduct,
-    duplicateProduct
-  } = useAdminStore();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  const fetchProducts = async () => {
+    try {
+      const res = await fetch("/api/admin/products?limit=250");
+      const data = await res.json();
+      setProducts(data.items || []);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const res = await fetch("/api/admin/categories");
+      const data = await res.json();
+      setCategories(data || []);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+
+  useEffect(() => {
+    Promise.all([fetchProducts(), fetchCategories()]);
+  }, []);
 
   // Search & Filter State
   const [searchTerm, setSearchTerm] = useState("");
@@ -266,7 +283,7 @@ export function ProductsTab() {
       altText: img.altText || formName
     }));
 
-    const payload: Omit<Product, "id" | "createdAt" | "updatedAt" | "category" | "slug"> = {
+    const payload = {
       name: formName,
       categoryId: formCategory,
       description: formDesc,
@@ -285,29 +302,102 @@ export function ProductsTab() {
       isBridal: false
     };
 
-    if (editingId) {
-      editProduct(editingId, payload);
-      showToast("Product changes saved successfully!");
-    } else {
-      addProduct(payload);
-      showToast("Product added to catalog successfully!");
-    }
+    const saveProduct = async () => {
+      try {
+        if (editingId) {
+          const res = await fetch(`/api/admin/products/${editingId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+          if (res.ok) {
+            showToast("Product changes saved successfully!");
+            fetchProducts();
+          } else {
+            showToast("Failed to update product details.", "error");
+          }
+        } else {
+          const res = await fetch("/api/admin/products", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+          if (res.ok) {
+            showToast("Product added to catalog successfully!");
+            fetchProducts();
+          } else {
+            showToast("Failed to create new product.", "error");
+          }
+        }
+      } catch (err) {
+        console.error("Error saving product:", err);
+        showToast("An error occurred while saving the product.", "error");
+      }
+    };
 
+    saveProduct();
     setFormOpen(false);
     resetForm();
   };
 
   // Handle Actions
-  const handleDuplicate = (id: string) => {
-    duplicateProduct(id);
-    showToast("Product copy duplicated successfully!");
+  const handleDuplicate = async (id: string) => {
+    const p = products.find((x) => x.id === id);
+    if (!p) return;
+    try {
+      const duplicatedPayload = {
+        name: `${p.name} (Copy)`,
+        categoryId: p.categoryId,
+        description: p.description,
+        price: p.price,
+        salePrice: p.salePrice || null,
+        stockQty: p.stockQty,
+        inStock: p.inStock,
+        isFeatured: p.isFeatured,
+        isTrending: p.isTrending,
+        isLatest: p.isLatest,
+        isActive: p.isActive,
+        images: p.images.map((img) => ({ url: img.url, isPrimary: img.isPrimary, position: img.position, altText: img.altText })),
+        metal: p.metal,
+        sku: `${p.sku}-COPY-${Math.floor(1000 + Math.random() * 9000)}`,
+        isExclusive: p.isExclusive,
+        isBridal: p.isBridal
+      };
+
+      const res = await fetch("/api/admin/products", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(duplicatedPayload),
+      });
+      if (res.ok) {
+        showToast("Product copy duplicated successfully!");
+        fetchProducts();
+      } else {
+        showToast("Failed to duplicate product.", "error");
+      }
+    } catch (err) {
+      console.error(err);
+      showToast("Error duplicating product.", "error");
+    }
   };
 
-  const handleDeleteConfirm = () => {
+  const handleDeleteConfirm = async () => {
     if (deleteId) {
-      deleteProduct(deleteId);
+      try {
+        const res = await fetch(`/api/admin/products/${deleteId}`, {
+          method: "DELETE",
+        });
+        if (res.ok) {
+          showToast("Product deleted successfully.");
+          fetchProducts();
+        } else {
+          showToast("Failed to delete product.", "error");
+        }
+      } catch (err) {
+        console.error(err);
+        showToast("Error deleting product.", "error");
+      }
       setDeleteId(null);
-      showToast("Product deleted successfully.");
     }
   };
 

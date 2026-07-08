@@ -7,24 +7,59 @@ import { FadeIn, StaggerContainer, StaggerItem } from "@/components/shared/motio
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { ChevronRight, SlidersHorizontal } from "lucide-react";
-import { useWebsiteData } from "@/lib/store/admin-store";
+import { useState, useEffect } from "react";
+import type { Product, Category } from "@/types";
 
 function ShopContent() {
-  const { products, categories } = useWebsiteData();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  
   const categoryFilter = searchParams.get("category");
+  const searchQuery = searchParams.get("q") || searchParams.get("search");
   const sortBy = searchParams.get("sort") || "featured";
 
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const [prodRes, catRes] = await Promise.all([
+          fetch("/api/products?limit=250"),
+          fetch("/api/categories"),
+        ]);
+        const prodData = await prodRes.json();
+        const catData = await catRes.json();
+        setProducts(prodData.items || []);
+        setCategories(catData || []);
+      } catch (err) {
+        console.error("Failed to load shop data:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, []);
+
   const filteredProducts = useMemo(() => {
-    const result = categoryFilter
+    let result = categoryFilter
       ? products.filter((p) => {
-          // Match by slug (preferred) OR by categoryId if slug is stale
           const cat = categories.find((c) => c.slug === categoryFilter);
           return p.category?.slug === categoryFilter || (cat && p.categoryId === cat.id);
         })
       : [...products];
+
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter((p) =>
+        p.name.toLowerCase().includes(q) ||
+        p.sku.toLowerCase().includes(q) ||
+        (p.description && p.description.toLowerCase().includes(q)) ||
+        (p.shortDesc && p.shortDesc.toLowerCase().includes(q))
+      );
+    }
 
     switch (sortBy) {
       case "price-low":
@@ -44,9 +79,20 @@ function ShopContent() {
     }
 
     return result;
-  }, [categoryFilter, sortBy, products, categories]);
+  }, [categoryFilter, sortBy, products, categories, searchQuery]);
 
   const activeCategory = categories.find((c) => c.slug === categoryFilter);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#FAF8F5]">
+        <div className="text-center">
+          <div className="w-8 h-8 border-2 border-[#C5A880] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+          <p className="text-sm text-[#6B6560]">Loading collection...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#FAF8F5]">

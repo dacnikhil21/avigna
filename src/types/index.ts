@@ -2,7 +2,7 @@ export interface ProductImage {
   id: string;
   productId: string;
   url: string;
-  altText?: string;
+  altText?: string | null;
   position: number;
   isPrimary: boolean;
 }
@@ -12,17 +12,17 @@ export interface Product {
   name: string;
   slug: string;
   description: string;
-  shortDesc?: string;
+  shortDesc?: string | null;
   price: number;
-  salePrice?: number;
+  salePrice?: number | null;
   sku: string;
-  material?: string;
+  material?: string | null;
   metal: string;
-  purity?: string;
-  color?: string;
-  weight?: string;
-  stones?: string;
-  dimensions?: string;
+  purity?: string | null;
+  color?: string | null;
+  weight?: string | null;
+  stones?: string | null;
+  dimensions?: string | null;
   stockQty: number;
   inStock: boolean;
   isFeatured: boolean;
@@ -33,12 +33,12 @@ export interface Product {
   isActive: boolean;
   categoryId: string;
   category: Category;
-  collectionId?: string;
-  collection?: Collection;
+  collectionId?: string | null;
+  collection?: Collection | null;
   images: ProductImage[];
-  metaTitle?: string;
-  metaDesc?: string;
-  metaKeywords?: string;
+  metaTitle?: string | null;
+  metaDesc?: string | null;
+  metaKeywords?: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -47,10 +47,10 @@ export interface Category {
   id: string;
   name: string;
   slug: string;
-  description?: string;
-  image?: string;
-  icon?: string;
-  parentId?: string;
+  description?: string | null;
+  image?: string | null;
+  icon?: string | null;
+  parentId?: string | null;
   sortOrder: number;
   isActive: boolean;
 }
@@ -59,10 +59,10 @@ export interface Collection {
   id: string;
   name: string;
   slug: string;
-  tagline?: string;
-  description?: string;
-  coverImage?: string;
-  image?: string;           // alias for coverImage — used by static data & legacy UI
+  tagline?: string | null;
+  description?: string | null;
+  coverImage?: string | null;
+  image?: string | null;           // alias for coverImage — used by static data & legacy UI
   isActive: boolean;
   isFeatured: boolean;
   sortOrder: number;
@@ -99,6 +99,10 @@ export interface SiteSettings {
   youtubeUrl?: string;
   pinterestUrl?: string;
   razorpayKeyId?: string;
+  logoText?: string;
+  logoSubText?: string;
+  storeTimings?: string;
+  gstNumber?: string;
   defaultMetaTitle?: string;
   defaultMetaDesc?: string;
   defaultOgImage?: string;
