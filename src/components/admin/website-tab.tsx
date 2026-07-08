@@ -75,7 +75,7 @@ export function WebsiteTab() {
     try {
       const res = await fetch("/api/admin/hero-slides");
       const data = await res.json();
-      setHeroSlides(data || []);
+      setHeroSlides(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error(err);
     }
@@ -85,7 +85,7 @@ export function WebsiteTab() {
     try {
       const res = await fetch("/api/admin/announcements");
       const data = await res.json();
-      setAnnouncements(data || []);
+      setAnnouncements(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error(err);
     }

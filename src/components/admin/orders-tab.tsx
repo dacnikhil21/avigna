@@ -43,7 +43,7 @@ export function OrdersTab() {
       setLoading(true);
       const res = await fetch("/api/admin/orders?limit=250");
       const data = await res.json();
-      setOrders(data.items || []);
+      setOrders(data && Array.isArray(data.items) ? data.items : []);
     } catch (err) {
       console.error("Error fetching orders:", err);
       showToast("Failed to load orders from database.");

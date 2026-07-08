@@ -367,7 +367,7 @@ function useWebsiteDataInternal(store: {
             gst: data.settings.gstNumber || prev.gst,
           }));
         }
-        if (data.heroSlides && data.heroSlides.length > 0) {
+        if (data.heroSlides && Array.isArray(data.heroSlides) && data.heroSlides.length > 0) {
           setHeroSlides(data.heroSlides);
           setBrand((prev) => ({
             ...prev,
@@ -375,7 +375,7 @@ function useWebsiteDataInternal(store: {
             heroSubtitle: data.heroSlides[0].subtitle || prev.heroSubtitle,
           }));
         }
-        if (data.announcements && data.announcements.length > 0) {
+        if (data.announcements && Array.isArray(data.announcements) && data.announcements.length > 0) {
           setAnnouncements(data.announcements);
           setBrand((prev) => ({
             ...prev,

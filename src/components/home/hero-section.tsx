@@ -27,7 +27,7 @@ export function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const activeSlides = heroSlides && heroSlides.length > 0
+  const activeSlides = heroSlides && Array.isArray(heroSlides) && heroSlides.length > 0
     ? heroSlides.map(s => ({ url: s.imageUrl, alt: s.imageAlt || s.title }))
     : HERO_SLIDES;
 

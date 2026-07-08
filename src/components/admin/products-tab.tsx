@@ -33,7 +33,7 @@ export function ProductsTab() {
     try {
       const res = await fetch("/api/admin/products?limit=250");
       const data = await res.json();
-      setProducts(data.items || []);
+      setProducts(data && Array.isArray(data.items) ? data.items : []);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
@@ -43,7 +43,7 @@ export function ProductsTab() {
     try {
       const res = await fetch("/api/admin/categories");
       const data = await res.json();
-      setCategories(data || []);
+      setCategories(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
