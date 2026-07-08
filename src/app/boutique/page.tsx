@@ -94,7 +94,7 @@ export default function BoutiquePage() {
             {/* Custom Grayscale Styled Map Iframe Container */}
             <FadeIn delay={0.2} className="relative aspect-video w-full overflow-hidden border border-[#EFECE7] grayscale hover:grayscale-0 transition-all duration-700 rounded-xl">
               <iframe
-                title={`${brand.businessName} Wanaparthy Boutique Map`}
+                title={`${brand.businessName} Wanaparthy Store Map`}
                 src={`https://maps.google.com/maps?q=${encodeURIComponent(brand.businessName)}+Wanaparthy&t=&z=15&ie=UTF8&iwloc=&output=embed`}
                 width="100%"
                 height="100%"

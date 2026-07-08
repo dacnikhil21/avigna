@@ -55,7 +55,7 @@ export default function CheckoutPage() {
   });
 
   const total = subtotal();
-  const shipping = total > 5000000 ? 0 : 50000;
+  const shipping = 0; // Free delivery on all orders per store policy
   const grandTotal = total + shipping;
 
   if (items.length === 0) {

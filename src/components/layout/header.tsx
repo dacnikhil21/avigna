@@ -417,8 +417,8 @@ export function Header() {
                   <div className="col-span-3 h-[240px] overflow-hidden relative group">
                     <Link href="/collections/temple-gold">
                       <Image
-                        src="https://images.unsplash.com/photo-1603561596112-0a132b757442?w=800&q=80"
-                        alt="Temple Gold Collection Editorial"
+                        src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80"
+                        alt="Temple Gold Collection — Premium 1 Gram Gold Jewellery"
                         fill
                         className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                         sizes="(max-width: 1024px) 25vw, 15vw"
@@ -491,7 +491,7 @@ export function Header() {
                         transition={{ duration: 0.3, ease: "easeOut" }}
                         className="pl-4 overflow-hidden flex flex-col gap-2.5 mt-2 border-l border-[#EFECE7]"
                       >
-                        <Link href="/shop" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#C5A880] font-normal">All Jewelry</Link>
+                        <Link href="/shop" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#C5A880] font-normal">All Jewellery</Link>
                         <Link href="/shop?category=necklace" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#C5A880] font-normal">Necklaces & Chokers</Link>
                         <Link href="/shop?category=earrings" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#C5A880] font-normal">Earrings & Jhumkas</Link>
                         <Link href="/shop?category=bangles" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#C5A880] font-normal">Bangles & Kadas</Link>

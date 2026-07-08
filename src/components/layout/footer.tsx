@@ -119,23 +119,25 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#C5A880] shrink-0" />
-                <span>{brand.phone}</span>
+                <a href={`tel:${brand.phone}`} className="hover:text-white transition-colors duration-300">{brand.phone}</a>
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#C5A880] shrink-0" />
-                <span>{brand.email}</span>
+                <a href={`mailto:${brand.email}`} className="hover:text-white transition-colors duration-300">{brand.email}</a>
               </li>
             </ul>
           </div>
 
         </div>
 
-        {/* Guarantees / certifications banner */}
+        {/* Trust badges */}
         <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-white/5 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex gap-4 items-center opacity-30 select-none">
-            <span className="text-[9px] tracking-widest uppercase text-white/60">BIS 916 certified</span>
+          <div className="flex gap-4 items-center opacity-40 select-none">
+            <span className="text-[9px] tracking-widest uppercase text-white/60">Premium 1 Gram Gold</span>
             <div className="w-1 h-1 rounded-full bg-white/40" />
-            <span className="text-[9px] tracking-widest uppercase text-white/60">100% Insured Delivery</span>
+            <span className="text-[9px] tracking-widest uppercase text-white/60">Free Pan-India Delivery</span>
+            <div className="w-1 h-1 rounded-full bg-white/40" />
+            <span className="text-[9px] tracking-widest uppercase text-white/60">Lifetime Craftsmanship Guarantee</span>
           </div>
         </div>
       </div>
@@ -149,15 +151,20 @@ export function Footer() {
             &copy; {new Date().getFullYear()} {brand.businessName}. Designed with reverence. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <Link href="#" className="hover:text-white/50 transition-colors">
-              Privacy Policy
+            <Link href="/faq" className="hover:text-white/50 transition-colors">
+              FAQ
             </Link>
-            <Link href="#" className="hover:text-white/50 transition-colors">
-              Terms of Service
+            <Link href="/contact" className="hover:text-white/50 transition-colors">
+              Contact Us
             </Link>
-            <Link href="#" className="hover:text-white/50 transition-colors">
-              Shipping &amp; Returns
-            </Link>
+            <a
+              href={`https://wa.me/91${brand.phone.replace(/\D/g, "")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white/50 transition-colors"
+            >
+              WhatsApp
+            </a>
           </div>
         </div>
       </div>

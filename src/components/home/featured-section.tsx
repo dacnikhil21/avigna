@@ -62,8 +62,8 @@ export function CraftsmanshipSection() {
               Crafted by Masters, Worn with Pride
             </h2>
             <p className="body-lg mb-6">
-              For over three decades, Sri Avighna 1 Gram Gold Jewellery has been the trusted name
-              for discerning jewellery lovers across India. Every piece is handcrafted
+              Since our founding in Wanaparthy, Sri Avighna 1 Gram Gold Jewellery has been the trusted name
+              for discerning jewellery lovers across Telangana. Every piece is handcrafted
               by master artisans using techniques passed down through generations.
             </p>
             <p className="body-lg mb-8">
@@ -74,8 +74,8 @@ export function CraftsmanshipSection() {
 
             <div className="grid grid-cols-3 gap-6 mb-10">
               {[
-                { value: "30+", label: "Years of Excellence" },
-                { value: "50K+", label: "Happy Customers" },
+                { value: "10+", label: "Years Trusted" },
+                { value: "10K+", label: "Happy Customers" },
                 { value: "24K", label: "Pure Gold Plated" },
               ].map((stat) => (
                 <div key={stat.label}>

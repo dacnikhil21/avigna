@@ -20,9 +20,9 @@ const values = [
   },
   {
     icon: Award,
-    title: "Certified Authenticity",
+    title: "Trusted Quality",
     description:
-      "Each purchase includes a certificate of authenticity, detailed specifications, and our lifetime craftsmanship guarantee.",
+      "Every piece is crafted from premium copper-alloy cores with thick 24K gold electroplating. Quality you can see, feel, and wear every day.",
   },
   {
     icon: Users,
@@ -39,8 +39,8 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="relative h-[60vh] min-h-[400px] flex items-end">
         <Image
-          src="https://images.unsplash.com/photo-1603561596112-0a132b757442?w=1920&q=80"
-          alt="Sri Avighna 1 Gram Gold Jewellery craftsmanship"
+          src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=1920&q=80"
+          alt="Sri Avighna 1 Gram Gold Jewellery — premium jewellery craftsmanship"
           fill
           priority
           className="object-cover"
@@ -59,7 +59,7 @@ export default function AboutPage() {
       <section className="section-padding py-24 md:py-32">
         <div className="max-w-3xl mx-auto text-center">
           <FadeIn>
-            <h2 className="heading-md mb-8">Three Decades of Trust</h2>
+            <h2 className="heading-md mb-8">A Legacy of Trust</h2>
             <div className="space-y-6 body-lg text-left">
               <p>
                 Founded in the heart of Wanaparthy, Telangana, {brand.businessName} began as a
