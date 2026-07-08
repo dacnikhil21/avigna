@@ -10,7 +10,7 @@ const values = [
     icon: Gem,
     title: "Uncompromising Quality",
     description:
-      "Every piece uses BIS hallmarked gold and GIA-certified diamonds. We never compromise on purity or craftsmanship.",
+      "Every piece features premium 1 gram gold plating and expert craftsmanship. We never compromise on quality or details.",
   },
   {
     icon: Heart,
@@ -62,21 +62,21 @@ export default function AboutPage() {
             <h2 className="heading-md mb-8">Three Decades of Trust</h2>
             <div className="space-y-6 body-lg text-left">
               <p>
-                Founded in 1994 in the heart of Bengaluru, {brand.businessName} began as a
-                small family workshop with a singular vision: to create jewellery that
-                honours India&apos;s rich artistic heritage while embracing contemporary
-                elegance.
+                Founded in the heart of Wanaparthy, Telangana, {brand.businessName} began as a
+                small family store with a singular vision: to bring the finest 1 gram gold
+                jewellery to every woman — honouring India&apos;s rich artistic heritage at an
+                honest, accessible price.
               </p>
               <p>
-                What started with a handful of master craftsmen has grown into one of
-                South India&apos;s most trusted luxury jewellery brands — yet our
+                What started with a handful of curated designs has grown into one of
+                South Telangana&apos;s most trusted jewellery destinations — yet our
                 approach remains unchanged. Every piece is still handcrafted, every
-                diamond still hand-selected, and every customer still treated like family.
+                kemp stone still hand-selected, and every customer still treated like family.
               </p>
               <p>
                 Today, we serve discerning customers across India — brides seeking
-                their perfect wedding set, professionals looking for everyday elegance,
-                and families marking life&apos;s most precious milestones.
+                their perfect wedding set, families celebrating festivals, and women
+                looking for everyday elegance at every milestone.
               </p>
             </div>
           </FadeIn>
@@ -110,8 +110,8 @@ export default function AboutPage() {
           <FadeIn>
             <div className="relative aspect-square rounded-3xl overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=80"
-                alt="BIS Hallmarked gold jewellery"
+                src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80"
+                alt="Premium 1 Gram Gold jewellery"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -120,21 +120,16 @@ export default function AboutPage() {
           </FadeIn>
           <FadeIn delay={0.1}>
             <p className="label-luxury mb-4">Certification</p>
-            <h2 className="heading-md mb-6">BIS Hallmarked & GIA Certified</h2>
+            <h2 className="heading-md mb-6">Premium Plating & Lifetime Guarantee</h2>
             <div className="space-y-4 body-lg">
               <p>
-                Every gold piece from {brand.businessName} carries the BIS hallmark —
-                the Bureau of Indian Standards mark that guarantees purity. Our 22K
-                gold is 916 purity, and our 18K gold is 750 purity.
+                Every piece from {brand.businessName} is built on a high-grade, hypoallergenic copper-alloy core, electroplated with a premium layer of 24K gold to deliver the weight, warmth, and shine of fine solid gold.
               </p>
               <p>
-                All diamonds above 0.30 carats come with GIA (Gemological Institute
-                of America) certification, ensuring you receive exactly what we promise.
+                Our collections are coated with an advanced anti-tarnish protective layer to prevent oxidation and discoloration, ensuring long-lasting beauty and comfort for all skin types.
               </p>
               <p>
-                Each purchase includes a detailed certificate of authenticity with
-                complete specifications — metal purity, stone details, weight, and
-                unique SKU.
+                Each purchase includes a detailed certificate of authenticity with complete specifications — including base metal details, gold plating thickness, stones description, weight, and a unique SKU.
               </p>
             </div>
           </FadeIn>

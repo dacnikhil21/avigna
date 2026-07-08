@@ -234,8 +234,8 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
             {/* Trust signals */}
             <div className="space-y-4">
               {[
-                { icon: Shield, text: "BIS Hallmarked & Certificate of Authenticity included" },
-                { icon: Truck, text: "Complimentary insured shipping on orders above ₹50,000" },
+                { icon: Shield, text: "Premium 1 Gram Gold Plating & Certificate of Authenticity included" },
+                { icon: Truck, text: "Complimentary insured shipping on orders above ₹999" },
                 { icon: RotateCcw, text: "Lifetime exchange & 15-day return policy" },
               ].map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-center gap-3 text-sm text-luxury-muted">

@@ -92,7 +92,7 @@ async function main() {
       pincode:      "509103",
       country:      "India",
       defaultMetaTitle: "Avighna Collections | Premium 1 Gram Gold Jewellery — Wanaparthy",
-      defaultMetaDesc:  "Shop exquisite 1 gram gold bridal sets, earrings, necklaces, bangles & more at Avighna Collections, Wanaparthy. Authentic hallmarked jewellery by H. Geetha Rani.",
+      defaultMetaDesc:  "Shop exquisite 1 gram gold bridal sets, earrings, necklaces, bangles & more at Avighna Collections, Wanaparthy. Authentic 1 gram gold jewellery by H. Geetha Rani.",
     },
     create: {
       id:           "singleton",
@@ -109,7 +109,7 @@ async function main() {
       pincode:      "509103",
       country:      "India",
       defaultMetaTitle: "Avighna Collections | Premium 1 Gram Gold Jewellery — Wanaparthy",
-      defaultMetaDesc:  "Shop exquisite 1 gram gold bridal sets, earrings, necklaces, bangles & more at Avighna Collections, Wanaparthy. Authentic hallmarked jewellery by H. Geetha Rani.",
+      defaultMetaDesc:  "Shop exquisite 1 gram gold bridal sets, earrings, necklaces, bangles & more at Avighna Collections, Wanaparthy. Authentic 1 gram gold jewellery by H. Geetha Rani.",
     },
   });
   console.log("✓ SiteSettings");

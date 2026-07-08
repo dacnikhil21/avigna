@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Collections",
   description:
-    "Explore Sri Avighna 1 Gram Gold Jewellery — curated luxury jewellery collections for bridal, everyday elegance, temple gold, and diamond dreams.",
+    "Explore Avighna Collections — curated 1 gram gold jewellery collections for brides, everyday elegance, temple gold, kemp stone jewellery, and festive occasions.",
 };
 
 export default async function CollectionsPage() {

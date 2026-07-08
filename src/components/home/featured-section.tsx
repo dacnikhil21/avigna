@@ -68,7 +68,7 @@ export function CraftsmanshipSection() {
             </p>
             <p className="body-lg mb-8">
               From the first sketch to the final polish, we maintain the highest
-              standards of quality — BIS hallmarked gold, GIA-certified diamonds,
+              standards of quality — premium 1 gram gold plating, hand-selected kemp stones,
               and a lifetime craftsmanship guarantee.
             </p>
 
@@ -76,7 +76,7 @@ export function CraftsmanshipSection() {
               {[
                 { value: "30+", label: "Years of Excellence" },
                 { value: "50K+", label: "Happy Customers" },
-                { value: "916", label: "BIS Hallmarked" },
+                { value: "24K", label: "Pure Gold Plated" },
               ].map((stat) => (
                 <div key={stat.label}>
                   <p className="font-serif text-2xl md:text-3xl font-light text-luxury-gold">

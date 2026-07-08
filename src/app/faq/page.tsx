@@ -17,8 +17,8 @@ const FAQ_GROUPS = [
         a: "1-gram gold jewellery uses a premium brass-copper base alloy core, coated with high-purity gold (22K or 18K) using advanced electroforming techniques. This results in the indistinguishable weight, warmth, and radiance of fine solid gold at an accessible price."
       },
       {
-        q: "How is Sri Avighna 1 Gram Gold Jewellery hallmarked?",
-        a: "All our gold pieces carry official BIS Hallmark certification (916 for 22K, 750 for 18K) confirming gold purity standards. A physical certificate of authenticity is included inside every signature unboxing box."
+        q: "How is Sri Avighna 1 Gram Gold Jewellery certified?",
+        a: "All our pieces feature premium 24K gold plating over a high-grade copper-alloy core, protected by an anti-tarnish coating. A physical certificate of authenticity confirming these specifications is included inside every signature unboxing box."
       },
       {
         q: "Is the metal safe for sensitive skin?",

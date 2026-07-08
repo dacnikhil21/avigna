@@ -99,7 +99,7 @@ export function BrandFilmSection() {
       <div className="grid grid-cols-3 border-t border-[#C5A880]/20">
         {[
           { label: "Karigar Heritage", value: "200+ Years" },
-          { label: "Purity Certified", value: "BIS Hallmarked" },
+          { label: "Material Finish", value: "24K Gold Plated" },
           { label: "Artisan Hours", value: "100–400 hrs" },
         ].map(({ label, value }) => (
           <div

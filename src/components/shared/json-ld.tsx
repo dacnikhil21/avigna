@@ -11,13 +11,13 @@ export function JsonLd() {
     email: BRAND.email,
     address: {
       "@type": "PostalAddress",
-      streetAddress: "123, MG Road",
-      addressLocality: "Bengaluru",
-      addressRegion: "Karnataka",
-      postalCode: "560001",
+      streetAddress: "Beside More Supermarket, Opp RR Complex, Polytechnic Road",
+      addressLocality: "Wanaparthy",
+      addressRegion: "Telangana",
+      postalCode: "509103",
       addressCountry: "IN",
     },
-    priceRange: "₹₹₹₹",
+    priceRange: "₹₹",
     image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1200&q=80",
   };
 
