@@ -23,17 +23,21 @@ const HERO_SLIDES = [
 ];
 
 export function HeroSection() {
-  const { brand } = useWebsiteData();
+  const { brand, heroSlides } = useWebsiteData();
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  const activeSlides = heroSlides && heroSlides.length > 0
+    ? heroSlides.map(s => ({ url: s.imageUrl, alt: s.imageAlt || s.title }))
+    : HERO_SLIDES;
 
   // Auto transition every 10 seconds
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+      setCurrentSlide((prev) => (prev + 1) % activeSlides.length);
     }, 10000);
     return () => clearInterval(timer);
-  }, []);
+  }, [activeSlides.length]);
   
   // Track scroll progress of the hero section relative to viewport scroll
   const { scrollYProgress } = useScroll({
@@ -81,7 +85,7 @@ export function HeroSection() {
           style={{ y: imageY, scale: imageScale }}
           className="relative w-full h-full"
         >
-          {HERO_SLIDES.map((slide, idx) => (
+          {activeSlides.map((slide, idx) => (
             <Image
               key={slide.url}
               src={slide.url}

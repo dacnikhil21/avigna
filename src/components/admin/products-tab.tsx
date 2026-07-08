@@ -86,7 +86,10 @@ export function ProductsTab() {
   const [formIsFeatured, setFormIsFeatured] = useState(false);
   const [formIsTrending, setFormIsTrending] = useState(false);
   const [formIsLatest, setFormIsLatest] = useState(false);
+  const [formIsExclusive, setFormIsExclusive] = useState(false);
+  const [formIsBridal, setFormIsBridal] = useState(false);
   const [formIsActive, setFormIsActive] = useState(true);
+  const [formSku, setFormSku] = useState("");
 
   // Drag over state
   const [dragOver, setDragOver] = useState(false);
@@ -112,10 +115,13 @@ export function ProductsTab() {
     setFormPrice("");
     setFormDiscount("");
     setFormStock("");
+    setFormSku("");
     setFormImages([]);
     setFormIsFeatured(false);
     setFormIsTrending(false);
     setFormIsLatest(false);
+    setFormIsExclusive(false);
+    setFormIsBridal(false);
     setFormIsActive(true);
     setEditingId(null);
     setIsDirty(false);
@@ -134,6 +140,7 @@ export function ProductsTab() {
     setFormPrice(product.price.toString());
     setFormDiscount(product.salePrice && product.salePrice < product.price ? product.salePrice.toString() : "");
     setFormStock(product.stockQty.toString());
+    setFormSku(product.sku || "");
     
     // Map existing images securely
     const mappedImages = product.images.map((img) => ({
@@ -148,6 +155,8 @@ export function ProductsTab() {
     setFormIsFeatured(product.isFeatured);
     setFormIsTrending(product.isTrending);
     setFormIsLatest(product.isLatest);
+    setFormIsExclusive(product.isExclusive || false);
+    setFormIsBridal(product.isBridal || false);
     setFormIsActive(product.isActive);
     setEditingId(product.id);
     
@@ -257,6 +266,26 @@ export function ProductsTab() {
     showToast("Featured image updated.");
   };
 
+  const handleMoveImage = (id: string, direction: "left" | "right") => {
+    const idx = formImages.findIndex((img) => img.id === id);
+    if (idx === -1) return;
+    const targetIdx = direction === "left" ? idx - 1 : idx + 1;
+    if (targetIdx < 0 || targetIdx >= formImages.length) return;
+    
+    const updated = [...formImages];
+    const temp = updated[idx];
+    updated[idx] = updated[targetIdx];
+    updated[targetIdx] = temp;
+    
+    updated.forEach((img, index) => {
+      img.position = index;
+    });
+    
+    setFormImages(updated);
+    setIsDirty(true);
+    showToast("Image order changed.");
+  };
+
   // Handle Save
   const handleFormSave = (e: React.FormEvent) => {
     e.preventDefault();
@@ -294,12 +323,12 @@ export function ProductsTab() {
       isFeatured: formIsFeatured,
       isTrending: formIsTrending,
       isLatest: formIsLatest,
+      isExclusive: formIsExclusive,
+      isBridal: formIsBridal,
       isActive: formIsActive,
       images: formattedImages,
       metal: "Gold",
-      sku: editingId ? (products.find((p) => p.id === editingId)?.sku || "") : `SKU-${Math.random().toString(36).substr(2, 6).toUpperCase()}`,
-      isExclusive: false,
-      isBridal: false
+      sku: formSku || (editingId ? (products.find((p) => p.id === editingId)?.sku || "") : `SKU-${Math.random().toString(36).substr(2, 6).toUpperCase()}`)
     };
 
     const saveProduct = async () => {
@@ -757,7 +786,7 @@ export function ProductsTab() {
                   )}
                 </div>
 
-                {/* Stock Quantity */}
+                {/* Stock Quantity & SKU Grid */}
                 <div className="space-y-2">
                   <Label htmlFor="prod-stock" className="text-xs uppercase tracking-wider font-bold text-slate-900">
                     Stock Quantity <span className="text-red-500">*</span>
@@ -770,6 +799,20 @@ export function ProductsTab() {
                     className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#C5A880] text-slate-900 font-bold"
                     value={formStock}
                     onChange={(e) => handleFieldChange(setFormStock, e.target.value)}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="prod-sku" className="text-xs uppercase tracking-wider font-bold text-slate-900">
+                    SKU <span className="text-slate-500 text-[10px] font-normal normal-case tracking-normal">— optional (will auto-generate if blank)</span>
+                  </Label>
+                  <Input
+                    id="prod-sku"
+                    type="text"
+                    placeholder="e.g. AV-NECK-001"
+                    className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#C5A880] text-slate-900 font-bold"
+                    value={formSku}
+                    onChange={(e) => handleFieldChange(setFormSku, e.target.value)}
                   />
                 </div>
 
@@ -807,51 +850,73 @@ export function ProductsTab() {
                   <p className="text-[10px] text-slate-500 font-normal mt-0.5">Supports PNG, JPG, JPEG. Max size 2MB per file.</p>
                 </div>
 
-                {/* Images Thumbnails Grid */}
-                {formImages.length > 0 && (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-3">
-                    {formImages.map((img) => (
-                      <div
-                        key={img.id}
-                        className={`group relative rounded-xl border overflow-hidden bg-slate-50 flex flex-col justify-between aspect-square transition-all border-slate-200 ${
-                          img.isPrimary ? "ring-2 ring-[#C5A880]" : "hover:border-slate-300"
-                        }`}
-                      >
-                        
-                        {/* Image Thumbnail */}
-                        <div className="relative flex-grow overflow-hidden bg-slate-100 flex items-center justify-center">
-                          <img
-                            src={img.url}
-                            alt="Product"
-                            className="object-cover w-full h-full"
-                          />
-                          
-                          {/* Image Action Overlays */}
-                          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5">
-                            {/* Replace */}
-                            <label className="p-1.5 bg-white/20 hover:bg-white/40 text-white rounded-lg cursor-pointer transition-colors" title="Replace Image">
-                              <RefreshCw className="w-4.5 h-4.5" />
-                              <input
-                                type="file"
-                                accept="image/*"
-                                className="hidden"
-                                onChange={(e) => {
-                                  const file = e.target.files?.[0];
-                                  if (file) handleReplaceImage(img.id, file);
-                                }}
-                              />
-                            </label>
-                            {/* Remove */}
-                            <button
-                              type="button"
-                              onClick={() => handleRemoveImage(img.id)}
-                              className="p-1.5 bg-red-600/30 hover:bg-red-600 text-white rounded-lg transition-colors"
-                              title="Delete Image"
-                            >
-                              <Trash className="w-4.5 h-4.5" />
-                            </button>
-                          </div>
-                        </div>
+                 {/* Images Thumbnails Grid */}
+                 {formImages.length > 0 && (
+                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-3">
+                     {formImages.map((img, idx) => (
+                       <div
+                         key={img.id}
+                         className={`group relative rounded-xl border overflow-hidden bg-slate-50 flex flex-col justify-between aspect-square transition-all border-slate-200 ${
+                           img.isPrimary ? "ring-2 ring-[#C5A880]" : "hover:border-slate-300"
+                         }`}
+                       >
+                         
+                         {/* Image Thumbnail */}
+                         <div className="relative flex-grow overflow-hidden bg-slate-100 flex items-center justify-center">
+                           <img
+                             src={img.url}
+                             alt="Product"
+                             className="object-cover w-full h-full"
+                           />
+                           
+                           {/* Image Action Overlays */}
+                           <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1">
+                             {/* Move Left */}
+                             {idx > 0 && (
+                               <button
+                                 type="button"
+                                 onClick={() => handleMoveImage(img.id, "left")}
+                                 className="p-1.5 bg-white/20 hover:bg-white/40 text-white rounded-lg transition-colors font-bold text-[10px]"
+                                 title="Move Left"
+                               >
+                                 &larr;
+                               </button>
+                             )}
+                             {/* Replace */}
+                             <label className="p-1.5 bg-white/20 hover:bg-white/40 text-white rounded-lg cursor-pointer transition-colors" title="Replace Image">
+                               <RefreshCw className="w-4 h-4" />
+                               <input
+                                 type="file"
+                                 accept="image/*"
+                                 className="hidden"
+                                 onChange={(e) => {
+                                   const file = e.target.files?.[0];
+                                   if (file) handleReplaceImage(img.id, file);
+                                 }}
+                               />
+                             </label>
+                             {/* Move Right */}
+                             {idx < formImages.length - 1 && (
+                               <button
+                                 type="button"
+                                 onClick={() => handleMoveImage(img.id, "right")}
+                                 className="p-1.5 bg-white/20 hover:bg-white/40 text-white rounded-lg transition-colors font-bold text-[10px]"
+                                 title="Move Right"
+                               >
+                                 &rarr;
+                               </button>
+                             )}
+                             {/* Remove */}
+                             <button
+                               type="button"
+                               onClick={() => handleRemoveImage(img.id)}
+                               className="p-1.5 bg-red-600/30 hover:bg-red-600 text-white rounded-lg transition-colors"
+                               title="Delete Image"
+                             >
+                               <Trash className="w-4 h-4" />
+                             </button>
+                           </div>
+                         </div>
 
                         {/* Control Bar */}
                         <div className="bg-slate-100 border-t border-slate-200 p-2 flex items-center justify-between shrink-0">
@@ -892,7 +957,7 @@ export function ProductsTab() {
               </div>
 
               {/* Checkbox Options Grid */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4 bg-slate-50 border border-slate-200 rounded-xl">
                 <label className="flex items-center gap-2.5 text-xs text-slate-900 font-bold select-none cursor-pointer">
                   <input
                     type="checkbox"
@@ -915,10 +980,28 @@ export function ProductsTab() {
                   <input
                     type="checkbox"
                     className="rounded border-slate-400 text-[#C5A880] focus:ring-[#C5A880] w-4.5 h-4.5"
+                    checked={formIsExclusive}
+                    onChange={(e) => handleFieldChange(setFormIsExclusive, e.target.checked)}
+                  />
+                  Best Seller (Exclusive)
+                </label>
+                <label className="flex items-center gap-2.5 text-xs text-slate-900 font-bold select-none cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="rounded border-slate-400 text-[#C5A880] focus:ring-[#C5A880] w-4.5 h-4.5"
                     checked={formIsLatest}
                     onChange={(e) => handleFieldChange(setFormIsLatest, e.target.checked)}
                   />
-                  Best Seller / New
+                  New Arrival
+                </label>
+                <label className="flex items-center gap-2.5 text-xs text-slate-900 font-bold select-none cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="rounded border-slate-400 text-[#C5A880] focus:ring-[#C5A880] w-4.5 h-4.5"
+                    checked={formIsBridal}
+                    onChange={(e) => handleFieldChange(setFormIsBridal, e.target.checked)}
+                  />
+                  Bridal Collection
                 </label>
                 <label className="flex items-center gap-2.5 text-xs text-slate-900 font-bold select-none cursor-pointer">
                   <input

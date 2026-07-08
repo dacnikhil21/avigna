@@ -4,6 +4,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { BRAND, products as initialProducts, categories as initialCategories } from "@/lib/data";
 import type { Product, Category } from "@/types";
+import type { HeroSlide, AnnouncementBar } from "@prisma/client";
 
 export interface MockOrder {
   id: string;
@@ -310,6 +311,8 @@ export function useWebsiteData(): {
   brand: WebsiteSettings;
   products: Product[];
   categories: Category[];
+  heroSlides: HeroSlide[];
+  announcements: AnnouncementBar[];
 } {
   const store = useAdminStore();
   return useWebsiteDataInternal(store);
@@ -325,8 +328,12 @@ function useWebsiteDataInternal(store: {
   brand: WebsiteSettings;
   products: Product[];
   categories: Category[];
+  heroSlides: HeroSlide[];
+  announcements: AnnouncementBar[];
 } {
   const [mounted, setMounted] = React.useState(false);
+  const [heroSlides, setHeroSlides] = React.useState<HeroSlide[]>([]);
+  const [announcements, setAnnouncements] = React.useState<AnnouncementBar[]>([]);
   const [brand, setBrand] = React.useState<WebsiteSettings>({
     businessName: "Sri Avighna 1 Gram Gold Jewellery",
     logoText: "Sri Avighna",
@@ -361,6 +368,7 @@ function useWebsiteDataInternal(store: {
           }));
         }
         if (data.heroSlides && data.heroSlides.length > 0) {
+          setHeroSlides(data.heroSlides);
           setBrand((prev) => ({
             ...prev,
             heroTitle: data.heroSlides[0].title || prev.heroTitle,
@@ -368,6 +376,7 @@ function useWebsiteDataInternal(store: {
           }));
         }
         if (data.announcements && data.announcements.length > 0) {
+          setAnnouncements(data.announcements);
           setBrand((prev) => ({
             ...prev,
             offerBannerText: data.announcements.map((a: { text: string }) => a.text).join(" | "),
@@ -399,14 +408,16 @@ function useWebsiteDataInternal(store: {
       brand: defaultBrand,
       products: store.products,
       categories: store.categories,
+      heroSlides: [],
+      announcements: [],
     };
   }
 
-  // Fallback to store's products/categories if database fetch isn't ready
-  // Admin panel will use this since store.products is kept in sync with admin operations
   return {
     brand,
     products: store.products,
     categories: store.categories,
+    heroSlides,
+    announcements,
   };
 }

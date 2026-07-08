@@ -1,33 +1,79 @@
 "use client";
 
-import { useState } from "react";
-import { useAdminStore } from "@/lib/store/admin-store";
-import { CheckCircle2, Save, Settings, ShieldAlert, AlertTriangle } from "lucide-react";
+import { useState, useEffect } from "react";
+import { CheckCircle2, Save, Settings, ShieldAlert, AlertTriangle, Globe } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
 export function SettingsTab() {
-  const { websiteSettings, updateWebsiteSettings } = useAdminStore();
-
-  const [formBusinessName, setFormBusinessName] = useState(websiteSettings.businessName);
-  const [formLogoText, setFormLogoText] = useState(websiteSettings.logoText);
-  const [formLogoSubText, setFormLogoSubText] = useState(websiteSettings.logoSubText);
-  const [formPhone, setFormPhone] = useState(websiteSettings.phone);
-  const [formEmail, setFormEmail] = useState(websiteSettings.email);
-  const [formAddress, setFormAddress] = useState(websiteSettings.address);
-  const [formStoreTimings, setFormStoreTimings] = useState(websiteSettings.storeTimings);
-  const [formGst, setFormGst] = useState(websiteSettings.gst);
+  const [loading, setLoading] = useState(true);
+  const [formBusinessName, setFormBusinessName] = useState("");
+  const [formLogoText, setFormLogoText] = useState("");
+  const [formLogoSubText, setFormLogoSubText] = useState("");
+  const [formPhone, setFormPhone] = useState("");
+  const [formEmail, setFormEmail] = useState("");
+  const [formAddress, setFormAddress] = useState("");
+  const [formStoreTimings, setFormStoreTimings] = useState("");
+  const [formGst, setFormGst] = useState("");
+  const [formLogoUrl, setFormLogoUrl] = useState("");
+  const [formInstagram, setFormInstagram] = useState("");
+  const [formFacebook, setFormFacebook] = useState("");
+  const [formYoutube, setFormYoutube] = useState("");
+  const [formPinterest, setFormPinterest] = useState("");
 
   const [isDirty, setIsDirty] = useState(false);
   const [toastMsg, setToastMsg] = useState("");
+
+  const loadSettings = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch("/api/admin/settings");
+      const data = await res.json();
+      if (data) {
+        setFormBusinessName(data.brandName || "");
+        setFormLogoText(data.logoText || "");
+        setFormLogoSubText(data.logoSubText || "");
+        setFormPhone(data.phone || "");
+        setFormEmail(data.email || "");
+        setFormAddress(data.addressLine1 || "");
+        setFormStoreTimings(data.storeTimings || "");
+        setFormGst(data.gstNumber || "");
+        setFormLogoUrl(data.logoUrl || "");
+        setFormInstagram(data.instagramUrl || "");
+        setFormFacebook(data.facebookUrl || "");
+        setFormYoutube(data.youtubeUrl || "");
+        setFormPinterest(data.pinterestUrl || "");
+      }
+    } catch (err) {
+      console.error("Error loading settings:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadSettings();
+  }, []);
 
   const handleFieldChange = <T,>(setter: (v: T) => void, val: T) => {
     setter(val);
     setIsDirty(true);
   };
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormLogoUrl(reader.result as string);
+        setIsDirty(true);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formBusinessName || !formLogoText || !formPhone || !formEmail || !formAddress || !formStoreTimings || !formGst) {
@@ -36,38 +82,62 @@ export function SettingsTab() {
       return;
     }
 
-    updateWebsiteSettings({
-      businessName: formBusinessName,
+    const payload = {
+      brandName: formBusinessName,
       logoText: formLogoText,
       logoSubText: formLogoSubText,
       phone: formPhone,
       email: formEmail,
-      address: formAddress,
+      addressLine1: formAddress,
       storeTimings: formStoreTimings,
-      gst: formGst
-    });
+      gstNumber: formGst,
+      logoUrl: formLogoUrl,
+      instagramUrl: formInstagram,
+      facebookUrl: formFacebook,
+      youtubeUrl: formYoutube,
+      pinterestUrl: formPinterest
+    };
 
-    setIsDirty(false);
-    setToastMsg("Business configurations saved successfully!");
-    setTimeout(() => setToastMsg(""), 3000);
+    try {
+      const res = await fetch("/api/admin/settings", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        setIsDirty(false);
+        setToastMsg("Business configurations saved successfully!");
+        setTimeout(() => setToastMsg(""), 3000);
+        loadSettings();
+      } else {
+        setToastMsg("Failed to update database configurations.");
+        setTimeout(() => setToastMsg(""), 3000);
+      }
+    } catch (err) {
+      console.error(err);
+      setToastMsg("Error saving configurations.");
+      setTimeout(() => setToastMsg(""), 3000);
+    }
   };
 
   const handleReset = () => {
-    setFormBusinessName(websiteSettings.businessName);
-    setFormLogoText(websiteSettings.logoText);
-    setFormLogoSubText(websiteSettings.logoSubText);
-    setFormPhone(websiteSettings.phone);
-    setFormEmail(websiteSettings.email);
-    setFormAddress(websiteSettings.address);
-    setFormStoreTimings(websiteSettings.storeTimings);
-    setFormGst(websiteSettings.gst);
+    loadSettings();
     setIsDirty(false);
     setToastMsg("Changes discarded.");
     setTimeout(() => setToastMsg(""), 3000);
   };
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center p-20">
+        <div className="w-8 h-8 border-2 border-[#C5A880] border-t-transparent rounded-full animate-spin mr-3" />
+        <span className="text-xs uppercase tracking-widest font-semibold text-[#1A1A1A]">Loading business settings...</span>
+      </div>
+    );
+  }
+
   return (
-    <div className="space-y-8 font-sans antialiased text-[#1A1A1A] max-w-4xl">
+    <div className="space-y-8 font-sans antialiased text-[#1A1A1A] max-w-4xl pb-12">
       
       {/* Toast */}
       {toastMsg && (
@@ -82,7 +152,7 @@ export function SettingsTab() {
         <div className="flex items-center justify-between gap-4 p-4 bg-amber-50 border border-amber-300 rounded-xl text-xs font-bold text-amber-900 animate-pulse">
           <div className="flex items-center gap-2">
             <AlertTriangle className="w-4 h-4 text-amber-600" />
-            <span>You have unsaved changes. Remember to save before exiting!</span>
+            <span>You have unsaved settings changes. Remember to save!</span>
           </div>
           <button
             type="button"
@@ -155,6 +225,19 @@ export function SettingsTab() {
                 onChange={(e) => handleFieldChange(setFormLogoSubText, e.target.value)}
               />
             </div>
+
+            <div className="space-y-2 md:col-span-2">
+              <Label className="text-xs uppercase tracking-wider font-bold text-slate-900">Upload Store Logo / Icon</Label>
+              <div className="flex items-center gap-4 pt-1">
+                <div className="w-16 h-16 bg-slate-100 border border-slate-200 rounded-xl overflow-hidden relative flex items-center justify-center">
+                  {formLogoUrl ? <img src={formLogoUrl} alt="Store Logo Preview" className="object-cover w-full h-full" /> : <Globe className="w-6 h-6 text-slate-400" />}
+                </div>
+                <label className="px-3 py-1.5 bg-[#C5A880] hover:bg-[#b0936b] text-white text-xs uppercase tracking-wider font-bold rounded-lg cursor-pointer">
+                  Upload Logo
+                  <input type="file" accept="image/*" className="hidden" onChange={handleLogoUpload} />
+                </label>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -217,6 +300,33 @@ export function SettingsTab() {
                 value={formAddress}
                 onChange={(e) => handleFieldChange(setFormAddress, e.target.value)}
               />
+            </div>
+          </div>
+        </div>
+
+        {/* Social Links */}
+        <div className="bg-white border border-[#EFECE7] rounded-2xl p-6 shadow-sm space-y-6">
+          <h3 className="font-serif text-base text-slate-950 font-bold border-b pb-2 flex items-center gap-2 uppercase tracking-wide">
+            <Globe className="w-4.5 h-4.5 text-[#C5A880] stroke-[2]" />
+            Social Media Links
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-slate-950 font-bold">
+            <div className="space-y-1.5">
+              <Label htmlFor="set-instagram">Instagram Profile URL</Label>
+              <Input id="set-instagram" className="input-luxury" placeholder="https://instagram.com/sriavighna" value={formInstagram} onChange={(e) => handleFieldChange(setFormInstagram, e.target.value)} />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="set-facebook">Facebook Page URL</Label>
+              <Input id="set-facebook" className="input-luxury" placeholder="https://facebook.com/sriavighna" value={formFacebook} onChange={(e) => handleFieldChange(setFormFacebook, e.target.value)} />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="set-youtube">YouTube Channel URL</Label>
+              <Input id="set-youtube" className="input-luxury" placeholder="https://youtube.com/c/sriavighna" value={formYoutube} onChange={(e) => handleFieldChange(setFormYoutube, e.target.value)} />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="set-pinterest">Pinterest Boards URL</Label>
+              <Input id="set-pinterest" className="input-luxury" placeholder="https://pinterest.com/sriavighna" value={formPinterest} onChange={(e) => handleFieldChange(setFormPinterest, e.target.value)} />
             </div>
           </div>
         </div>
