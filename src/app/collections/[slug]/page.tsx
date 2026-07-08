@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import type { Product } from "@/types";
 
+export const dynamic = "force-dynamic";
+
 interface Props {
   params: Promise<{ slug: string }>;
 }

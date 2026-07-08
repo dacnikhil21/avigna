@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { CollectionsGrid } from "@/components/collections/collections-grid";
 import type { Collection } from "@/types";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Collections",
   description:

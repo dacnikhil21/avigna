@@ -4,6 +4,8 @@ import { CheckCircle2, Package, MapPin, ArrowRight, Home } from "lucide-react";
 import { getOrderByNumber } from "@/lib/db/orders";
 import { formatPrice } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+
 interface Props {
   searchParams: Promise<{ order?: string }>;
 }
