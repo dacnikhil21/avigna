@@ -115,9 +115,6 @@ export function HeroSection() {
         
         {/* Bottom vertical gradient to anchor the text content */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#121212]/85 via-[#121212]/30 to-transparent pointer-events-none" />
-        
-        {/* Smooth bottom transition to white page background */}
-        <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-white via-white/40 to-transparent pointer-events-none z-[5]" />
       </div>
 
       {/* Main Content Overlay */}

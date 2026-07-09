@@ -43,8 +43,6 @@ export default async function CollectionsPage() {
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#121212]/90 via-[#121212]/35 to-transparent" />
-        {/* Smooth bottom transition to page background */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#FAF8F5] to-transparent pointer-events-none z-[5]" />
         <div className="relative z-10 section-padding pb-12 w-full">
           <FadeIn>
             <p className="label-luxury text-[#C5A880] mb-2">Exclusive Editions</p>
