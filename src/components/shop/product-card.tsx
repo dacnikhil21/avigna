@@ -143,24 +143,6 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
               </span>
             )}
           </div>
-
-          {/* Action Buttons */}
-          <div className="mt-auto flex flex-col gap-1">
-            <button
-              onClick={handleAddToCart}
-              className="w-full flex items-center justify-center gap-1 py-1.5 border border-[#121212] text-[#121212] text-[8px] md:text-[9px] uppercase tracking-wider rounded-md hover:bg-[#121212] hover:text-white transition-all duration-300 font-medium"
-            >
-              <ShoppingBag className="w-2.5 h-2.5" />
-              Add to Cart
-            </button>
-            <Link
-              href={`/product/${product.slug}`}
-              className="w-full flex items-center justify-center gap-1 py-1.5 bg-[#C5A880] text-white text-[8px] md:text-[9px] uppercase tracking-wider rounded-md hover:bg-[#b8966f] transition-all duration-300 font-medium"
-            >
-              <ArrowUpRight className="w-2.5 h-2.5" />
-              View Details
-            </Link>
-          </div>
         </div>
       </article>
 

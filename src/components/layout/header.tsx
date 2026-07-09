@@ -29,7 +29,7 @@ export function Header() {
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const router = useRouter();
   const pathname = usePathname();
-  const isOverlayPage = pathname === "/" || pathname === "/bridal-salon";
+  const isOverlayPage = pathname === "/" || pathname === "/bridal-salon" || pathname === "/shop" || pathname === "/collections" || pathname === "/about" || pathname === "/contact";
 
   // Load recent searches from localStorage
   useEffect(() => {

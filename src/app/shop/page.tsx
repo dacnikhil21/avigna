@@ -3,6 +3,7 @@
 import { useMemo, Suspense } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { ProductCard } from "@/components/shop/product-card";
+import Image from "next/image";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/shared/motion";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -103,8 +104,29 @@ function ShopContent() {
 
   return (
     <div className="min-h-screen bg-[#FAF8F5]">
+      {/* Hero Banner */}
+      <section className="relative h-[45vh] min-h-[300px] flex items-end">
+        <Image
+          src="https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?w=1920&q=80"
+          alt="Sri Avighna Shop Collection Background"
+          fill
+          priority
+          className="object-cover animate-in fade-in zoom-in-95 duration-500"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#121212]/90 via-[#121212]/35 to-transparent" />
+        <div className="relative z-10 section-padding pb-12 w-full">
+          <FadeIn>
+            <p className="label-luxury text-[#C5A880] mb-2">Sri Avighna Collections</p>
+            <h1 className="heading-lg text-white font-serif tracking-wide leading-tight">
+              {activeCategory ? activeCategory.name : "The Shop Collection"}
+            </h1>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* Breadcrumbs */}
-      <div className="section-padding pt-28 md:pt-32 pb-4">
+      <div className="section-padding pt-8 pb-4">
         <nav className="flex items-center gap-1.5 text-xs text-[#9a948f]">
           <Link href="/" className="hover:text-[#C5A880] transition-colors">Home</Link>
           <ChevronRight className="w-3 h-3" />
