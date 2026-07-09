@@ -13,7 +13,7 @@ export async function PUT(req: NextRequest, ctx: RouteContext) {
 
     const {
       name, slug, description, shortDesc, price, salePrice,
-      sku, metal, purity, color, weight, stones, dimensions,
+      sku, material, metal, purity, color, weight, stones, dimensions,
       stockQty, inStock, isFeatured, isLatest, isExclusive,
       isTrending, isBridal, isActive, categoryId, collectionId,
       metaTitle, metaDesc, metaKeywords, images,
@@ -28,6 +28,7 @@ export async function PUT(req: NextRequest, ctx: RouteContext) {
     if (price !== undefined) data.price = Math.round(price);
     if (salePrice !== undefined) data.salePrice = salePrice ? Math.round(salePrice) : null;
     if (sku !== undefined) data.sku = sku;
+    if (material !== undefined) data.material = material;
     if (metal !== undefined) data.metal = metal;
     if (purity !== undefined) data.purity = purity;
     if (color !== undefined) data.color = color;

@@ -82,6 +82,7 @@ export function ProductsTab() {
   
   // Multiple images state
   const [formImages, setFormImages] = useState<Omit<ProductImage, "productId">[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
   
   const [formIsFeatured, setFormIsFeatured] = useState(false);
   const [formIsTrending, setFormIsTrending] = useState(false);
@@ -90,6 +91,15 @@ export function ProductsTab() {
   const [formIsBridal, setFormIsBridal] = useState(false);
   const [formIsActive, setFormIsActive] = useState(true);
   const [formSku, setFormSku] = useState("");
+
+  // Specifications
+  const [formMaterial, setFormMaterial] = useState("");
+  const [formMetal, setFormMetal] = useState("");
+  const [formPurity, setFormPurity] = useState("");
+  const [formColor, setFormColor] = useState("");
+  const [formWeight, setFormWeight] = useState("");
+  const [formStones, setFormStones] = useState("");
+  const [formDimensions, setFormDimensions] = useState("");
 
   // Drag over state
   const [dragOver, setDragOver] = useState(false);
@@ -125,6 +135,15 @@ export function ProductsTab() {
     setFormIsActive(true);
     setEditingId(null);
     setIsDirty(false);
+
+    // Specifications
+    setFormMaterial("");
+    setFormMetal("");
+    setFormPurity("");
+    setFormColor("");
+    setFormWeight("");
+    setFormStones("");
+    setFormDimensions("");
   };
 
   // Open forms
@@ -137,8 +156,8 @@ export function ProductsTab() {
     setFormName(product.name);
     setFormCategory(product.categoryId);
     setFormDesc(product.description || "");
-    setFormPrice(product.price.toString());
-    setFormDiscount(product.salePrice && product.salePrice < product.price ? product.salePrice.toString() : "");
+    setFormPrice((product.price / 100).toString());
+    setFormDiscount(product.salePrice ? (product.salePrice / 100).toString() : "");
     setFormStock(product.stockQty.toString());
     setFormSku(product.sku || "");
     
@@ -160,6 +179,15 @@ export function ProductsTab() {
     setFormIsActive(product.isActive);
     setEditingId(product.id);
     
+    // Specifications
+    setFormMaterial(product.material || "");
+    setFormMetal(product.metal || "");
+    setFormPurity(product.purity || "");
+    setFormColor(product.color || "");
+    setFormWeight(product.weight || "");
+    setFormStones(product.stones || "");
+    setFormDimensions(product.dimensions || "");
+
     setFormOpen(true);
     setIsDirty(false);
   };
@@ -180,28 +208,51 @@ export function ProductsTab() {
     resetForm();
   };
 
-  // Image Upload File Reader
-  const addImagesFromFiles = (files: FileList) => {
-    Array.from(files).forEach((file) => {
+  // Image Upload File Reader / Uploader
+  const addImagesFromFiles = async (files: FileList) => {
+    setIsUploading(true);
+    showToast("Uploading image(s) to Cloudinary...");
+    for (const file of Array.from(files)) {
       if (!file.type.startsWith("image/")) {
         showToast("Invalid file type. Select images only.", "error");
-        return;
+        continue;
       }
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const isFirst = formImages.length === 0;
-        const newImage: Omit<ProductImage, "productId"> = {
-          id: `img-${Math.random().toString(36).substr(2, 9)}`,
-          url: reader.result as string,
-          isPrimary: isFirst,
-          position: formImages.length,
-          altText: file.name
-        };
-        setFormImages((prev) => [...prev, newImage]);
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("folder", "avigna/products");
+
+        const res = await fetch("/api/admin/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(errData.error || "Upload failed");
+        }
+
+        const data = await res.json();
+        setFormImages((prev) => {
+          const updated = [...prev];
+          const isFirst = updated.length === 0;
+          const newImage: Omit<ProductImage, "productId"> = {
+            id: `img-${Math.random().toString(36).substr(2, 9)}`,
+            url: data.url,
+            isPrimary: isFirst,
+            position: updated.length,
+            altText: file.name
+          };
+          return [...updated, newImage];
+        });
         setIsDirty(true);
-      };
-      reader.readAsDataURL(file);
-    });
+        showToast("Image uploaded successfully!");
+      } catch (error: any) {
+        console.error("Image upload failed:", error);
+        showToast(`Failed to upload image: ${error.message}`, "error");
+      }
+    }
+    setIsUploading(false);
   };
 
   const handleImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -227,18 +278,41 @@ export function ProductsTab() {
     }
   };
 
-  const handleReplaceImage = (id: string, file: File) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
+  const handleReplaceImage = async (id: string, file: File) => {
+    if (!file.type.startsWith("image/")) {
+      showToast("Invalid file type. Select images only.", "error");
+      return;
+    }
+    setIsUploading(true);
+    showToast("Replacing image on Cloudinary...");
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("folder", "avigna/products");
+
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.error || "Upload failed");
+      }
+
+      const data = await res.json();
       setFormImages((prev) =>
         prev.map((img) =>
-          img.id === id ? { ...img, url: reader.result as string, altText: file.name } : img
+          img.id === id ? { ...img, url: data.url, altText: file.name } : img
         )
       );
       setIsDirty(true);
       showToast("Image replaced successfully.");
-    };
-    reader.readAsDataURL(file);
+    } catch (error: any) {
+      console.error("Image replace failed:", error);
+      showToast(`Failed to replace image: ${error.message}`, "error");
+    }
+    setIsUploading(false);
   };
 
   const handleRemoveImage = (id: string) => {
@@ -295,12 +369,10 @@ export function ProductsTab() {
       return;
     }
 
-    const priceNum = parseFloat(formPrice);
-    // formDiscount now holds the final SALE PRICE directly
-    const salePriceInput = formDiscount ? parseFloat(formDiscount) : 0;
+    const priceNum = Math.round(parseFloat(formPrice) * 100);
+    const salePriceInput = formDiscount ? Math.round(parseFloat(formDiscount) * 100) : null;
     const stockNum = parseInt(formStock);
-    // Only set a salePrice if it is strictly less than the original price
-    const salePrice = (salePriceInput > 0 && salePriceInput < priceNum) ? salePriceInput : undefined;
+    const salePrice = salePriceInput;
 
     // Build formal images structures
     const formattedImages: ProductImage[] = formImages.map((img, idx) => ({
@@ -317,7 +389,7 @@ export function ProductsTab() {
       categoryId: formCategory,
       description: formDesc,
       price: priceNum,
-      salePrice: salePrice === null ? undefined : salePrice,
+      salePrice: salePrice || null,
       stockQty: stockNum,
       inStock: stockNum > 0,
       isFeatured: formIsFeatured,
@@ -327,8 +399,14 @@ export function ProductsTab() {
       isBridal: formIsBridal,
       isActive: formIsActive,
       images: formattedImages,
-      metal: "Gold",
-      sku: formSku || (editingId ? (products.find((p) => p.id === editingId)?.sku || "") : `SKU-${Math.random().toString(36).substr(2, 6).toUpperCase()}`)
+      sku: formSku || (editingId ? (products.find((p) => p.id === editingId)?.sku || "") : `SKU-${Math.random().toString(36).substr(2, 6).toUpperCase()}`),
+      material: formMaterial,
+      metal: formMetal || "Gold",
+      purity: formPurity,
+      color: formColor,
+      weight: formWeight,
+      stones: formStones,
+      dimensions: formDimensions,
     };
 
     const saveProduct = async () => {
@@ -585,9 +663,9 @@ export function ProductsTab() {
                       {/* Price */}
                       <td className="py-3 px-4">
                         <div className="space-y-0.5 text-slate-900">
-                          <p className="font-bold text-sm">₹{p.price.toLocaleString("en-IN")}</p>
+                          <p className="font-bold text-sm">₹{((p.salePrice ?? p.price) / 100).toLocaleString("en-IN")}</p>
                           {p.salePrice && (
-                            <p className="text-[10px] text-red-600 line-through">₹{p.price.toLocaleString("en-IN")}</p>
+                            <p className="text-[10px] text-red-600 line-through">₹{(p.price / 100).toLocaleString("en-IN")}</p>
                           )}
                         </div>
                       </td>
@@ -747,18 +825,16 @@ export function ProductsTab() {
                       </option>
                     ))}
                   </select>
-                </div>
-
-                {/* Price */}
+                </div>                {/* Price */}
                 <div className="space-y-2">
                   <Label htmlFor="prod-price" className="text-xs uppercase tracking-wider font-bold text-slate-900">
-                    Base Price (₹) <span className="text-red-500">*</span>
+                    MRP (Original Price) (₹) <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="prod-price"
                     type="number"
                     required
-                    placeholder="e.g. 2999"
+                    placeholder="e.g. 20000"
                     className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#C5A880] text-slate-900 font-bold"
                     value={formPrice}
                     onChange={(e) => handleFieldChange(setFormPrice, e.target.value)}
@@ -768,21 +844,18 @@ export function ProductsTab() {
                 {/* Sale Price (Discount) */}
                 <div className="space-y-2">
                   <Label htmlFor="prod-discount" className="text-xs uppercase tracking-wider font-bold text-slate-900">
-                    Sale Price (₹) <span className="text-slate-500 text-[10px] font-normal normal-case tracking-normal">— optional, must be less than MRP</span>
+                    Store Price (Selling Price) (₹) <span className="text-slate-500 text-[10px] font-normal normal-case tracking-normal">— optional (will display MRP if blank)</span>
                   </Label>
                   <Input
                     id="prod-discount"
                     type="number"
-                    placeholder={formPrice ? `e.g. ${Math.round(parseFloat(formPrice || "0") * 0.9)} (leave blank = no discount)` : "e.g. 1800"}
+                    placeholder="e.g. 12000"
                     className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#C5A880] text-slate-900 font-bold"
                     value={formDiscount}
                     onChange={(e) => handleFieldChange(setFormDiscount, e.target.value)}
                   />
-                  {formDiscount && formPrice && parseFloat(formDiscount) >= parseFloat(formPrice) && (
-                    <p className="text-[10px] text-red-600 font-bold mt-1">⚠ Sale price must be less than MRP (₹{formPrice}). Discount will not apply.</p>
-                  )}
-                  {formDiscount && formPrice && parseFloat(formDiscount) > 0 && parseFloat(formDiscount) < parseFloat(formPrice) && (
-                    <p className="text-[10px] text-emerald-700 font-bold mt-1">✓ Customer saves ₹{(parseFloat(formPrice) - parseFloat(formDiscount)).toFixed(0)} ({Math.round(((parseFloat(formPrice) - parseFloat(formDiscount)) / parseFloat(formPrice)) * 100)}% off)</p>
+                  {formDiscount && formPrice && parseFloat(formDiscount) > 0 && (
+                    <p className="text-[10px] text-emerald-700 font-bold mt-1">✓ Product will sell for ₹{parseFloat(formDiscount).toLocaleString("en-IN")} (MRP: ₹{parseFloat(formPrice).toLocaleString("en-IN")})</p>
                   )}
                 </div>
 
@@ -829,25 +902,36 @@ export function ProductsTab() {
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
                   onDrop={handleDrop}
-                  className={`w-full flex flex-col items-center justify-center border-2 border-dashed rounded-xl py-6 cursor-pointer text-xs font-bold gap-2 transition-all select-none ${
+                  className={`w-full flex flex-col items-center justify-center border-2 border-dashed rounded-xl py-6 cursor-pointer text-xs font-bold gap-2 transition-all select-none relative ${
+                    isUploading ? "pointer-events-none opacity-60" : ""
+                  } ${
                     dragOver
                       ? "border-[#C5A880] bg-[#C5A880]/5 text-[#C5A880]"
                       : "border-[#D1CFC9] hover:border-slate-400 bg-slate-50 text-slate-700"
                   }`}
                 >
-                  <Upload className={`w-8 h-8 ${dragOver ? "text-[#C5A880] animate-bounce" : "text-slate-400"}`} />
-                  <span>Drag &amp; drop product images here, or</span>
-                  <label className="px-3.5 py-1.5 bg-[#C5A880] hover:bg-[#b0936b] text-white rounded-lg transition-colors cursor-pointer inline-block text-[10px] uppercase font-bold tracking-wider">
-                    Browse Files
-                    <input
-                      type="file"
-                      accept="image/*"
-                      multiple
-                      className="hidden"
-                      onChange={handleImageFileChange}
-                    />
-                  </label>
-                  <p className="text-[10px] text-slate-500 font-normal mt-0.5">Supports PNG, JPG, JPEG. Max size 2MB per file.</p>
+                  {isUploading ? (
+                    <div className="flex flex-col items-center gap-2">
+                      <RefreshCw className="w-8 h-8 text-[#C5A880] animate-spin" />
+                      <span className="text-[#C5A880] font-bold animate-pulse">Uploading to Cloudinary...</span>
+                    </div>
+                  ) : (
+                    <>
+                      <Upload className={`w-8 h-8 ${dragOver ? "text-[#C5A880] animate-bounce" : "text-slate-400"}`} />
+                      <span>Drag &amp; drop product images here, or</span>
+                      <label className="px-3.5 py-1.5 bg-[#C5A880] hover:bg-[#b0936b] text-white rounded-lg transition-colors cursor-pointer inline-block text-[10px] uppercase font-bold tracking-wider">
+                        Browse Files
+                        <input
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          className="hidden"
+                          onChange={handleImageFileChange}
+                        />
+                      </label>
+                      <p className="text-[10px] text-slate-500 font-normal mt-0.5">Supports PNG, JPG, JPEG. Max size 2MB per file.</p>
+                    </>
+                  )}
                 </div>
 
                  {/* Images Thumbnails Grid */}
@@ -939,6 +1023,92 @@ export function ProductsTab() {
                     ))}
                   </div>
                 )}
+              </div>
+
+              {/* Specifications */}
+              <div className="space-y-3.5 border-t border-[#EFECE7] pt-6">
+                <Label className="text-xs uppercase tracking-wider font-bold text-slate-900 block">
+                  Product Specifications (Optional)
+                </Label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  {/* Material */}
+                  <div className="space-y-1">
+                    <Label htmlFor="prod-material" className="text-[10px] uppercase tracking-wider font-semibold text-slate-700">Material</Label>
+                    <Input
+                      id="prod-material"
+                      placeholder="e.g. 1 Gram Gold"
+                      className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#C5A880] text-slate-900 font-bold text-xs"
+                      value={formMaterial}
+                      onChange={(e) => handleFieldChange(setFormMaterial, e.target.value)}
+                    />
+                  </div>
+                  {/* Metal */}
+                  <div className="space-y-1">
+                    <Label htmlFor="prod-metal" className="text-[10px] uppercase tracking-wider font-semibold text-slate-700">Metal Plating</Label>
+                    <Input
+                      id="prod-metal"
+                      placeholder="e.g. Gold Plated Copper"
+                      className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#C5A880] text-slate-900 font-bold text-xs"
+                      value={formMetal}
+                      onChange={(e) => handleFieldChange(setFormMetal, e.target.value)}
+                    />
+                  </div>
+                  {/* Purity */}
+                  <div className="space-y-1">
+                    <Label htmlFor="prod-purity" className="text-[10px] uppercase tracking-wider font-semibold text-slate-700">Purity / Finish</Label>
+                    <Input
+                      id="prod-purity"
+                      placeholder="e.g. 24k Plating"
+                      className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#C5A880] text-slate-900 font-bold text-xs"
+                      value={formPurity}
+                      onChange={(e) => handleFieldChange(setFormPurity, e.target.value)}
+                    />
+                  </div>
+                  {/* Color */}
+                  <div className="space-y-1">
+                    <Label htmlFor="prod-color" className="text-[10px] uppercase tracking-wider font-semibold text-slate-700">Color</Label>
+                    <Input
+                      id="prod-color"
+                      placeholder="e.g. Gold, Ruby Red"
+                      className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#C5A880] text-slate-900 font-bold text-xs"
+                      value={formColor}
+                      onChange={(e) => handleFieldChange(setFormColor, e.target.value)}
+                    />
+                  </div>
+                  {/* Weight */}
+                  <div className="space-y-1">
+                    <Label htmlFor="prod-weight" className="text-[10px] uppercase tracking-wider font-semibold text-slate-700">Weight</Label>
+                    <Input
+                      id="prod-weight"
+                      placeholder="e.g. 45g"
+                      className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#C5A880] text-slate-900 font-bold text-xs"
+                      value={formWeight}
+                      onChange={(e) => handleFieldChange(setFormWeight, e.target.value)}
+                    />
+                  </div>
+                  {/* Stones */}
+                  <div className="space-y-1">
+                    <Label htmlFor="prod-stones" className="text-[10px] uppercase tracking-wider font-semibold text-slate-700">Stones / Pearls</Label>
+                    <Input
+                      id="prod-stones"
+                      placeholder="e.g. Kemp, Pearls"
+                      className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#C5A880] text-slate-900 font-bold text-xs"
+                      value={formStones}
+                      onChange={(e) => handleFieldChange(setFormStones, e.target.value)}
+                    />
+                  </div>
+                  {/* Dimensions */}
+                  <div className="space-y-1">
+                    <Label htmlFor="prod-dimensions" className="text-[10px] uppercase tracking-wider font-semibold text-slate-700">Dimensions</Label>
+                    <Input
+                      id="prod-dimensions"
+                      placeholder="e.g. 24 inch chain"
+                      className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#C5A880] text-slate-900 font-bold text-xs"
+                      value={formDimensions}
+                      onChange={(e) => handleFieldChange(setFormDimensions, e.target.value)}
+                    />
+                  </div>
+                </div>
               </div>
 
               {/* Description */}

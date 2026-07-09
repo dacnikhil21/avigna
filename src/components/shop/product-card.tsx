@@ -28,7 +28,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
       productId: product.id,
       name: product.name,
       slug: product.slug,
-      price: product.price,
+      price: product.salePrice ?? product.price,
       image: product.images[0]?.url ?? "",
       metal: product.metal,
     });
@@ -46,11 +46,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
     setQuickViewOpen(true);
   };
 
-  // Calculate discount percentage
-  const discountPct =
-    product.salePrice && product.salePrice < product.price
-      ? Math.round(((product.price - product.salePrice) / product.price) * 100)
-      : null;
+  // Discount logic removed
 
   // Badge logic
   const badge = product.isExclusive
@@ -86,11 +82,6 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
               {badge && (
                 <span className={cn("px-1.5 py-0.5 text-[8px] md:text-[9px] uppercase tracking-wider text-white font-medium rounded-md", badge.color)}>
                   {badge.label}
-                </span>
-              )}
-              {discountPct && (
-                <span className="px-1.5 py-0.5 text-[8px] md:text-[9px] uppercase tracking-wider text-white font-medium rounded-md bg-[#E05252]">
-                  -{discountPct}%
                 </span>
               )}
             </div>
@@ -144,11 +135,9 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           {/* Pricing */}
           <div className="flex items-center gap-1.5 mb-2.5 flex-wrap">
             <span className="text-xs md:text-sm font-semibold text-[#121212]">
-              {product.salePrice && product.salePrice < product.price
-                ? formatPrice(product.salePrice)
-                : formatPrice(product.price)}
+              {product.salePrice ? formatPrice(product.salePrice) : formatPrice(product.price)}
             </span>
-            {product.salePrice && product.salePrice < product.price && (
+            {product.salePrice && (
               <span className="text-[10px] md:text-xs text-[#9a948f] line-through">
                 {formatPrice(product.price)}
               </span>

@@ -21,6 +21,7 @@ import { useWishlistStore } from "@/lib/store/wishlist";
 import { ProductCard } from "@/components/shop/product-card";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/shared/motion";
+import { useRouter } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 
 interface ProductDetailProps {
@@ -29,6 +30,7 @@ interface ProductDetailProps {
 }
 
 export function ProductDetail({ product, related }: ProductDetailProps) {
+  const router = useRouter();
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
@@ -37,13 +39,56 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
   const { toggleItem, items } = useWishlistStore();
   const isWishlisted = items.some((i) => i.id === product.id);
 
+  // Hover zoom states and handlers
+  const [zoomStyle, setZoomStyle] = useState<React.CSSProperties>({});
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - left) / width) * 100;
+    const y = ((e.clientY - top) / height) * 100;
+    setZoomStyle({
+      transformOrigin: `${x}% ${y}%`,
+      transform: "scale(1.8)",
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setZoomStyle({
+      transformOrigin: "center center",
+      transform: "scale(1)",
+    });
+  };
+
+  const handleBuyNow = () => {
+    // 1. Clear cart
+    useCartStore.getState().clearCart();
+    
+    // 2. Add current item with quantity
+    for (let i = 0; i < quantity; i++) {
+      addItem({
+        productId: product.id,
+        name: product.name,
+        slug: product.slug,
+        price: product.salePrice ?? product.price,
+        image: product.images[0]?.url ?? "",
+        metal: product.metal,
+      });
+    }
+    
+    // 3. Close the slide-out cart slider immediately so it doesn't block screen
+    useCartStore.getState().closeCart();
+    
+    // 4. Redirect to checkout
+    router.push("/checkout");
+  };
+
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
       addItem({
         productId: product.id,
         name: product.name,
         slug: product.slug,
-        price: product.price,
+        price: product.salePrice ?? product.price,
         image: product.images[0]?.url ?? "",
         metal: product.metal,
       });
@@ -86,7 +131,11 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
         {/* Gallery */}
         <FadeIn direction="left">
           <div className="sticky top-32">
-            <div className="relative aspect-square rounded-xl overflow-hidden bg-luxury-cream mb-4">
+            <div 
+              className="relative aspect-square rounded-xl overflow-hidden bg-luxury-cream mb-4 cursor-zoom-in touch-manipulation"
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+            >
               <motion.div
                 key={selectedImage}
                 initial={{ opacity: 0 }}
@@ -100,6 +149,7 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
                   fill
                   priority
                   className="object-cover"
+                  style={{ transition: "transform 0.1s ease-out", ...zoomStyle }}
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               </motion.div>
@@ -150,6 +200,31 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
               )}
             </div>
 
+            {/* Stock Status */}
+            <div className="flex items-center gap-2 mb-4">
+              {product.stockQty > 0 ? (
+                <span className="text-emerald-700 text-sm font-semibold flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse" />
+                  ✓ In Stock
+                </span>
+              ) : (
+                <span className="text-red-600 text-sm font-semibold flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-red-500 inline-block" />
+                  Out of Stock
+                </span>
+              )}
+            </div>
+
+            {/* Delivery Info */}
+            <div className="border-t border-b border-[#EFECE7] py-4 my-6 space-y-2">
+              <p className="text-sm text-slate-800 flex items-center gap-2 font-medium">
+                <span className="text-base">🚚</span> Free Delivery
+              </p>
+              <p className="text-xs text-luxury-muted ml-7">
+                Delivery in 3–5 Business Days
+              </p>
+            </div>
+
             <p className="body-lg mb-6">{product.description}</p>
 
             {/* Specs */}
@@ -168,7 +243,7 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
             </div>
 
             {/* Quantity + Add to cart */}
-            <div className="flex items-center gap-4 mb-6">
+            <div className="flex items-center gap-4 mb-3">
               <div className="flex items-center gap-3 border border-luxury-beige/50 rounded-lg px-2">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -188,14 +263,14 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
               </div>
 
               <Button
-                variant="gold"
+                variant="outline"
                 size="lg"
-                className="flex-1 rounded-lg"
+                className="flex-1 rounded-lg border-luxury-gold text-luxury-gold hover:bg-luxury-gold/5"
                 onClick={handleAddToCart}
               >
                 {added ? (
                   <>
-                    <Check className="w-4 h-4" />
+                    <Check className="w-4 h-4 mr-2" />
                     Added to Bag
                   </>
                 ) : (
@@ -203,6 +278,15 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
                 )}
               </Button>
             </div>
+
+            <Button
+              variant="gold"
+              size="lg"
+              className="w-full rounded-lg mb-6 py-6 text-sm font-semibold tracking-wider uppercase"
+              onClick={handleBuyNow}
+            >
+              Buy It Now
+            </Button>
 
             <div className="flex gap-3 mb-8">
               <Button 

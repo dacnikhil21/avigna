@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const {
       name, slug, description, shortDesc, price, salePrice,
-      sku, metal, purity, color, weight, stones, dimensions,
+      sku, material, metal, purity, color, weight, stones, dimensions,
       stockQty, inStock, isFeatured, isLatest, isExclusive,
       isTrending, isBridal, isActive, categoryId, collectionId,
       metaTitle, metaDesc, metaKeywords, images = [],
@@ -72,6 +72,7 @@ export async function POST(req: NextRequest) {
         price: Math.round(price),
         salePrice: salePrice ? Math.round(salePrice) : null,
         sku,
+        material,
         metal: metal || "Gold Plated",
         purity,
         color,
