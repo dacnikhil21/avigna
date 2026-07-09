@@ -247,9 +247,10 @@ export function ProductsTab() {
         });
         setIsDirty(true);
         showToast("Image uploaded successfully!");
-      } catch (error: any) {
+      } catch (error) {
         console.error("Image upload failed:", error);
-        showToast(`Failed to upload image: ${error.message}`, "error");
+        const errMsg = error instanceof Error ? error.message : "Unknown error";
+        showToast(`Failed to upload image: ${errMsg}`, "error");
       }
     }
     setIsUploading(false);
@@ -308,9 +309,10 @@ export function ProductsTab() {
       );
       setIsDirty(true);
       showToast("Image replaced successfully.");
-    } catch (error: any) {
+    } catch (error) {
       console.error("Image replace failed:", error);
-      showToast(`Failed to replace image: ${error.message}`, "error");
+      const errMsg = error instanceof Error ? error.message : "Unknown error";
+      showToast(`Failed to replace image: ${errMsg}`, "error");
     }
     setIsUploading(false);
   };
