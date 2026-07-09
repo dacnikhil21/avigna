@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { useCartStore } from "@/lib/store/cart";
 import { useWebsiteData } from "@/lib/store/admin-store";
 import { useWishlistStore } from "@/lib/store/wishlist";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import type { Product } from "@/types";
 
 export function Header() {
@@ -28,6 +28,8 @@ export function Header() {
   const [searchLoading, setSearchLoading] = useState(false);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const router = useRouter();
+  const pathname = usePathname();
+  const isOverlayPage = pathname === "/" || pathname === "/bridal-salon";
 
   // Load recent searches from localStorage
   useEffect(() => {
@@ -97,7 +99,7 @@ export function Header() {
     "Explore Our 1 Gram Gold Jewellery – Wanaparthy, Telangana"
   ];
 
-  const { totalItems, openCart } = useCartStore();
+  const { totalItems, openCart, isOpen: isCartOpen } = useCartStore();
   const itemCount = totalItems();
   const wishlistItems = useWishlistStore((s) => s.items);
   const wishlistCount = wishlistItems.length;
@@ -143,11 +145,14 @@ export function Header() {
     }
   };
 
-  const isHeaderDark = !isScrolled && !isMegaMenuOpen && !isSearchOpen;
+  const isHeaderDark = isOverlayPage && !isScrolled && !isMegaMenuOpen && !isSearchOpen;
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-50 flex flex-col w-full">
+      <div className={cn(
+        "fixed top-0 left-0 right-0 z-40 flex flex-col w-full transition-opacity duration-300",
+        (isSearchOpen || isMobileOpen || isCartOpen) && "opacity-0 pointer-events-none"
+      )}>
         {/* Luxury Announcement Bar */}
         <AnimatePresence>
           {showAnnouncement && (
@@ -187,7 +192,7 @@ export function Header() {
         <header
           className={cn(
             "w-full transition-all duration-400 ease-out z-40 border-b",
-            isScrolled
+            isScrolled || !isOverlayPage
               ? "bg-white/95 backdrop-blur-md shadow-sm border-[#EFECE7] h-16 md:h-20"
               : isMegaMenuOpen
                 ? "bg-white border-[#EFECE7] h-20 md:h-[88px]"

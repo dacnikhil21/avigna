@@ -135,7 +135,7 @@ export default function BridalSalonPage() {
               <StaggerItem key={product.id}>
                 <div className="group block">
                   <div className="relative aspect-[3/4] overflow-hidden bg-luxury-cream mb-4">
-                    <Image src={product.images[0]?.url ?? ""} alt={product.images[0]?.altText ?? product.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <Image src={product.images && product.images.length > 0 && product.images[0]?.url ? product.images[0].url : "/images/hero-bridal-bride.jpg"} alt={product.images && product.images.length > 0 && product.images[0]?.altText ? product.images[0].altText : product.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
                     <div className="absolute top-3 left-3">
                       <span className="text-[9px] uppercase tracking-[0.2em] bg-[#C5A880] text-white px-3 py-1.5">Bridal Edit</span>
                     </div>

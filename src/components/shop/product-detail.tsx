@@ -144,8 +144,8 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
                 className="relative w-full h-full"
               >
                 <Image
-                  src={product.images[selectedImage]?.url ?? ""}
-                  alt={product.images[selectedImage]?.altText ?? product.name}
+                  src={product.images && product.images.length > 0 && product.images[selectedImage]?.url ? product.images[selectedImage].url : "/images/hero-bridal-bride.jpg"}
+                  alt={product.images && product.images.length > 0 && product.images[selectedImage]?.altText ? product.images[selectedImage].altText : product.name}
                   fill
                   priority
                   className="object-cover"
@@ -168,7 +168,7 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
                     }`}
                   >
                     <Image
-                      src={img.url}
+                      src={img.url || "/images/hero-bridal-bride.jpg"}
                       alt={img.altText ?? `${product.name} view ${i + 1}`}
                       fill
                       className="object-cover"

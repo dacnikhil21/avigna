@@ -186,6 +186,17 @@ async function main() {
   const heroSlides = [
     {
       id: "hero-1",
+      eyebrow: "Everyday Luxury",
+      title: "Effortless Elegance, Every Day",
+      subtitle: "Lightweight, versatile, and modern 1 gram gold pieces crafted for daily wear.",
+      ctaText: "Shop Daily Wear",
+      ctaUrl: "/collections/everyday-luxe",
+      imageUrl: "/images/hero-4.jpeg",
+      imageAlt: "Premium gold necklaces and bangles layout",
+      sortOrder: 1,
+    },
+    {
+      id: "hero-2",
       eyebrow: "Avighna Collections — Wanaparthy",
       title: "Jewellery That Tells Your Story",
       subtitle: "Handcrafted 1 gram gold ornaments for brides, celebrations & everyday elegance.",
@@ -193,37 +204,47 @@ async function main() {
       ctaUrl: "/bridal-salon",
       secondaryCtaText: "Shop All",
       secondaryCtaUrl: "/shop",
-      imageUrl: IMG.bridal1,
-      imageAlt: "Bridal gold jewellery set",
-      sortOrder: 1,
-    },
-    {
-      id: "hero-2",
-      eyebrow: "Temple Gold Collection",
-      title: "Sacred Craftsmanship, Timeless Beauty",
-      subtitle: "Inspired by the divine art of South Indian temples — wearable heritage.",
-      ctaText: "View Collection",
-      ctaUrl: "/collections",
-      imageUrl: IMG.necklace2,
-      imageAlt: "Temple gold necklace",
+      imageUrl: "/images/hero-1.jpeg",
+      imageAlt: "Traditional red saree South Indian bridal jewellery",
       sortOrder: 2,
     },
     {
       id: "hero-3",
-      eyebrow: "Bridal Edit 2025",
-      title: "Dressed in Gold, Made for Your Big Day",
-      subtitle: "Complete bridal sets — necklace, earrings, tikka & more — crafted for the bride who deserves the best.",
-      ctaText: "Book Bridal Session",
-      ctaUrl: "/bridal-salon",
-      secondaryCtaText: "Explore Bridal",
-      secondaryCtaUrl: "/collections/bridal-heritage",
-      imageUrl: "/images/hero-bridal-bride.jpg",
-      imageAlt: "South Indian bride in red silk saree wearing gold jewellery",
+      eyebrow: "Temple Gold Collection",
+      title: "Sacred Craftsmanship, Timeless Beauty",
+      subtitle: "Inspired by the divine art of South Indian temples — wearable heritage.",
+      ctaText: "View Collection",
+      ctaUrl: "/collections/temple-gold",
+      imageUrl: "/images/hero-2.jpeg",
+      imageAlt: "Intricate temple gold necklace detailing",
       sortOrder: 3,
     },
+    {
+      id: "hero-4",
+      eyebrow: "Kemp Collection",
+      title: "The Vibrant Color of Celebrations",
+      subtitle: "Stunning kemp stone necklaces and chokers designed for festive occasions.",
+      ctaText: "Shop Kemp Collection",
+      ctaUrl: "/collections/kemp-collection",
+      imageUrl: "/images/hero-3.jpeg",
+      imageAlt: "Traditional gold kemp stone choker design",
+      sortOrder: 4,
+    },
+    {
+      id: "hero-5",
+      eyebrow: "Natyam Edit",
+      title: "Stage-Ready Classical Brilliance",
+      subtitle: "Professional classical dance jewellery sets for Bharatanatyam and Kuchipudi.",
+      ctaText: "Explore Natyam Edit",
+      ctaUrl: "/collections/natyam-edit",
+      imageUrl: "/images/hero-5.jpeg",
+      imageAlt: "South Indian bride standing in traditional bridal wear",
+      sortOrder: 5,
+    },
   ];
+  await prisma.heroSlide.deleteMany();
   for (const slide of heroSlides) {
-    await prisma.heroSlide.upsert({ where: { id: slide.id }, update: slide, create: slide });
+    await prisma.heroSlide.create({ data: slide });
   }
   console.log("✓ HeroSlides");
 
@@ -550,7 +571,7 @@ async function main() {
   console.log(`  Site Settings:     1`);
   console.log(`  Boutique Info:     1 (Wanaparthy Flagship)`);
   console.log(`  Announcement Bars: 3`);
-  console.log(`  Hero Slides:       2`);
+  console.log(`  Hero Slides:       ${heroSlides.length}`);
   console.log(`  Brand Story:       2 sections`);
   console.log(`  Editorial Gallery: 6 images`);
   console.log(`  Testimonials:      4`);

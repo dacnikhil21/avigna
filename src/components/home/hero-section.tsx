@@ -9,16 +9,24 @@ import { cn } from "@/lib/utils";
 
 const HERO_SLIDES = [
   {
-    url: "https://images.unsplash.com/photo-1610030469668-93535c17b6b3?w=1920&q=85",
-    alt: "Indian bridal model wearing a traditional red saree with elegant 1 Gram Gold Jewellery, gently posing with her necklace",
+    url: "/images/hero-4.jpeg",
+    alt: "Premium gold necklaces and bangles layout",
   },
   {
-    url: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=1920&q=85",
-    alt: "Luxury close-up of premium necklaces, bangles and earrings",
+    url: "/images/hero-1.jpeg",
+    alt: "Traditional red saree South Indian bridal jewellery",
   },
   {
-    url: "/images/hero-bridal-bride.jpg",
-    alt: "South Indian bride in red silk saree adorned with gold jewellery — necklace, earrings and tikka",
+    url: "/images/hero-2.jpeg",
+    alt: "Intricate temple gold necklace detailing",
+  },
+  {
+    url: "/images/hero-3.jpeg",
+    alt: "Traditional gold kemp stone choker design",
+  },
+  {
+    url: "/images/hero-5.jpeg",
+    alt: "South Indian bride standing in traditional bridal wear",
   },
 ];
 
@@ -103,10 +111,10 @@ export function HeroSection() {
         </motion.div>
         
         {/* Soft, rich ambient overlay */}
-        <div className="absolute inset-0 bg-black/25 pointer-events-none" />
+        <div className="absolute inset-0 bg-black/35 pointer-events-none" />
         
         {/* Bottom vertical gradient to anchor the text content */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#121212]/75 via-[#121212]/15 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#121212]/85 via-[#121212]/30 to-transparent pointer-events-none" />
       </div>
 
       {/* Main Content Overlay */}
