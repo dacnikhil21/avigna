@@ -3,29 +3,26 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// CATALOGUE MODELS
-// ─────────────────────────────────────────────────────────────────────────────
-
 model Category {
-  id          String    @id @default(cuid())
+  id          String     @id @default(cuid())
   name        String
-  slug        String    @unique
-  description String?   @db.Text
+  slug        String     @unique
+  description String?
   image       String?
-  icon        String?   // emoji or icon name for nav
-  parentId    String?   // for sub-categories
-  parent      Category? @relation("SubCategories", fields: [parentId], references: [id])
+  icon        String?
+  parentId    String?
+  sortOrder   Int        @default(0)
+  isActive    Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  parent      Category?  @relation("SubCategories", fields: [parentId], references: [id])
   children    Category[] @relation("SubCategories")
-  sortOrder   Int       @default(0)
-  isActive    Boolean   @default(true)
   products    Product[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
 
   @@index([parentId])
   @@index([isActive])
@@ -37,61 +34,56 @@ model Collection {
   name        String
   slug        String    @unique
   tagline     String?
-  description String?   @db.Text
+  description String?
   coverImage  String?
   isActive    Boolean   @default(true)
   isFeatured  Boolean   @default(false)
   sortOrder   Int       @default(0)
-  products    Product[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  products    Product[]
 
   @@index([isActive])
   @@index([isFeatured])
 }
 
 model Product {
-  id             String         @id @default(cuid())
-  name           String
-  slug           String         @unique
-  description    String         @db.Text
-  shortDesc      String?        @db.Text  // one-liner for cards
-  price          Int            // in paise (smallest currency unit)
-  salePrice      Int?           // discounted price in paise
-  sku            String         @unique
-  // Physical attributes
-  material       String?        // e.g. "1 Gram Gold", "Copper with Gold Plating"
-  metal          String         // display label e.g. "22K Gold Plated"
-  purity         String?        // e.g. "916 BIS Hallmarked"
-  color          String?        // e.g. "Gold, Ruby Red"
-  weight         String?        // e.g. "12g"
-  stones         String?        // e.g. "Kemp, Pearls"
-  dimensions     String?        // e.g. "Length: 18 inches"
-  // Inventory
-  stockQty       Int            @default(0)
-  inStock        Boolean        @default(true)
-  // Classification flags
-  isFeatured     Boolean        @default(false)
-  isLatest       Boolean        @default(false)
-  isExclusive    Boolean        @default(false)
-  isTrending     Boolean        @default(false)
-  isBridal       Boolean        @default(false)
-  isActive       Boolean        @default(true)
-  // Relations
-  categoryId     String
-  category       Category       @relation(fields: [categoryId], references: [id])
-  collectionId   String?
-  collection     Collection?    @relation(fields: [collectionId], references: [id])
-  images         ProductImage[]
-  orderItems     OrderItem[]
-  wishlistItems  WishlistItem[]
-  cartItems      CartItem[]
-  // SEO
-  metaTitle      String?
-  metaDesc       String?        @db.Text
-  metaKeywords   String?
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
+  id            String         @id @default(cuid())
+  name          String
+  slug          String         @unique
+  description   String
+  shortDesc     String?
+  price         Int
+  salePrice     Int?
+  sku           String         @unique
+  material      String?
+  metal         String
+  purity        String?
+  color         String?
+  weight        String?
+  stones        String?
+  dimensions    String?
+  stockQty      Int            @default(0)
+  inStock       Boolean        @default(true)
+  isFeatured    Boolean        @default(false)
+  isLatest      Boolean        @default(false)
+  isExclusive   Boolean        @default(false)
+  isTrending    Boolean        @default(false)
+  isBridal      Boolean        @default(false)
+  isActive      Boolean        @default(true)
+  categoryId    String
+  collectionId  String?
+  metaTitle     String?
+  metaDesc      String?
+  metaKeywords  String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  cartItems     CartItem[]
+  orderItems    OrderItem[]
+  category      Category       @relation(fields: [categoryId], references: [id])
+  collection    Collection?    @relation(fields: [collectionId], references: [id])
+  images        ProductImage[]
+  wishlistItems WishlistItem[]
 
   @@index([categoryId])
   @@index([collectionId])
@@ -107,53 +99,46 @@ model Product {
 model ProductImage {
   id        String  @id @default(cuid())
   productId String
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   url       String
   altText   String?
   position  Int     @default(0)
   isPrimary Boolean @default(false)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@index([productId])
   @@index([isPrimary])
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// CMS / CONTENT MODELS
-// ─────────────────────────────────────────────────────────────────────────────
-
-// Singleton — only one row should exist. Use upsert with a fixed id.
 model SiteSettings {
-  id              String   @id @default(cuid())
-  brandName       String   @default("Avighna Collections")
-  tagline         String?
-  description     String?  @db.Text
-  logoUrl         String?
-  faviconUrl      String?
-  phone           String?
-  whatsapp        String?
-  email           String?
-  addressLine1    String?
-  addressLine2    String?
-  city            String?
-  state           String?
-  pincode         String?
-  country         String   @default("India")
-  instagramUrl    String?
-  facebookUrl     String?
-  youtubeUrl      String?
-  pinterestUrl    String?
-  razorpayKeyId   String?  // public key for frontend
-  // Brand Display
-  logoText        String?  // e.g. "Sri Avighna"
-  logoSubText     String?  // e.g. "1 Gram Gold Jewellery"
-  storeTimings    String?  // e.g. "10:30 AM – 9:00 PM"
-  gstNumber       String?
-  // SEO Defaults
-  defaultMetaTitle    String?
-  defaultMetaDesc     String?  @db.Text
-  defaultOgImage      String?
-  googleAnalyticsId   String?
-  updatedAt       DateTime @updatedAt
+  id                String   @id @default(cuid())
+  brandName         String   @default("Avighna Collections")
+  tagline           String?
+  description       String?
+  logoUrl           String?
+  faviconUrl        String?
+  phone             String?
+  whatsapp          String?
+  email             String?
+  addressLine1      String?
+  addressLine2      String?
+  city              String?
+  state             String?
+  pincode           String?
+  country           String   @default("India")
+  instagramUrl      String?
+  facebookUrl       String?
+  youtubeUrl        String?
+  pinterestUrl      String?
+  razorpayKeyId     String?
+  defaultMetaTitle  String?
+  defaultMetaDesc   String?
+  defaultOgImage    String?
+  googleAnalyticsId String?
+  updatedAt         DateTime @updatedAt
+  gstNumber         String?
+  logoSubText       String?
+  logoText          String?
+  storeTimings      String?
 }
 
 model AnnouncementBar {
@@ -172,39 +157,39 @@ model AnnouncementBar {
 }
 
 model HeroSlide {
-  id          String   @id @default(cuid())
-  title       String
-  subtitle    String?
-  eyebrow     String?  // small label above title
-  ctaText     String?
-  ctaUrl      String?
+  id               String   @id @default(cuid())
+  title            String
+  subtitle         String?
+  eyebrow          String?
+  ctaText          String?
+  ctaUrl           String?
   secondaryCtaText String?
   secondaryCtaUrl  String?
-  imageUrl    String
-  imageAlt    String?
-  overlayOpacity Float  @default(0.5)
-  isActive    Boolean  @default(true)
-  sortOrder   Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  imageUrl         String
+  imageAlt         String?
+  overlayOpacity   Float    @default(0.5)
+  isActive         Boolean  @default(true)
+  sortOrder        Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
   @@index([isActive])
 }
 
 model BrandStory {
-  id          String   @id @default(cuid())
-  sectionKey  String   @unique  // e.g. "craft", "heritage", "film"
-  heading     String
-  subheading  String?
-  body        String   @db.Text
-  imageUrl    String?
-  imageAlt    String?
-  videoUrl    String?
-  ctaText     String?
-  ctaUrl      String?
-  isActive    Boolean  @default(true)
-  sortOrder   Int      @default(0)
-  updatedAt   DateTime @updatedAt
+  id         String   @id @default(cuid())
+  sectionKey String   @unique
+  heading    String
+  subheading String?
+  body       String
+  imageUrl   String?
+  imageAlt   String?
+  videoUrl   String?
+  ctaText    String?
+  ctaUrl     String?
+  isActive   Boolean  @default(true)
+  sortOrder  Int      @default(0)
+  updatedAt  DateTime @updatedAt
 }
 
 model EditorialGallery {
@@ -213,7 +198,7 @@ model EditorialGallery {
   altText   String?
   caption   String?
   link      String?
-  colSpan   Int      @default(1)  // grid layout: 1, 2
+  colSpan   Int      @default(1)
   rowSpan   Int      @default(1)
   isActive  Boolean  @default(true)
   sortOrder Int      @default(0)
@@ -224,48 +209,47 @@ model EditorialGallery {
 }
 
 model BoutiqueInfo {
-  id           String   @id @default(cuid())
-  name         String   @default("Avighna Collections")
-  addressLine1 String
-  addressLine2 String?
-  landmark     String?
-  city         String
-  state        String
-  pincode      String
-  phone        String
-  whatsapp     String?
-  email        String?
-  mapEmbedUrl  String?
-  googleMapsUrl String?
-  // Hours
-  mondayHours  String?
-  tuesdayHours String?
+  id             String   @id @default(cuid())
+  name           String   @default("Avighna Collections")
+  addressLine1   String
+  addressLine2   String?
+  landmark       String?
+  city           String
+  state          String
+  pincode        String
+  phone          String
+  whatsapp       String?
+  email          String?
+  mapEmbedUrl    String?
+  googleMapsUrl  String?
+  mondayHours    String?
+  tuesdayHours   String?
   wednesdayHours String?
   thursdayHours  String?
-  fridayHours  String?
-  saturdayHours String?
-  sundayHours  String?
-  hoursNote    String?  // e.g. "Closed on public holidays"
-  isActive     Boolean  @default(true)
-  isPrimary    Boolean  @default(false)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  fridayHours    String?
+  saturdayHours  String?
+  sundayHours    String?
+  hoursNote      String?
+  isActive       Boolean  @default(true)
+  isPrimary      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model Testimonial {
-  id        String   @id @default(cuid())
-  name      String
-  role      String?  // e.g. "Bride", "Gift Buyer"
-  location  String?
-  content   String   @db.Text
-  rating    Int      @default(5)
-  avatarUrl String?
-  productId String?  // optional link to product reviewed
-  isActive  Boolean  @default(true)
-  isFeatured Boolean @default(false)
-  sortOrder Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String   @id @default(cuid())
+  name       String
+  role       String?
+  location   String?
+  content    String
+  rating     Int      @default(5)
+  avatarUrl  String?
+  productId  String?
+  isActive   Boolean  @default(true)
+  isFeatured Boolean  @default(false)
+  sortOrder  Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@index([isActive])
   @@index([isFeatured])
@@ -274,7 +258,7 @@ model Testimonial {
 model FaqEntry {
   id        String      @id @default(cuid())
   question  String
-  answer    String      @db.Text
+  answer    String
   category  FaqCategory @default(GENERAL)
   sortOrder Int         @default(0)
   isActive  Boolean     @default(true)
@@ -284,19 +268,6 @@ model FaqEntry {
   @@index([category])
   @@index([isActive])
 }
-
-enum FaqCategory {
-  GENERAL
-  MATERIAL_COMPOSITION
-  SHIPPING_SECURITY
-  CARE_GUARANTEE
-  ORDERS_RETURNS
-  BRIDAL
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// COMMERCE MODELS
-// ─────────────────────────────────────────────────────────────────────────────
 
 model Customer {
   id           String         @id @default(cuid())
@@ -308,10 +279,10 @@ model Customer {
   city         String?
   state        String?
   pincode      String?
-  orders       Order[]
-  wishlists    WishlistItem[]
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
+  orders       Order[]
+  wishlists    WishlistItem[]
 
   @@index([email])
   @@index([phone])
@@ -319,12 +290,12 @@ model Customer {
 
 model WishlistItem {
   id         String    @id @default(cuid())
-  sessionId  String?   // for guest users
-  customerId String?   // for logged-in users
-  customer   Customer? @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  sessionId  String?
+  customerId String?
   productId  String
-  product    Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
   createdAt  DateTime  @default(now())
+  customer   Customer? @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  product    Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@unique([sessionId, productId])
   @@unique([customerId, productId])
@@ -334,13 +305,13 @@ model WishlistItem {
 }
 
 model CartItem {
-  id         String   @id @default(cuid())
-  sessionId  String
-  productId  String
-  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  quantity   Int      @default(1)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id        String   @id @default(cuid())
+  sessionId String
+  productId String
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@unique([sessionId, productId])
   @@index([sessionId])
@@ -351,34 +322,28 @@ model Order {
   id                String      @id @default(cuid())
   orderNumber       String      @unique
   status            OrderStatus @default(PENDING)
-  // Customer info snapshot
   customerName      String
   customerEmail     String
   customerPhone     String
   customerId        String?
-  customer          Customer?   @relation(fields: [customerId], references: [id])
-  // Shipping address snapshot
-  shippingAddress   String      @db.Text
+  shippingAddress   String
   city              String
   state             String
   pincode           String
-  // Gift
   isGift            Boolean     @default(false)
-  giftMessage       String?     @db.Text
-  // Amounts (in paise)
+  giftMessage       String?
   subtotal          Int
   shipping          Int         @default(0)
   discount          Int         @default(0)
   total             Int
-  // Payment
   razorpayOrderId   String?
   razorpayPaymentId String?
   razorpaySignature String?
   paidAt            DateTime?
-  // Items
-  items             OrderItem[]
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
+  customer          Customer?   @relation(fields: [customerId], references: [id])
+  items             OrderItem[]
 
   @@index([status])
   @@index([customerId])
@@ -387,34 +352,20 @@ model Order {
 }
 
 model OrderItem {
-  id          String  @id @default(cuid())
-  orderId     String
-  order       Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  productId   String
-  product     Product @relation(fields: [productId], references: [id])
-  quantity    Int
-  price       Int     // snapshot price at time of order (in paise)
-  name        String  // snapshot product name
-  image       String  // snapshot image URL
-  sku         String? // snapshot SKU
+  id        String  @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Int
+  name      String
+  image     String
+  sku       String?
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id])
 
   @@index([orderId])
   @@index([productId])
 }
-
-enum OrderStatus {
-  PENDING
-  PAID
-  PROCESSING
-  SHIPPED
-  DELIVERED
-  CANCELLED
-  REFUNDED
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// ADMIN FOUNDATION
-// ─────────────────────────────────────────────────────────────────────────────
 
 model AdminUser {
   id           String    @id @default(cuid())
@@ -429,6 +380,25 @@ model AdminUser {
 
   @@index([email])
   @@index([role])
+}
+
+enum FaqCategory {
+  GENERAL
+  MATERIAL_COMPOSITION
+  SHIPPING_SECURITY
+  CARE_GUARANTEE
+  ORDERS_RETURNS
+  BRIDAL
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
 }
 
 enum AdminRole {

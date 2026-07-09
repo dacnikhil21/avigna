@@ -39,12 +39,17 @@ export async function GET(req: NextRequest) {
       page,
     });
 
-    return NextResponse.json(result);
+    return new NextResponse(JSON.stringify(result), {
+      headers: {
+        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=30",
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     console.error("API /api/products error:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch products" },
-      { status: 500 }
-    );
+    return new NextResponse(JSON.stringify({ error: "Failed to fetch products" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }

@@ -29,7 +29,7 @@ export async function GET() {
       getTestimonials(),
     ]);
 
-    return NextResponse.json({
+    const result = {
       settings,
       announcements,
       heroSlides,
@@ -37,12 +37,19 @@ export async function GET() {
       editorialGallery,
       boutiqueInfo,
       testimonials,
+    };
+
+    return new NextResponse(JSON.stringify(result), {
+      headers: {
+        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=30",
+        "Content-Type": "application/json",
+      },
     });
   } catch (error) {
     console.error("API /api/content error:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch CMS content" },
-      { status: 500 }
-    );
+    return new NextResponse(JSON.stringify({ error: "Failed to fetch CMS content" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
