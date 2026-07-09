@@ -221,7 +221,7 @@ export function CollectionCard({
 }) {
   return (
     <Link href={`/collections/${slug}`} className="group block">
-      <article className="relative aspect-[4/5] rounded-xl overflow-hidden">
+      <article className="relative aspect-[3/2] rounded-2xl overflow-hidden shadow-luxury-md border border-[#EFECE7]/40">
         <Image
           src={image}
           alt={name}
