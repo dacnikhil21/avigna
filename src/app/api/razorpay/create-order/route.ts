@@ -62,13 +62,13 @@ export async function POST(request: Request) {
     const dbOrder = await prisma.order.create({
       data: {
         orderNumber,
-        customerName: customer.name,
-        customerEmail: customer.email,
-        customerPhone: customer.phone,
-        shippingAddress: customer.address,
-        city: customer.city,
-        state: customer.state,
-        pincode: customer.pincode,
+        customerName: customer.name || session.user.name || "Customer",
+        customerEmail: customer.email || session.user.email || "customer@example.com",
+        customerPhone: customer.phone || "0000000000",
+        shippingAddress: customer.address || "Address",
+        city: customer.city || "City",
+        state: customer.state || "State",
+        pincode: customer.pincode || "000000",
         subtotal,
         shipping,
         total: amount,
@@ -107,8 +107,9 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("Create order error:", error);
+    const errorMessage = error instanceof Error ? error.message : "Failed to create order";
     return NextResponse.json(
-      { error: "Failed to create order" },
+      { error: errorMessage },
       { status: 500 }
     );
   }
