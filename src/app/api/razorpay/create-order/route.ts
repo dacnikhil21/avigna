@@ -2,19 +2,62 @@ import { NextResponse } from "next/server";
 import { getRazorpayInstance } from "@/lib/razorpay";
 import { prisma } from "@/lib/prisma";
 import { generateOrderNumber } from "@/lib/utils";
+import { auth } from "@/auth";
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const { amount, customer, items } = body;
+    const session = await auth();
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
-    if (!amount || !customer || !items?.length) {
+    const body = await request.json();
+    const { customer, items } = body;
+
+    if (!customer || !items?.length) {
       return NextResponse.json({ error: "Invalid request" }, { status: 400 });
     }
 
+    // Fetch all products from DB to validate stock and price
+    const productIds = items.map((i: { productId: string }) => i.productId);
+    const dbProducts = await prisma.product.findMany({
+      where: { id: { in: productIds } },
+      include: { images: true },
+    });
+
+    let calculatedTotal = 0;
+    const finalItems = [];
+
+    for (const item of items) {
+      const dbProduct = dbProducts.find((p) => p.id === item.productId);
+      
+      if (!dbProduct) {
+        return NextResponse.json({ error: `Product not found: ${item.productId}` }, { status: 400 });
+      }
+
+      if (dbProduct.stockQty < item.quantity) {
+        return NextResponse.json(
+          { error: `Insufficient stock for ${dbProduct.name}. Only ${dbProduct.stockQty} available.` },
+          { status: 400 }
+        );
+      }
+
+      const price = dbProduct.salePrice ?? dbProduct.price;
+      calculatedTotal += price * item.quantity;
+      
+      finalItems.push({
+        productId: dbProduct.id,
+        quantity: item.quantity,
+        price: price,
+        name: dbProduct.name,
+        image: dbProduct.images[0]?.url || "",
+      });
+    }
+
     const orderNumber = generateOrderNumber();
-    const shipping = amount > 5000000 ? 0 : 50000;
-    const subtotal = amount - shipping;
+    const shipping = calculatedTotal > 5000000 ? 0 : 50000;
+    const amount = calculatedTotal + shipping;
+    const subtotal = calculatedTotal;
 
     const dbOrder = await prisma.order.create({
       data: {
@@ -29,15 +72,10 @@ export async function POST(request: Request) {
         subtotal,
         shipping,
         total: amount,
+        customerId: session.user.id,
         items: {
-          create: items.map(
-            (item: {
-              productId: string;
-              quantity: number;
-              price: number;
-              name: string;
-              image: string;
-            }) => ({
+          create: finalItems.map(
+            (item) => ({
               productId: item.productId,
               quantity: item.quantity,
               price: item.price,

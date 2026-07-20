@@ -1,16 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Shield, Lock } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ArrowLeft, Shield, Lock, MapPin } from "lucide-react";
 import { useCartStore } from "@/lib/store/cart";
 import { formatPrice } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { FadeIn } from "@/components/shared/motion";
+import { useSession } from "next-auth/react";
 
 declare global {
   interface Window {
@@ -41,22 +42,51 @@ interface RazorpayInstance {
 }
 
 export default function CheckoutPage() {
+  const router = useRouter();
+  const { data: session, status } = useSession();
   const { items, subtotal, clearCart, isGift, giftMessage, setGiftOptions } = useCartStore();
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [shippingForm, setShippingForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
-    city: "",
-    state: "",
-    pincode: "",
-  });
+  const [shippingForm, setShippingForm] = useState<{name: string, email: string, phone: string, address: string, city: string, state: string, pincode: string} | null>(null);
+  const [addressLoading, setAddressLoading] = useState(true);
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login?callbackUrl=/checkout");
+    } else if (status === "authenticated") {
+      // Fetch default address
+      fetch("/api/account/addresses")
+        .then(res => res.json())
+        .then(data => {
+          const defaultAddr = data.addresses?.find((a: { isDefault: boolean }) => a.isDefault) || data.addresses?.[0];
+          if (defaultAddr) {
+            setShippingForm({
+              name: defaultAddr.fullName,
+              email: session.user?.email || "",
+              phone: defaultAddr.mobile,
+              address: `${defaultAddr.houseFlat}, ${defaultAddr.street}${defaultAddr.area ? `, ${defaultAddr.area}` : ''}`,
+              city: defaultAddr.city,
+              state: defaultAddr.state,
+              pincode: defaultAddr.pincode,
+            });
+          }
+          setAddressLoading(false);
+        })
+        .catch(() => setAddressLoading(false));
+    }
+  }, [status, router, session]);
 
   const total = subtotal();
   const shipping = 0; // Free delivery on all orders per store policy
   const grandTotal = total + shipping;
+
+  if (status === "loading" || addressLoading) {
+    return (
+      <div className="section-padding pt-32 pb-20 min-h-[60vh] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-luxury-gold border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   if (items.length === 0) {
     return (
@@ -72,6 +102,7 @@ export default function CheckoutPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!shippingForm) return;
     setLoading(true);
 
     try {
@@ -84,10 +115,7 @@ export default function CheckoutPage() {
           items: items.map((i) => ({
             productId: i.productId,
             quantity: i.quantity,
-            price: i.price,
-            name: i.name,
-            image: i.image,
-          })),
+          })), // We only send IDs and quantity now; price is verified on backend
         }),
       });
 
@@ -129,7 +157,7 @@ export default function CheckoutPage() {
       document.body.appendChild(script);
     } catch (err) {
       console.error(err);
-      setErrorMsg("Payment initialization failed. Please try again.");
+      setErrorMsg(err instanceof Error ? err.message : "Payment initialization failed. Please try again.");
       setTimeout(() => setErrorMsg(null), 4000);
     } finally {
       setLoading(false);
@@ -152,81 +180,29 @@ export default function CheckoutPage() {
         {/* Form */}
         <FadeIn className="lg:col-span-3 space-y-8">
           <div className="bg-luxury-cream/30 rounded-3xl p-6 md:p-8">
-            <h2 className="font-serif text-xl font-light mb-6">Shipping Details</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="md:col-span-2">
-                <Label htmlFor="name">Full Name</Label>
-                <Input
-                  id="name"
-                  required
-                  value={shippingForm.name}
-                  onChange={(e) => setShippingForm({ ...shippingForm, name: e.target.value })}
-                  className="mt-1.5"
-                />
+            <h2 className="font-serif text-xl font-light mb-6 flex items-center gap-2">
+              <MapPin className="w-5 h-5 text-luxury-gold" />
+              Shipping Details
+            </h2>
+            {!shippingForm ? (
+              <div className="text-center py-8">
+                <p className="text-gray-600 mb-4">You do not have a shipping address saved.</p>
+                <Button variant="gold" asChild>
+                  <Link href="/account/addresses">Add an Address</Link>
+                </Button>
               </div>
-              <div>
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  required
-                  value={shippingForm.email}
-                  onChange={(e) => setShippingForm({ ...shippingForm, email: e.target.value })}
-                  className="mt-1.5"
-                />
+            ) : (
+              <div className="bg-white p-6 rounded-xl border border-gray-100">
+                <div className="flex justify-between items-start mb-4">
+                  <h3 className="font-medium text-lg">{shippingForm.name}</h3>
+                  <Link href="/account/addresses" className="text-sm text-luxury-gold hover:underline">Change</Link>
+                </div>
+                <p className="text-gray-600 text-sm mb-1">{shippingForm.phone}</p>
+                <p className="text-gray-600 text-sm">{shippingForm.email}</p>
+                <p className="text-gray-600 text-sm mt-3">{shippingForm.address}</p>
+                <p className="text-gray-600 text-sm">{shippingForm.city}, {shippingForm.state} {shippingForm.pincode}</p>
               </div>
-              <div>
-                <Label htmlFor="phone">Phone</Label>
-                <Input
-                  id="phone"
-                  type="tel"
-                  required
-                  value={shippingForm.phone}
-                  onChange={(e) => setShippingForm({ ...shippingForm, phone: e.target.value })}
-                  className="mt-1.5"
-                />
-              </div>
-              <div className="md:col-span-2">
-                <Label htmlFor="address">Address</Label>
-                <Input
-                  id="address"
-                  required
-                  value={shippingForm.address}
-                  onChange={(e) => setShippingForm({ ...shippingForm, address: e.target.value })}
-                  className="mt-1.5"
-                />
-              </div>
-              <div>
-                <Label htmlFor="city">City</Label>
-                <Input
-                  id="city"
-                  required
-                  value={shippingForm.city}
-                  onChange={(e) => setShippingForm({ ...shippingForm, city: e.target.value })}
-                  className="mt-1.5"
-                />
-              </div>
-              <div>
-                <Label htmlFor="state">State</Label>
-                <Input
-                  id="state"
-                  required
-                  value={shippingForm.state}
-                  onChange={(e) => setShippingForm({ ...shippingForm, state: e.target.value })}
-                  className="mt-1.5"
-                />
-              </div>
-              <div>
-                <Label htmlFor="pincode">Pincode</Label>
-                <Input
-                  id="pincode"
-                  required
-                  value={shippingForm.pincode}
-                  onChange={(e) => setShippingForm({ ...shippingForm, pincode: e.target.value })}
-                  className="mt-1.5"
-                />
-              </div>
-            </div>
+            )}
           </div>
 
           <div className="bg-luxury-cream/30 rounded-3xl p-6 md:p-8">

@@ -28,6 +28,18 @@ export async function PUT(req: NextRequest, ctx: RouteContext) {
       include: { items: true },
     });
 
+    if (status === "CANCELLED") {
+      // Restore stock for each item
+      for (const item of order.items) {
+        await prisma.product.update({
+          where: { id: item.productId },
+          data: {
+            stockQty: { increment: item.quantity },
+          },
+        });
+      }
+    }
+
     return NextResponse.json(order);
   } catch (error) {
     console.error("Admin PUT /api/admin/orders/[id]/status error:", error);

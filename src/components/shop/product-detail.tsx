@@ -247,16 +247,18 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
               <div className="flex items-center gap-3 border border-luxury-beige/50 rounded-lg px-2">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="p-2 hover:bg-luxury-cream rounded-lg transition-colors"
+                  className="p-2 hover:bg-luxury-cream rounded-lg transition-colors disabled:opacity-50"
                   aria-label="Decrease quantity"
+                  disabled={product.stockQty <= 0}
                 >
                   <Minus className="w-4 h-4" />
                 </button>
-                <span className="text-sm w-8 text-center">{quantity}</span>
+                <span className="text-sm w-8 text-center">{product.stockQty <= 0 ? 0 : quantity}</span>
                 <button
                   onClick={() => setQuantity(quantity + 1)}
-                  className="p-2 hover:bg-luxury-cream rounded-lg transition-colors"
+                  className="p-2 hover:bg-luxury-cream rounded-lg transition-colors disabled:opacity-50"
                   aria-label="Increase quantity"
+                  disabled={product.stockQty <= 0}
                 >
                   <Plus className="w-4 h-4" />
                 </button>
@@ -267,8 +269,11 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
                 size="lg"
                 className="flex-1 rounded-lg border-luxury-gold text-luxury-gold hover:bg-luxury-gold/5"
                 onClick={handleAddToCart}
+                disabled={product.stockQty <= 0}
               >
-                {added ? (
+                {product.stockQty <= 0 ? (
+                  "Out of Stock"
+                ) : added ? (
                   <>
                     <Check className="w-4 h-4 mr-2" />
                     Added to Bag
@@ -284,8 +289,9 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
               size="lg"
               className="w-full rounded-lg mb-6 py-6 text-sm font-semibold tracking-wider uppercase"
               onClick={handleBuyNow}
+              disabled={product.stockQty <= 0}
             >
-              Buy It Now
+              {product.stockQty <= 0 ? "Out of Stock" : "Buy It Now"}
             </Button>
 
             <div className="flex gap-3 mb-8">

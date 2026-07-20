@@ -19,6 +19,7 @@ interface CartStore {
   totalItems: () => number;
   subtotal: () => number;
   setGiftOptions: (isGift: boolean, message: string) => void;
+  setItems: (items: CartItem[]) => void;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -29,6 +30,7 @@ export const useCartStore = create<CartStore>()(
       isGift: false,
       giftMessage: "",
 
+      setItems: (items) => set({ items }),
       setGiftOptions: (isGift, giftMessage) => set({ isGift, giftMessage }),
 
       addItem: (item) => {

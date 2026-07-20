@@ -1,13 +1,14 @@
-# Sprint 7 Task Tracker
+# Task Tracker: Customer Login & Sign Up
 
-## 1. Search Experience Redesign
-- [x] Create search overlay backdrop (dark blurred background) inside `header.tsx`
-- [x] Implement centered sliding search panel layout
-- [x] Add Search input, Search icon, and Close buttons
-- [x] Build Recent Searches feature inside overlay (integrating with `localStorage`)
-- [x] Build Popular Categories list
-- [x] Build Trending Searches list
-- [x] Query `/api/products?search=...` live as the user types and render instant results
+- [x] Install dependencies (`next-auth@beta`, `bcryptjs`)
+- [x] Update Prisma Schema (Add `passwordHash` to `Customer`)
+- [x] Run `npx prisma db push` to apply schema changes
+- [x] Create NextAuth configuration (`src/auth.ts`)
+- [x] Create NextAuth API route handlers
+- [x] Create custom Registration API endpoint
+- [x] Build Luxury Login Page UI (`/login`)
+- [x] Build Luxury Sign-up Page UI (`/register`)
+- [x] Update Navigation Header to toggle Account/Login links based on session user types and render instant results
 
 ## 2. Search Navigation Corrections
 - [x] Fix necklaces and rings categories slugs in `header.tsx` mobile drawer

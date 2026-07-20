@@ -9,12 +9,15 @@ interface WishlistStore {
   toggleItem: (product: Product) => void;
   hasItem: (productId: string) => boolean;
   clearWishlist: () => void;
+  setItems: (items: Product[]) => void;
 }
 
 export const useWishlistStore = create<WishlistStore>()(
   persist(
     (set, get) => ({
       items: [],
+
+      setItems: (items) => set({ items }),
 
       toggleItem: (product) => {
         set((state) => {

@@ -100,9 +100,15 @@ export function Header() {
   ];
 
   const { totalItems, openCart, isOpen: isCartOpen } = useCartStore();
-  const itemCount = totalItems();
   const wishlistItems = useWishlistStore((s) => s.items);
-  const wishlistCount = wishlistItems.length;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const itemCount = mounted ? totalItems() : 0;
+  const wishlistCount = mounted ? wishlistItems.length : 0;
   const menuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Rotate announcement messages

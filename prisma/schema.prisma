@@ -274,6 +274,7 @@ model Customer {
   name         String
   email        String?        @unique
   phone        String?        @unique
+  passwordHash String?
   addressLine1 String?
   addressLine2 String?
   city         String?
@@ -283,9 +284,39 @@ model Customer {
   updatedAt    DateTime       @updatedAt
   orders       Order[]
   wishlists    WishlistItem[]
+  addresses    Address[]
 
   @@index([email])
   @@index([phone])
+}
+
+model Address {
+  id         String   @id @default(cuid())
+  customerId String
+  fullName   String
+  mobile     String
+  houseFlat  String
+  street     String
+  area       String?
+  city       String
+  state      String
+  pincode    String
+  isDefault  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([customerId])
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique
+  expires   DateTime
+  createdAt DateTime @default(now())
+
+  @@unique([email, token])
 }
 
 model WishlistItem {
