@@ -36,8 +36,7 @@ export function StateSync() {
               setCartItems(data.cartItems);
             }
             if (data.wishlistItems) {
-              // The API returns an array of productIds for wishlist
-              setWishlistItems(data.wishlistItems.map((id: string) => ({ id })) as unknown as import("@/types").Product[]);
+              setWishlistItems(data.wishlistItems);
             }
           }
         } catch (error) {

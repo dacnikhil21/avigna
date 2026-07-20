@@ -102,7 +102,11 @@ export default function CheckoutPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!shippingForm) return;
+    if (!shippingForm) {
+      setErrorMsg("Please add a shipping address before proceeding to payment.");
+      setTimeout(() => setErrorMsg(null), 4000);
+      return;
+    }
     setLoading(true);
 
     try {

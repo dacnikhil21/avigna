@@ -2,6 +2,25 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 
+export async function GET(req: Request) {
+  try {
+    const session = await auth();
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const addresses = await prisma.address.findMany({
+      where: { customerId: session.user.id },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return NextResponse.json({ addresses }, { status: 200 });
+  } catch (error) {
+    console.error("Address fetch error:", error);
+    return NextResponse.json({ error: "Failed to fetch addresses" }, { status: 500 });
+  }
+}
+
 export async function POST(req: Request) {
   try {
     const session = await auth();

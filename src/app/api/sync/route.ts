@@ -64,7 +64,7 @@ export async function POST(req: Request) {
 
     const dbWishlistItems = await prisma.wishlistItem.findMany({
       where: { customerId: customerId },
-      include: { product: true },
+      include: { product: { include: { images: true } } },
     });
 
     const unifiedCart = dbCartItems.map((dbItem) => ({
@@ -76,7 +76,7 @@ export async function POST(req: Request) {
       stockQty: dbItem.product.stockQty,
     }));
 
-    const unifiedWishlist = dbWishlistItems.map((w) => w.productId);
+    const unifiedWishlist = dbWishlistItems.map((w) => w.product);
 
     return NextResponse.json({
       cartItems: unifiedCart,
