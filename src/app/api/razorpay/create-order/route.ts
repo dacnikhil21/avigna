@@ -55,8 +55,9 @@ export async function POST(request: Request) {
     }
 
     const orderNumber = generateOrderNumber();
-    const shipping = calculatedTotal > 5000000 ? 0 : 50000;
-    const amount = calculatedTotal + shipping;
+    const shipping = calculatedTotal >= 5000 ? 0 : 99; // Free shipping above ₹5000
+    const amountInRupees = calculatedTotal + shipping;
+    const amountInPaise = amountInRupees * 100; // Razorpay requires amount in PAISE (1 INR = 100 Paise)
     const subtotal = calculatedTotal;
 
     const dbOrder = await prisma.order.create({
@@ -71,7 +72,7 @@ export async function POST(request: Request) {
         pincode: customer.pincode || "000000",
         subtotal,
         shipping,
-        total: amount,
+        total: amountInRupees,
         customerId: session.user.id,
         items: {
           create: finalItems.map(
@@ -89,7 +90,7 @@ export async function POST(request: Request) {
 
     const razorpay = getRazorpayInstance();
     const razorpayOrder = await razorpay.orders.create({
-      amount,
+      amount: amountInPaise,
       currency: "INR",
       receipt: orderNumber,
     });
@@ -103,7 +104,7 @@ export async function POST(request: Request) {
       orderId: razorpayOrder.id,
       orderNumber,
       dbOrderId: dbOrder.id,
-      amount,
+      amount: amountInPaise,
     });
   } catch (error) {
     console.error("Create order error:", error);
