@@ -38,7 +38,7 @@ export default async function AccountLayout({
                 My Orders
               </Link>
               <Link
-                href="/account/wishlist"
+                href="/wishlist"
                 className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium hover:bg-luxury-cream transition-colors text-luxury-black"
               >
                 <Heart className="w-4 h-4 text-luxury-muted" />

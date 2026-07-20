@@ -58,7 +58,7 @@ export function AuthModal() {
         if (onSuccessCallback) {
           onSuccessCallback();
         } else {
-          router.refresh();
+          window.location.href = "/account";
         }
       }
     } catch (err) {
@@ -113,7 +113,7 @@ export function AuthModal() {
         if (onSuccessCallback) {
           onSuccessCallback();
         } else {
-          router.refresh();
+          window.location.href = "/account";
         }
       }
     } catch (err) {
