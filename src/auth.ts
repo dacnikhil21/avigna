@@ -18,9 +18,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (!credentials?.email || !credentials?.password) {
           throw new Error("Invalid credentials");
         }
+        const cleanEmail = (credentials.email as string).trim().toLowerCase();
         
         const customer = await prisma.customer.findUnique({
-          where: { email: credentials.email as string }
+          where: { email: cleanEmail }
         });
         
         if (!customer || !customer.passwordHash) {

@@ -18,11 +18,12 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid mobile number" }, { status: 400 });
     }
 
+    const cleanEmail = email.trim().toLowerCase();
     const cleanPhone = phone ? phone.trim() : null;
 
     // Check duplicate email
     const existingEmail = await prisma.customer.findUnique({
-      where: { email }
+      where: { email: cleanEmail }
     });
     if (existingEmail) {
       return NextResponse.json({ error: "Email is already registered" }, { status: 409 });
@@ -44,7 +45,7 @@ export async function POST(req: Request) {
     const customer = await prisma.customer.create({
       data: {
         name,
-        email,
+        email: cleanEmail,
         phone: cleanPhone,
         passwordHash,
       }
