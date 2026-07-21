@@ -167,25 +167,31 @@ export function Header() {
               animate={{ height: 34, opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
-              className="w-full bg-[#FAF8F5] border-b border-[#EFECE7] relative overflow-hidden flex items-center justify-center"
+              className="w-full bg-[#FAF8F5] border-b border-[#EFECE7] relative overflow-hidden flex items-center"
             >
-              <div className="relative flex items-center justify-center w-full h-full px-12">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentMessageIndex}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
-                    className="text-[12px] font-medium tracking-[0.08em] font-dmsans text-[#121212] uppercase text-center"
-                  >
-                    {dynamicMessages[currentMessageIndex]}
-                  </motion.div>
-                </AnimatePresence>
+              <div className="relative flex items-center w-full h-full overflow-hidden pr-10">
+                <motion.div
+                  className="flex shrink-0 items-center gap-10 whitespace-nowrap text-[11px] md:text-[12px] font-medium tracking-[0.1em] font-dmsans text-[#121212] uppercase"
+                  animate={{ x: ["0%", "-50%"] }}
+                  transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+                >
+                  <span>{brand.offerBannerText || "FREE SHIPPING ON ALL ORDERS | BIS 916 CERTIFIED"}</span>
+                  <span className="text-[#C5A880]">✦</span>
+                  <span>Pristine 1 Gram Gold Replica Jewellery</span>
+                  <span className="text-[#C5A880]">✦</span>
+                  <span>Explore Our 1 Gram Gold Jewellery – Wanaparthy, Telangana</span>
+                  <span className="text-[#C5A880]">✦</span>
+                  <span>{brand.offerBannerText || "FREE SHIPPING ON ALL ORDERS | BIS 916 CERTIFIED"}</span>
+                  <span className="text-[#C5A880]">✦</span>
+                  <span>Pristine 1 Gram Gold Replica Jewellery</span>
+                  <span className="text-[#C5A880]">✦</span>
+                  <span>Explore Our 1 Gram Gold Jewellery – Wanaparthy, Telangana</span>
+                  <span className="text-[#C5A880]">✦</span>
+                </motion.div>
               </div>
               <button
                 onClick={() => setShowAnnouncement(false)}
-                className="absolute right-4 p-1 hover:bg-black/5 rounded-full transition-colors text-[#121212]"
+                className="absolute right-3 z-10 p-1 bg-[#FAF8F5]/90 backdrop-blur-sm hover:bg-black/10 rounded-full transition-colors text-[#121212]"
                 aria-label="Close announcement"
               >
                 <X className="w-3.5 h-3.5" />
