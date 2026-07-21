@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Minus, Plus, ShoppingBag } from "lucide-react";
+import { X, Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
 import { useCartStore } from "@/lib/store/cart";
 import { formatPrice } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -120,9 +120,11 @@ export function CartDrawer() {
                           </div>
                           <button
                             onClick={() => removeItem(item.productId)}
-                            className="text-xs text-luxury-muted hover:text-luxury-black transition-colors underline"
+                            className="text-xs text-red-600/80 hover:text-red-700 transition-colors flex items-center gap-1 p-1 hover:bg-red-50 rounded"
+                            aria-label="Remove item"
                           >
-                            Remove
+                            <Trash2 className="w-3.5 h-3.5" />
+                            <span>Remove</span>
                           </button>
                         </div>
                       </div>

@@ -21,6 +21,8 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
   const isWishlisted = items.some((i) => i.id === product.id);
   const [quickViewOpen, setQuickViewOpen] = useState(false);
 
+  const [added, setAdded] = useState(false);
+
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -33,6 +35,8 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
       metal: product.metal,
       stockQty: product.stockQty,
     });
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1800);
   };
 
   const handleToggleWishlist = (e: React.MouseEvent) => {
@@ -47,8 +51,6 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
     setQuickViewOpen(true);
   };
 
-  // Discount logic removed
-
   // Badge logic
   const badge = product.isExclusive
     ? { label: "Exclusive", color: "bg-[#8B1A1A]" }
@@ -62,7 +64,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
 
   return (
     <>
-      <article className="group flex flex-col bg-white rounded-xl overflow-hidden border border-[#EFECE7] hover:shadow-lg hover:border-[#C5A880]/30 transition-all duration-500">
+      <article className="group flex flex-col bg-white rounded-xl overflow-hidden border border-[#EFECE7] hover:shadow-lg hover:border-[#C5A880]/30 transition-all duration-500 h-full">
         {/* Image */}
         <Link href={`/product/${product.slug}`} className="block relative">
           <div className="relative aspect-[4/5] overflow-hidden bg-[#FAF8F5]">
@@ -94,7 +96,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
                 "absolute top-2 right-2 z-10 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm",
                 isWishlisted
                   ? "bg-white text-[#C5A880] opacity-100"
-                  : "bg-white/80 text-[#6B6560] opacity-0 group-hover:opacity-100"
+                  : "bg-white/80 text-[#6B6560] md:opacity-0 group-hover:opacity-100"
               )}
               aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
             >
@@ -102,18 +104,12 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
             </button>
 
             {/* Quick View hover overlay */}
-            <div className="absolute inset-x-0 bottom-0 p-2 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0 flex gap-1.5">
+            <div className="absolute inset-x-0 bottom-0 p-2 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0 flex gap-1.5 hidden md:flex">
               <button
                 onClick={handleQuickView}
                 className="flex-1 flex items-center justify-center gap-1 py-1.5 bg-white/90 backdrop-blur-sm text-[#121212] text-[8px] md:text-[9px] uppercase tracking-wider rounded-md hover:bg-white transition-colors font-medium"
               >
                 <Eye className="w-3 h-3" /> Quick View
-              </button>
-              <button
-                onClick={handleAddToCart}
-                className="flex-1 flex items-center justify-center gap-1 py-1.5 bg-[#121212]/90 backdrop-blur-sm text-white text-[8px] md:text-[9px] uppercase tracking-wider rounded-md hover:bg-[#121212] transition-colors font-medium"
-              >
-                <ShoppingBag className="w-3 h-3" /> Add Bag
               </button>
             </div>
           </div>
@@ -122,27 +118,44 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
         {/* Info */}
         <div className="p-2.5 md:p-3.5 flex flex-col flex-1">
           {/* Category */}
-          <p className="text-[8px] md:text-[9px] uppercase tracking-[0.15em] text-[#C5A880] mb-0.5 truncate">
+          <p className="text-[8px] md:text-[9px] uppercase tracking-[0.15em] text-[#C5A880] mb-0.5 truncate font-medium">
             {product.category?.name ?? product.metal}
           </p>
 
           {/* Name */}
           <Link href={`/product/${product.slug}`}>
-            <h3 className="font-serif text-xs md:text-sm font-light leading-snug mb-1 text-[#121212] group-hover:text-[#C5A880] transition-colors duration-300 line-clamp-1">
+            <h3 className="font-serif text-xs md:text-sm font-light leading-snug mb-2 text-[#121212] group-hover:text-[#C5A880] transition-colors duration-300 line-clamp-1">
               {product.name}
             </h3>
           </Link>
 
-          {/* Pricing */}
-          <div className="flex items-center gap-1.5 mb-2.5 flex-wrap">
-            <span className="text-xs md:text-sm font-semibold text-[#121212]">
-              {product.salePrice ? formatPrice(product.salePrice) : formatPrice(product.price)}
-            </span>
-            {product.salePrice && (
-              <span className="text-[10px] md:text-xs text-[#9a948f] line-through">
-                {formatPrice(product.price)}
+          {/* Pricing & 1-Tap Add */}
+          <div className="flex items-center justify-between mt-auto pt-2 border-t border-[#EFECE7]">
+            <div className="flex flex-col">
+              <span className="text-xs md:text-sm font-semibold text-[#121212]">
+                {product.salePrice ? formatPrice(product.salePrice) : formatPrice(product.price)}
               </span>
-            )}
+              {product.salePrice && (
+                <span className="text-[9px] md:text-[10px] text-[#9a948f] line-through">
+                  {formatPrice(product.price)}
+                </span>
+              )}
+            </div>
+            <button
+              onClick={handleAddToCart}
+              disabled={product.stockQty <= 0}
+              className={cn(
+                "px-2.5 py-1 rounded-md text-[9px] md:text-[10px] uppercase tracking-wider font-medium transition-all duration-300 flex items-center gap-1",
+                added
+                  ? "bg-emerald-700 text-white"
+                  : "bg-[#121212] text-white hover:bg-[#C5A880] hover:text-[#121212] active:scale-95",
+                product.stockQty <= 0 && "opacity-40 cursor-not-allowed bg-gray-200 text-gray-500"
+              )}
+              aria-label="Add to bag"
+            >
+              <ShoppingBag className="w-3 h-3" />
+              {added ? "Added ✓" : product.stockQty <= 0 ? "Sold Out" : "Add"}
+            </button>
           </div>
         </div>
       </article>

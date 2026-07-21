@@ -581,7 +581,10 @@ export function Header() {
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-[#EFECE7] h-[64px] flex items-center justify-around md:hidden pb-safe">
         <Link
           href="/"
-          className="flex flex-col items-center justify-center p-2 text-[#121212] hover:text-[#C5A880] transition-colors duration-250 w-14"
+          className={cn(
+            "flex flex-col items-center justify-center p-2 transition-colors duration-250 w-14",
+            pathname === "/" ? "text-[#C5A880]" : "text-[#121212] hover:text-[#C5A880]"
+          )}
           aria-label="Home"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
@@ -590,7 +593,10 @@ export function Header() {
 
         <Link
           href="/shop"
-          className="flex flex-col items-center justify-center p-2 text-[#121212] hover:text-[#C5A880] transition-colors duration-250 w-14"
+          className={cn(
+            "flex flex-col items-center justify-center p-2 transition-colors duration-250 w-14",
+            (pathname.startsWith("/shop") || pathname.startsWith("/collections")) ? "text-[#C5A880]" : "text-[#121212] hover:text-[#C5A880]"
+          )}
           aria-label="Categories"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>
@@ -599,7 +605,10 @@ export function Header() {
 
         <Link
           href="/wishlist"
-          className="relative flex flex-col items-center justify-center p-2 text-[#121212] hover:text-[#C5A880] transition-colors duration-250 w-14"
+          className={cn(
+            "relative flex flex-col items-center justify-center p-2 transition-colors duration-250 w-14",
+            pathname.startsWith("/wishlist") ? "text-[#C5A880]" : "text-[#121212] hover:text-[#C5A880]"
+          )}
           aria-label="Wishlist"
         >
           <Heart className="w-5 h-5" />
@@ -613,7 +622,10 @@ export function Header() {
 
         <button
           onClick={openCart}
-          className="relative flex flex-col items-center justify-center p-2 text-[#121212] hover:text-[#C5A880] transition-colors duration-250 w-14"
+          className={cn(
+            "relative flex flex-col items-center justify-center p-2 transition-colors duration-250 w-14",
+            isCartOpen ? "text-[#C5A880]" : "text-[#121212] hover:text-[#C5A880]"
+          )}
           aria-label="Cart"
         >
           <ShoppingBag className="w-5 h-5" />
@@ -627,7 +639,10 @@ export function Header() {
 
         <Link
           href="/account"
-          className="flex flex-col items-center justify-center p-2 text-[#121212] hover:text-[#C5A880] transition-colors duration-250 w-14"
+          className={cn(
+            "flex flex-col items-center justify-center p-2 transition-colors duration-250 w-14",
+            (pathname.startsWith("/account") || pathname.startsWith("/login") || pathname.startsWith("/register")) ? "text-[#C5A880]" : "text-[#121212] hover:text-[#C5A880]"
+          )}
           aria-label="Account"
         >
           <User className="w-5 h-5" />

@@ -153,14 +153,14 @@ function ShopContent() {
           </p>
         </FadeIn>
 
-        {/* Filter bar */}
-        <FadeIn className="mb-6">
+        {/* Filter bar - Sticky on scroll */}
+        <div className="sticky top-16 md:top-20 z-20 bg-[#FAF8F5]/95 backdrop-blur-md py-3 -mx-6 px-6 md:-mx-12 md:px-12 mb-6 border-b border-[#EFECE7]">
           {/* Scrollable category pills */}
-          <div className="flex items-center gap-2 mb-4 overflow-x-auto pb-2 no-scrollbar">
+          <div className="flex items-center gap-2 mb-3 overflow-x-auto pb-1 no-scrollbar">
             <Link
               href="/shop"
               className={cn(
-                "flex-shrink-0 px-3 py-1.5 rounded-full text-[10px] md:text-xs uppercase tracking-wider transition-all duration-300 border",
+                "flex-shrink-0 px-3.5 py-1.5 rounded-full text-[10px] md:text-xs uppercase tracking-wider transition-all duration-300 border font-medium",
                 !categoryFilter
                   ? "bg-[#121212] text-white border-[#121212]"
                   : "bg-white text-[#6B6560] border-[#EFECE7] hover:border-[#C5A880]"
@@ -168,28 +168,35 @@ function ShopContent() {
             >
               All
             </Link>
-            {categories.map((cat) => (
-              <Link
-                key={cat.slug}
-                href={`/shop?category=${cat.slug}`}
-                className={cn(
-                  "flex-shrink-0 px-3 py-1.5 rounded-full text-[10px] md:text-xs uppercase tracking-wider transition-all duration-300 border whitespace-nowrap",
-                  categoryFilter === cat.slug
-                    ? "bg-[#121212] text-white border-[#121212]"
-                    : "bg-white text-[#6B6560] border-[#EFECE7] hover:border-[#C5A880]"
-                )}
-              >
-                {cat.name}
-              </Link>
-            ))}
+            {categories.map((cat) => {
+              const isSelected =
+                categoryFilter === cat.slug ||
+                (categoryFilter === "necklaces" && cat.slug === "necklace") ||
+                (categoryFilter === "rings" && cat.slug === "finger-rings");
+              const displayName = cat.name.replace(/\s+jewellery/i, "").trim();
+              return (
+                <Link
+                  key={cat.slug}
+                  href={`/shop?category=${cat.slug}`}
+                  className={cn(
+                    "flex-shrink-0 px-3.5 py-1.5 rounded-full text-[10px] md:text-xs uppercase tracking-wider transition-all duration-300 border whitespace-nowrap font-medium",
+                    isSelected
+                      ? "bg-[#121212] text-white border-[#121212]"
+                      : "bg-white text-[#6B6560] border-[#EFECE7] hover:border-[#C5A880]"
+                  )}
+                >
+                  {displayName}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Results count + Sort */}
           <div className="flex items-center justify-between">
-            <p className="text-xs md:text-sm text-[#6B6560]">
+            <p className="text-xs text-[#6B6560]">
               <span className="font-medium text-[#121212]">{filteredProducts.length}</span> {filteredProducts.length === 1 ? "piece" : "pieces"}
             </p>
-            <div className="flex items-center gap-1.5 border border-[#EFECE7] bg-white rounded-full px-3 py-1.5">
+            <div className="flex items-center gap-1.5 border border-[#EFECE7] bg-white rounded-full px-3 py-1">
               <SlidersHorizontal className="w-3 h-3 text-[#9a948f]" />
               <select
                 value={sortBy}
@@ -208,7 +215,7 @@ function ShopContent() {
               </select>
             </div>
           </div>
-        </FadeIn>
+        </div>
 
         {/* Product Grid — 2 cols mobile, 3 tablet, 4-5 desktop */}
         {filteredProducts.length > 0 ? (

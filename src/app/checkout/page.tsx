@@ -13,6 +13,8 @@ import { Separator } from "@/components/ui/separator";
 import { FadeIn } from "@/components/shared/motion";
 import { useSession } from "next-auth/react";
 
+import { Input } from "@/components/ui/input";
+
 declare global {
   interface Window {
     Razorpay: new (options: RazorpayOptions) => RazorpayInstance;
@@ -49,6 +51,65 @@ export default function CheckoutPage() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [shippingForm, setShippingForm] = useState<{name: string, email: string, phone: string, address: string, city: string, state: string, pincode: string} | null>(null);
   const [addressLoading, setAddressLoading] = useState(true);
+  const [isAddingAddress, setIsAddingAddress] = useState(false);
+  const [saveAddressLoading, setSaveAddressLoading] = useState(false);
+  const [newAddr, setNewAddr] = useState({
+    fullName: "",
+    mobile: "",
+    houseFlat: "",
+    street: "",
+    city: "",
+    state: "",
+    pincode: "",
+  });
+
+  const handleSaveInlineAddress = async () => {
+    if (!newAddr.fullName || !newAddr.mobile || !newAddr.houseFlat || !newAddr.street || !newAddr.city || !newAddr.state || !newAddr.pincode) {
+      setErrorMsg("Please fill in all required address fields.");
+      setTimeout(() => setErrorMsg(null), 4000);
+      return;
+    }
+    setSaveAddressLoading(true);
+    try {
+      const res = await fetch("/api/account/addresses", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: newAddr.fullName,
+          mobile: newAddr.mobile,
+          houseFlat: newAddr.houseFlat,
+          street: newAddr.street,
+          city: newAddr.city,
+          state: newAddr.state,
+          pincode: newAddr.pincode,
+          isDefault: true,
+        }),
+      });
+
+      if (res.ok) {
+        const fullAddr = `${newAddr.houseFlat}, ${newAddr.street}`;
+        const createdForm = {
+          name: newAddr.fullName,
+          email: session?.user?.email || "",
+          phone: newAddr.mobile,
+          address: fullAddr,
+          city: newAddr.city,
+          state: newAddr.state,
+          pincode: newAddr.pincode,
+        };
+        setShippingForm(createdForm);
+        setIsAddingAddress(false);
+      } else {
+        throw new Error("Failed to save address");
+      }
+    } catch (err) {
+      console.error(err);
+      setErrorMsg("Failed to save address. Please try again.");
+      setTimeout(() => setErrorMsg(null), 4000);
+    } finally {
+      setSaveAddressLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -188,18 +249,125 @@ export default function CheckoutPage() {
               <MapPin className="w-5 h-5 text-luxury-gold" />
               Shipping Details
             </h2>
-            {!shippingForm ? (
-              <div className="text-center py-8">
-                <p className="text-gray-600 mb-4">You do not have a shipping address saved.</p>
-                <Button variant="gold" asChild>
-                  <Link href="/account/addresses">Add an Address</Link>
-                </Button>
+            {!shippingForm || isAddingAddress ? (
+              <div className="bg-white p-6 rounded-2xl border border-gray-100 space-y-4">
+                <h3 className="font-serif text-lg font-light text-[#121212] mb-2">
+                  Add Shipping Address
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="new-name" className="text-xs">Full Name *</Label>
+                    <Input
+                      id="new-name"
+                      required
+                      placeholder="e.g. Ananya Sharma"
+                      value={newAddr.fullName}
+                      onChange={(e) => setNewAddr({ ...newAddr, fullName: e.target.value })}
+                      className="mt-1 text-xs"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="new-mobile" className="text-xs">Mobile Number *</Label>
+                    <Input
+                      id="new-mobile"
+                      required
+                      placeholder="10-digit mobile number"
+                      value={newAddr.mobile}
+                      onChange={(e) => setNewAddr({ ...newAddr, mobile: e.target.value })}
+                      className="mt-1 text-xs"
+                    />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <Label htmlFor="new-flat" className="text-xs">Flat / House No. / Building *</Label>
+                    <Input
+                      id="new-flat"
+                      required
+                      placeholder="e.g. Flat 402, Royal Residency"
+                      value={newAddr.houseFlat}
+                      onChange={(e) => setNewAddr({ ...newAddr, houseFlat: e.target.value })}
+                      className="mt-1 text-xs"
+                    />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <Label htmlFor="new-street" className="text-xs">Street / Area / Landmark *</Label>
+                    <Input
+                      id="new-street"
+                      required
+                      placeholder="e.g. Jubilee Hills, Road No. 36"
+                      value={newAddr.street}
+                      onChange={(e) => setNewAddr({ ...newAddr, street: e.target.value })}
+                      className="mt-1 text-xs"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="new-city" className="text-xs">City *</Label>
+                    <Input
+                      id="new-city"
+                      required
+                      placeholder="e.g. Hyderabad"
+                      value={newAddr.city}
+                      onChange={(e) => setNewAddr({ ...newAddr, city: e.target.value })}
+                      className="mt-1 text-xs"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="new-state" className="text-xs">State *</Label>
+                    <Input
+                      id="new-state"
+                      required
+                      placeholder="e.g. Telangana"
+                      value={newAddr.state}
+                      onChange={(e) => setNewAddr({ ...newAddr, state: e.target.value })}
+                      className="mt-1 text-xs"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="new-pincode" className="text-xs">Pincode *</Label>
+                    <Input
+                      id="new-pincode"
+                      required
+                      placeholder="6-digit pincode"
+                      value={newAddr.pincode}
+                      onChange={(e) => setNewAddr({ ...newAddr, pincode: e.target.value })}
+                      className="mt-1 text-xs"
+                    />
+                  </div>
+                </div>
+                <div className="flex gap-3 pt-2">
+                  <Button
+                    type="button"
+                    variant="gold"
+                    size="sm"
+                    disabled={saveAddressLoading}
+                    onClick={handleSaveInlineAddress}
+                    className="text-xs"
+                  >
+                    {saveAddressLoading ? "Saving..." : "Save & Use Address"}
+                  </Button>
+                  {shippingForm && (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setIsAddingAddress(false)}
+                      className="text-xs"
+                    >
+                      Cancel
+                    </Button>
+                  )}
+                </div>
               </div>
             ) : (
               <div className="bg-white p-6 rounded-xl border border-gray-100">
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="font-medium text-lg">{shippingForm.name}</h3>
-                  <Link href="/account/addresses" className="text-sm text-luxury-gold hover:underline">Change</Link>
+                  <button
+                    type="button"
+                    onClick={() => setIsAddingAddress(true)}
+                    className="text-xs text-luxury-gold hover:underline font-medium"
+                  >
+                    + Add New / Change
+                  </button>
                 </div>
                 <p className="text-gray-600 text-sm mb-1">{shippingForm.phone}</p>
                 <p className="text-gray-600 text-sm">{shippingForm.email}</p>
