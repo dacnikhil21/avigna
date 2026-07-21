@@ -55,28 +55,31 @@ export function CategoriesSection() {
 
       <div className="relative w-full">
         {/* Horizontal Scroll Wrapper */}
-        <div className="flex gap-4 md:gap-6 overflow-x-auto pb-3 pt-1 px-6 md:px-12 no-scrollbar scroll-smooth">
-          {categories.map((cat) => (
-            <Link
-              key={cat.id}
-              href={`/shop?category=${cat.slug}`}
-              className="flex-shrink-0 flex flex-col items-center group cursor-pointer"
-            >
-              <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden bg-[#FAF8F5] border border-[#EFECE7] transition-all duration-500 group-hover:border-[#C5A880] group-hover:scale-105 shadow-sm">
-                <Image
-                  src={cat.image || "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&q=80"}
-                  alt={cat.name}
-                  fill
-                  sizes="(max-width: 768px) 64px, 80px"
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-[#1A1A1A]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </div>
-              <span className="mt-2 text-[10px] md:text-xs font-sans font-medium tracking-wider text-[#4A4A4A] group-hover:text-[#C5A880] transition-colors duration-300 uppercase">
-                {cat.name}
-              </span>
-            </Link>
-          ))}
+        <div className="flex gap-3 sm:gap-5 md:gap-6 overflow-x-auto pb-3 pt-1 px-4 md:px-12 no-scrollbar scroll-smooth">
+          {categories.map((cat) => {
+            const displayName = cat.name.replace(/\s+jewellery/i, "").trim();
+            return (
+              <Link
+                key={cat.id}
+                href={`/shop?category=${cat.slug}`}
+                className="w-[72px] sm:w-[84px] md:w-24 shrink-0 flex flex-col items-center group cursor-pointer text-center"
+              >
+                <div className="relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full overflow-hidden bg-[#FAF8F5] border border-[#EFECE7] transition-all duration-500 group-hover:border-[#C5A880] group-hover:scale-105 shadow-sm shrink-0">
+                  <Image
+                    src={cat.image && !cat.image.startsWith("data:") ? cat.image : "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80"}
+                    alt={displayName}
+                    fill
+                    sizes="(max-width: 768px) 64px, 80px"
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-[#1A1A1A]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+                <span className="mt-2 text-[9px] sm:text-[10px] md:text-xs font-sans font-medium tracking-wider text-[#4A4A4A] group-hover:text-[#C5A880] transition-colors duration-300 uppercase leading-tight text-center w-full px-0.5 line-clamp-2">
+                  {displayName}
+                </span>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>

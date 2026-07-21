@@ -226,34 +226,8 @@ export function HeroSection() {
                 Shop All Jewellery
               </Link>
             </motion.div>
-          </div>
         </motion.div>
       </div>
-
-      {/* Elegant Scroll Indicator */}
-      <motion.div
-        variants={fadeInUpVariants}
-        initial="hidden"
-        animate="visible"
-        custom={2.0}
-        style={{ opacity: scrollIndicatorOpacity }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20 pointer-events-none"
-      >
-        <div className="w-[1px] h-12 bg-white/20 relative overflow-hidden">
-          <motion.div
-            animate={{ y: ["-100%", "300%"] }}
-            transition={{
-              duration: 2.2,
-              repeat: Infinity,
-              ease: [0.25, 1, 0.5, 1],
-            }}
-            className="absolute top-0 left-0 w-full h-4 bg-[#C5A880]"
-          />
-        </div>
-        <span className="text-[9px] uppercase tracking-[0.3em] text-[#FAF8F5]/60 font-medium">
-          Scroll
-        </span>
-      </motion.div>
     </section>
   );
 }
