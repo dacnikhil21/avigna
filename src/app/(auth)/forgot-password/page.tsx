@@ -36,7 +36,7 @@ export default function ForgotPasswordPage() {
         });
         setEmail("");
       }
-    } catch (err) {
+    } catch {
       setStatus({ type: "error", message: "An unexpected error occurred. Please try again." });
     } finally {
       setLoading(false);

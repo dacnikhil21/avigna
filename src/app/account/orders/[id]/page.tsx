@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, CheckCircle2, Circle, Truck, Package } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Circle } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 
 const TIMELINE_STEPS = ["PAID", "PROCESSING", "SHIPPED", "DELIVERED"];

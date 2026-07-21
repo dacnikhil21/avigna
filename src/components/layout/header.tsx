@@ -18,7 +18,6 @@ export function Header() {
   const { brand } = useWebsiteData();
   const [isShopExpanded, setIsShopExpanded] = useState(false);
   const [showAnnouncement, setShowAnnouncement] = useState(true);
-  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -110,15 +109,6 @@ export function Header() {
   const itemCount = mounted ? totalItems() : 0;
   const wishlistCount = mounted ? wishlistItems.length : 0;
   const menuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  // Rotate announcement messages
-  useEffect(() => {
-    if (!showAnnouncement) return;
-    const timer = setInterval(() => {
-      setCurrentMessageIndex((prev) => (prev + 1) % dynamicMessages.length);
-    }, 8000);
-    return () => clearInterval(timer);
-  }, [showAnnouncement, dynamicMessages.length]);
 
   // Handle scrolling height & backgrounds
   useEffect(() => {

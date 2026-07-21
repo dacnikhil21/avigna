@@ -71,7 +71,7 @@ export function AddressClient({ initialAddresses }: { initialAddresses: Address[
       toast.success("Address deleted successfully");
       setDeletingId(null);
       router.refresh();
-    } catch (err) {
+    } catch {
       toast.error("Error deleting address");
     }
   };
@@ -86,7 +86,7 @@ export function AddressClient({ initialAddresses }: { initialAddresses: Address[
       if (!res.ok) throw new Error("Failed");
       toast.success("Default address updated");
       router.refresh();
-    } catch (err) {
+    } catch {
       toast.error("Error updating default address");
     }
   };

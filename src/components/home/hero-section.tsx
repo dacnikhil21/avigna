@@ -60,9 +60,6 @@ export function HeroSection() {
   // Content fades out and shifts up softly on scroll (0% to 30% scroll progress)
   const contentOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
   const contentY = useTransform(scrollYProgress, [0, 0.3], [0, -30]);
-  
-  // Scroll indicator disappears immediately upon scrolling
-  const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
 
   // Framer Motion entry sequence config
   const entryTransition = {

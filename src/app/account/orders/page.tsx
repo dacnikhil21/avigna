@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { Package, ArrowRight, Clock } from "lucide-react";
+import { Package, ArrowRight } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 
 export default async function OrdersPage() {

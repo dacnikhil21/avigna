@@ -124,15 +124,15 @@ export const useCartStore = create<CartStore>()(
     }),
     {
       name: "avighna-cart",
-      merge: (persistedState: any, currentState) => {
-        const items = persistedState?.items || [];
+      merge: (persistedState: unknown, currentState) => {
+        const items = (persistedState as { items?: CartItem[] })?.items || [];
         const sanitizedItems = deduplicateItems(items).map((item) => ({
           ...item,
           quantity: Math.min(Math.max(1, item.quantity || 1), item.stockQty ?? 999),
         }));
         return {
           ...currentState,
-          ...persistedState,
+          ...(persistedState as object),
           items: sanitizedItems,
         };
       },
