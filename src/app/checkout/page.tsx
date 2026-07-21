@@ -188,6 +188,12 @@ export default function CheckoutPage() {
 
       if (!res.ok) throw new Error(data.error || "Failed to create order");
 
+      if (data.isMock || !process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID) {
+        clearCart();
+        window.location.href = `/checkout/success?order=${data.orderNumber}`;
+        return;
+      }
+
       const script = document.createElement("script");
       script.src = "https://checkout.razorpay.com/v1/checkout.js";
       script.onload = () => {

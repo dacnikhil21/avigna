@@ -35,9 +35,9 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: `Product not found: ${item.productId}` }, { status: 400 });
       }
 
-      if (dbProduct.stockQty < item.quantity) {
+      if (!dbProduct.inStock) {
         return NextResponse.json(
-          { error: `Insufficient stock for ${dbProduct.name}. Only ${dbProduct.stockQty} available.` },
+          { error: `${dbProduct.name} is currently out of stock.` },
           { status: 400 }
         );
       }
@@ -87,6 +87,24 @@ export async function POST(request: Request) {
         },
       },
     });
+
+    const keyId = process.env.RAZORPAY_KEY_ID || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
+    const keySecret = process.env.RAZORPAY_KEY_SECRET;
+
+    if (!keyId || !keySecret) {
+      // If Razorpay keys are not set, complete order creation directly as CONFIRMED
+      await prisma.order.update({
+        where: { id: dbOrder.id },
+        data: { status: "PAID" },
+      });
+
+      return NextResponse.json({
+        isMock: true,
+        orderNumber,
+        dbOrderId: dbOrder.id,
+        amount: amountInPaise,
+      });
+    }
 
     const razorpay = getRazorpayInstance();
     const razorpayOrder = await razorpay.orders.create({
