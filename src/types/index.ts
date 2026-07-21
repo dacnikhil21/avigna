@@ -76,6 +76,7 @@ export interface CartItem {
   image: string;
   quantity: number;
   metal: string;
+  stockQty?: number;
 }
 
 export interface SiteSettings {

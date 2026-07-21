@@ -55,7 +55,7 @@ export async function POST(request: Request) {
     }
 
     const orderNumber = generateOrderNumber();
-    const shipping = calculatedTotal >= 5000 ? 0 : 99; // Free shipping above ₹5000
+    const shipping = 0; // Complimentary shipping per store policy
     const amountInRupees = calculatedTotal + shipping;
     const amountInPaise = amountInRupees * 100; // Razorpay requires amount in PAISE (1 INR = 100 Paise)
     const subtotal = calculatedTotal;

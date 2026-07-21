@@ -12,33 +12,55 @@ export async function POST(req: Request) {
     const { cartItems, wishlistItems } = await req.json();
     const customerId = session.user.id;
 
-    // 1. Sync Cart
-    // We treat the customerId as the sessionId for logged-in users.
-    if (cartItems && cartItems.length > 0) {
+    // 1. Sync Cart items securely with stock capping
+    if (cartItems && Array.isArray(cartItems) && cartItems.length > 0) {
+      const productIds = cartItems.map((i: { productId: string }) => i.productId).filter(Boolean);
+      const dbProducts = await prisma.product.findMany({
+        where: { id: { in: productIds } },
+        select: { id: true, stockQty: true, inStock: true },
+      });
+
       for (const item of cartItems) {
-        // Upsert cart item
-        await prisma.cartItem.upsert({
+        if (!item.productId) continue;
+        const product = dbProducts.find((p) => p.id === item.productId);
+        if (!product || !product.inStock || product.stockQty <= 0) continue;
+
+        const existingDbCartItem = await prisma.cartItem.findUnique({
           where: {
             sessionId_productId: {
               sessionId: customerId,
               productId: item.productId,
             },
           },
-          update: {
-            quantity: item.quantity,
-          },
-          create: {
-            sessionId: customerId,
-            productId: item.productId,
-            quantity: item.quantity,
-          },
         });
+
+        if (existingDbCartItem) {
+          // Merge guest & DB quantity, capping at product stock
+          const mergedQty = Math.min(
+            existingDbCartItem.quantity + Math.max(1, item.quantity || 1),
+            product.stockQty
+          );
+          await prisma.cartItem.update({
+            where: { id: existingDbCartItem.id },
+            data: { quantity: mergedQty },
+          });
+        } else {
+          const safeQty = Math.min(Math.max(1, item.quantity || 1), product.stockQty);
+          await prisma.cartItem.create({
+            data: {
+              sessionId: customerId,
+              productId: item.productId,
+              quantity: safeQty,
+            },
+          });
+        }
       }
     }
 
-    // 2. Sync Wishlist
-    if (wishlistItems && wishlistItems.length > 0) {
+    // 2. Sync Wishlist items securely
+    if (wishlistItems && Array.isArray(wishlistItems) && wishlistItems.length > 0) {
       for (const productId of wishlistItems) {
+        if (!productId || typeof productId !== "string") continue;
         await prisma.wishlistItem.upsert({
           where: {
             customerId_productId: {
@@ -46,11 +68,10 @@ export async function POST(req: Request) {
               productId: productId,
             },
           },
-          update: {}, // do nothing if exists
+          update: {}, // Keep existing if already present
           create: {
             customerId: customerId,
             productId: productId,
-            // optionally leave sessionId null for logged-in wishlists
           },
         });
       }
@@ -67,12 +88,15 @@ export async function POST(req: Request) {
       include: { product: { include: { images: true } } },
     });
 
+    // Map unified cart items cleanly with latest price and stock limits
     const unifiedCart = dbCartItems.map((dbItem) => ({
       productId: dbItem.productId,
-      quantity: dbItem.quantity,
-      price: dbItem.product.price,
+      quantity: Math.min(dbItem.quantity, dbItem.product.stockQty),
+      price: dbItem.product.salePrice ?? dbItem.product.price,
       name: dbItem.product.name,
+      slug: dbItem.product.slug,
       image: dbItem.product.images?.[0]?.url || "",
+      metal: dbItem.product.metal,
       stockQty: dbItem.product.stockQty,
     }));
 

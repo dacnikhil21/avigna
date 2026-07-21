@@ -111,7 +111,8 @@ export function CartDrawer() {
                               onClick={() =>
                                 updateQuantity(item.productId, item.quantity + 1)
                               }
-                              className="p-1.5 hover:bg-luxury-cream rounded-full transition-colors"
+                              disabled={!!item.stockQty && item.quantity >= item.stockQty}
+                              className="p-1.5 hover:bg-luxury-cream rounded-full transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                               aria-label="Increase quantity"
                             >
                               <Plus className="w-3 h-3" />

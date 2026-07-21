@@ -31,6 +31,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
       price: product.salePrice ?? product.price,
       image: product.images[0]?.url ?? "",
       metal: product.metal,
+      stockQty: product.stockQty,
     });
   };
 

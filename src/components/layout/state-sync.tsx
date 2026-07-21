@@ -11,12 +11,19 @@ export function StateSync() {
   const setCartItems = useCartStore((s) => s.setItems);
   const wishlistItems = useWishlistStore((s) => s.items);
   const setWishlistItems = useWishlistStore((s) => s.setItems);
-  const syncedRef = useRef(false);
+  const lastSyncedUserRef = useRef<string | null>(null);
 
   useEffect(() => {
-    if (status === "authenticated" && !syncedRef.current) {
-      syncedRef.current = true;
-      
+    const userId = session?.user?.id;
+
+    if (status === "unauthenticated") {
+      lastSyncedUserRef.current = null;
+      return;
+    }
+
+    if (status === "authenticated" && userId && lastSyncedUserRef.current !== userId) {
+      lastSyncedUserRef.current = userId;
+
       const syncData = async () => {
         try {
           const res = await fetch("/api/sync", {
@@ -24,18 +31,20 @@ export function StateSync() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               cartItems,
-              wishlistItems: wishlistItems.map((w: { id?: string, productId?: string }) => w.id || w.productId),
+              wishlistItems: wishlistItems.map(
+                (w: { id?: string; productId?: string }) => w.id || w.productId
+              ),
             }),
           });
-          
+
           if (res.ok) {
             const data = await res.json();
-            
+
             // Override local Zustand states with the unified state from DB
-            if (data.cartItems) {
+            if (data.cartItems && Array.isArray(data.cartItems)) {
               setCartItems(data.cartItems);
             }
-            if (data.wishlistItems) {
+            if (data.wishlistItems && Array.isArray(data.wishlistItems)) {
               setWishlistItems(data.wishlistItems);
             }
           }
@@ -46,7 +55,7 @@ export function StateSync() {
 
       syncData();
     }
-  }, [status, cartItems, wishlistItems, setCartItems, setWishlistItems]);
+  }, [status, session?.user?.id]); // Track only status and userId to avoid re-triggering loop
 
   return null;
 }

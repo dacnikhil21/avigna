@@ -53,17 +53,19 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
     // 1. Clear cart
     useCartStore.getState().clearCart();
     
-    // 2. Add current item with quantity
-    for (let i = 0; i < quantity; i++) {
-      addItem({
+    // 2. Add current item with quantity directly
+    addItem(
+      {
         productId: product.id,
         name: product.name,
         slug: product.slug,
         price: product.salePrice ?? product.price,
         image: product.images[0]?.url ?? "",
         metal: product.metal,
-      });
-    }
+        stockQty: product.stockQty,
+      },
+      quantity
+    );
     
     // 3. Close the slide-out cart slider immediately so it doesn't block screen
     useCartStore.getState().closeCart();
@@ -73,16 +75,18 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
   };
 
   const handleAddToCart = () => {
-    for (let i = 0; i < quantity; i++) {
-      addItem({
+    addItem(
+      {
         productId: product.id,
         name: product.name,
         slug: product.slug,
         price: product.salePrice ?? product.price,
         image: product.images[0]?.url ?? "",
         metal: product.metal,
-      });
-    }
+        stockQty: product.stockQty,
+      },
+      quantity
+    );
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };
@@ -255,10 +259,10 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
                 </button>
                 <span className="text-sm w-8 text-center">{product.stockQty <= 0 ? 0 : quantity}</span>
                 <button
-                  onClick={() => setQuantity(quantity + 1)}
+                  onClick={() => setQuantity(Math.min(product.stockQty, quantity + 1))}
                   className="p-2 hover:bg-luxury-cream rounded-lg transition-colors disabled:opacity-50"
                   aria-label="Increase quantity"
-                  disabled={product.stockQty <= 0}
+                  disabled={product.stockQty <= 0 || quantity >= product.stockQty}
                 >
                   <Plus className="w-4 h-4" />
                 </button>
