@@ -37,12 +37,13 @@ export default async function OrderDetailsPage({ params }: { params: Promise<{ i
           <h1 className="text-2xl font-serif mb-1">Order #{order.orderNumber}</h1>
           <p className="text-sm text-gray-500">Placed on {new Date(order.createdAt).toLocaleDateString()}</p>
         </div>
-        <span className={`px-4 py-1.5 text-sm font-medium rounded-full ${
-          order.status === 'DELIVERED' ? 'bg-green-100 text-green-700' :
-          isCancelled ? 'bg-red-100 text-red-700' :
-          'bg-blue-100 text-blue-700'
+        <span className={`px-4 py-1 text-xs font-semibold uppercase tracking-wider rounded-full border ${
+          order.status === 'DELIVERED' ? 'bg-emerald-50 text-emerald-800 border-emerald-200' :
+          isCancelled ? 'bg-red-50 text-red-700 border-red-200' :
+          order.status === 'SHIPPED' ? 'bg-indigo-50 text-indigo-800 border-indigo-200' :
+          'bg-[#C5A880]/15 text-[#8B6B38] border-[#C5A880]/30'
         }`}>
-          {order.status}
+          {order.status === 'DELIVERED' ? 'Delivered' : isCancelled ? 'Cancelled' : order.status === 'SHIPPED' ? 'Out for Delivery' : 'Confirmed & Processing'}
         </span>
       </div>
 

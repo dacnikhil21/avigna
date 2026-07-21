@@ -62,12 +62,14 @@ export function AddressClient({ initialAddresses }: { initialAddresses: Address[
     setIsFormOpen(true);
   };
 
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this address?")) return;
     try {
       const res = await fetch(`/api/account/addresses?id=${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Failed to delete");
       toast.success("Address deleted successfully");
+      setDeletingId(null);
       router.refresh();
     } catch (err) {
       toast.error("Error deleting address");
@@ -205,15 +207,34 @@ export function AddressClient({ initialAddresses }: { initialAddresses: Address[
                 <br />
                 {address.city}, {address.state} {address.pincode}
               </p>
-              <div className="flex gap-4 mt-4 pt-4 border-t border-gray-100">
-                <button onClick={() => handleOpenEdit(address)} className="text-sm flex items-center gap-1 text-luxury-gold font-medium hover:underline">
+              <div className="flex items-center gap-4 mt-4 pt-4 border-t border-gray-100">
+                <button onClick={() => handleOpenEdit(address)} className="text-xs flex items-center gap-1 text-luxury-gold font-medium hover:underline">
                   <Edit2 className="w-3.5 h-3.5" /> Edit
                 </button>
-                <button onClick={() => handleDelete(address.id)} className="text-sm flex items-center gap-1 text-red-600 font-medium hover:underline">
-                  <Trash2 className="w-3.5 h-3.5" /> Delete
-                </button>
+                {deletingId === address.id ? (
+                  <div className="flex items-center gap-2 bg-red-50 px-2 py-1 rounded">
+                    <span className="text-xs text-red-600 font-medium">Delete?</span>
+                    <button
+                      onClick={() => handleDelete(address.id)}
+                      className="text-xs font-bold text-red-600 hover:underline"
+                    >
+                      Yes
+                    </button>
+                    <span className="text-xs text-gray-300">|</span>
+                    <button
+                      onClick={() => setDeletingId(null)}
+                      className="text-xs text-gray-500 hover:underline"
+                    >
+                      No
+                    </button>
+                  </div>
+                ) : (
+                  <button onClick={() => setDeletingId(address.id)} className="text-xs flex items-center gap-1 text-red-600 font-medium hover:underline">
+                    <Trash2 className="w-3.5 h-3.5" /> Delete
+                  </button>
+                )}
                 {!address.isDefault && (
-                  <button onClick={() => handleSetDefault(address)} className="text-sm ml-auto text-gray-500 hover:text-luxury-gold font-medium hover:underline">
+                  <button onClick={() => handleSetDefault(address)} className="text-xs ml-auto text-gray-500 hover:text-luxury-gold font-medium hover:underline">
                     Set Default
                   </button>
                 )}

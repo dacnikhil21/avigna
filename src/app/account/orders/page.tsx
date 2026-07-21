@@ -48,18 +48,29 @@ export default async function OrdersPage() {
                     <p className="font-medium text-gray-900">#{order.orderNumber}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4">
-                  <span className={`px-3 py-1 text-xs font-medium rounded-full ${
-                    order.status === 'DELIVERED' ? 'bg-green-100 text-green-700' :
-                    order.status === 'CANCELLED' ? 'bg-red-100 text-red-700' :
-                    'bg-blue-100 text-blue-700'
-                  }`}>
-                    {order.status}
-                  </span>
-                  <Link href={`/account/orders/${order.id}`} className="text-sm text-luxury-gold font-medium hover:underline">
-                    View Details
+                  {(() => {
+                    const isDelivered = order.status === "DELIVERED";
+                    const isCancelled = order.status === "CANCELLED";
+                    const isShipped = order.status === "SHIPPED";
+
+                    const label = isDelivered ? "Delivered" : isCancelled ? "Cancelled" : isShipped ? "Shipped" : "Confirmed & Processing";
+                    const badgeStyle = isDelivered
+                      ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+                      : isCancelled
+                      ? "bg-red-50 text-red-700 border-red-200"
+                      : isShipped
+                      ? "bg-indigo-50 text-indigo-800 border-indigo-200"
+                      : "bg-[#C5A880]/15 text-[#8B6B38] border-[#C5A880]/30";
+
+                    return (
+                      <span className={`px-3.5 py-1 text-[11px] uppercase tracking-wider font-semibold border rounded-full ${badgeStyle}`}>
+                        {label}
+                      </span>
+                    );
+                  })()}
+                  <Link href={`/account/orders/${order.id}`} className="text-xs text-luxury-gold font-medium hover:underline flex items-center gap-1">
+                    Details <ArrowRight className="w-3 h-3" />
                   </Link>
-                </div>
               </div>
               
               <div className="p-4 md:p-6 divide-y divide-gray-100">
