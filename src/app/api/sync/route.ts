@@ -85,16 +85,28 @@ export async function POST(req: Request) {
       include: { product: { include: { images: true } } },
     });
 
+    // Clean up any legacy inflated quantities in DB
+    for (const dbItem of dbCartItems) {
+      const maxStock = dbItem.product?.stockQty && dbItem.product.stockQty > 0 ? dbItem.product.stockQty : 1;
+      if (dbItem.quantity > maxStock) {
+        await prisma.cartItem.update({
+          where: { id: dbItem.id },
+          data: { quantity: maxStock },
+        });
+        dbItem.quantity = maxStock;
+      }
+    }
+
     // Map unified cart items cleanly with latest price and stock limits
     const unifiedCart = dbCartItems.map((dbItem) => ({
       productId: dbItem.productId,
-      quantity: Math.min(dbItem.quantity, dbItem.product.stockQty),
-      price: dbItem.product.salePrice ?? dbItem.product.price,
-      name: dbItem.product.name,
-      slug: dbItem.product.slug,
-      image: dbItem.product.images?.[0]?.url || "",
-      metal: dbItem.product.metal,
-      stockQty: dbItem.product.stockQty,
+      quantity: Math.min(dbItem.quantity, dbItem.product?.stockQty ?? 1),
+      price: dbItem.product?.salePrice ?? dbItem.product?.price ?? 0,
+      name: dbItem.product?.name ?? "",
+      slug: dbItem.product?.slug ?? "",
+      image: dbItem.product?.images?.[0]?.url || "",
+      metal: dbItem.product?.metal ?? "",
+      stockQty: dbItem.product?.stockQty ?? 1,
     }));
 
     const unifiedWishlist = dbWishlistItems.map((w) => w.product);

@@ -229,6 +229,43 @@ export default function CheckoutPage() {
     }
   };
 
+  const handleDetectLocation = () => {
+    if (typeof window === "undefined" || !navigator.geolocation) {
+      setErrorMsg("Geolocation is not supported by your browser.");
+      setTimeout(() => setErrorMsg(null), 4000);
+      return;
+    }
+    setSaveAddressLoading(true);
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        try {
+          const { latitude, longitude } = pos.coords;
+          const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
+          const data = await res.json();
+          if (data && data.address) {
+            const addr = data.address;
+            setNewAddr((prev) => ({
+              ...prev,
+              city: addr.city || addr.town || addr.village || addr.county || prev.city,
+              state: addr.state || prev.state,
+              pincode: addr.postcode || prev.pincode,
+              street: addr.suburb || addr.neighbourhood || addr.road || prev.street,
+            }));
+          }
+        } catch (err) {
+          console.error("Geocoding error:", err);
+        } finally {
+          setSaveAddressLoading(false);
+        }
+      },
+      () => {
+        setSaveAddressLoading(false);
+        setErrorMsg("Unable to retrieve location. Please fill manually.");
+        setTimeout(() => setErrorMsg(null), 4000);
+      }
+    );
+  };
+
   return (
     <div className="section-padding pt-32 md:pt-36 pb-20">
       <Link
@@ -251,9 +288,18 @@ export default function CheckoutPage() {
             </h2>
             {!shippingForm || isAddingAddress ? (
               <div className="bg-white p-6 rounded-2xl border border-gray-100 space-y-4">
-                <h3 className="font-serif text-lg font-light text-[#121212] mb-2">
-                  Add Shipping Address
-                </h3>
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="font-serif text-lg font-light text-[#121212]">
+                    Add Shipping Address
+                  </h3>
+                  <button
+                    type="button"
+                    onClick={handleDetectLocation}
+                    className="text-xs text-[#C5A880] hover:underline flex items-center gap-1 font-medium bg-[#C5A880]/10 px-2.5 py-1 rounded-full border border-[#C5A880]/30 transition-colors"
+                  >
+                    📍 Use Current Location
+                  </button>
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="new-name" className="text-xs">Full Name *</Label>
