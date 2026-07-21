@@ -85,7 +85,7 @@ export function HeroSection() {
   return (
     <section 
       ref={containerRef}
-      className="relative h-screen w-full overflow-hidden bg-[#121212] select-none"
+      className="relative min-h-[580px] h-[90vh] md:h-screen w-full overflow-hidden bg-[#121212] select-none"
     >
       {/* Background Image Container */}
       <div className="absolute inset-0 z-0">
