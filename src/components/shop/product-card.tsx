@@ -69,7 +69,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
         <Link href={`/product/${product.slug}`} className="block relative">
           <div className="relative aspect-[4/5] overflow-hidden bg-[#FAF8F5]">
             <Image
-              src={product.images && product.images.length > 0 && product.images[0]?.url ? product.images[0].url : "/images/hero-bridal-bride.jpg"}
+              src={product.images && product.images.length > 0 && product.images[0]?.url ? product.images[0].url : "/images/hero-1.jpeg"}
               alt={product.images && product.images.length > 0 && product.images[0]?.altText ? product.images[0].altText : product.name}
               fill
               priority={priority}
@@ -179,7 +179,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
             >
               <div className="relative aspect-square md:aspect-[3/4] md:w-1/2 bg-[#FAF8F5]">
                 <Image
-                  src={product.images && product.images.length > 0 && product.images[0]?.url ? product.images[0].url : "/images/hero-bridal-bride.jpg"}
+                  src={product.images && product.images.length > 0 && product.images[0]?.url ? product.images[0].url : "/images/hero-1.jpeg"}
                   alt={product.name}
                   fill
                   className="object-cover"

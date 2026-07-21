@@ -137,12 +137,12 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
                 className="relative w-full h-full"
               >
                 <Image
-                  src={product.images && product.images.length > 0 && product.images[selectedImage]?.url ? product.images[selectedImage].url : "/images/hero-bridal-bride.jpg"}
+                  src={product.images && product.images.length > 0 && product.images[selectedImage]?.url ? product.images[selectedImage].url : "/images/hero-1.jpeg"}
                   alt={product.images && product.images.length > 0 && product.images[selectedImage]?.altText ? product.images[selectedImage].altText : product.name}
                   fill
                   priority
                   className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               </motion.div>
               
@@ -159,21 +159,23 @@ export function ProductDetail({ product, related }: ProductDetailProps) {
               </button>
             </div>
 
-            {product.images.length > 1 && (
-              <div className="flex gap-3">
-                {product.images.map((img, i) => (
+            {/* Thumbnails */}
+            {product.images && product.images.length > 1 && (
+              <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
+                {product.images.map((img, idx) => (
                   <button
-                    key={i}
-                    onClick={() => setSelectedImage(i)}
-                    className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
-                      selectedImage === i
-                        ? "border-luxury-gold shadow-gold"
-                        : "border-transparent opacity-60 hover:opacity-100"
-                    }`}
+                    key={img.id || idx}
+                    onClick={() => setSelectedImage(idx)}
+                    className={cn(
+                      "relative w-20 h-20 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0",
+                      selectedImage === idx
+                        ? "border-[#C5A880] ring-1 ring-[#C5A880]"
+                        : "border-transparent opacity-70 hover:opacity-100"
+                    )}
                   >
                     <Image
-                      src={img.url || "/images/hero-bridal-bride.jpg"}
-                      alt={img.altText ?? `${product.name} view ${i + 1}`}
+                      src={img.url || "/images/hero-1.jpeg"}
+                      alt={img.altText ?? `${product.name} view ${idx + 1}`}
                       fill
                       className="object-cover"
                       sizes="80px"
