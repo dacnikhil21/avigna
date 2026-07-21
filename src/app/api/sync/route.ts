@@ -12,39 +12,40 @@ export async function POST(req: Request) {
     const { cartItems, wishlistItems } = await req.json();
     const customerId = session.user.id;
 
-    // 1. Sync Cart items securely with stock capping
-    if (cartItems && Array.isArray(cartItems) && cartItems.length > 0) {
-      const productIds = cartItems.map((i: { productId: string }) => i.productId).filter(Boolean);
-      const dbProducts = await prisma.product.findMany({
-        where: { id: { in: productIds } },
-        select: { id: true, stockQty: true, inStock: true },
+    // 1. Sync Cart items securely & purge any deleted DB items
+    if (cartItems && Array.isArray(cartItems)) {
+      const activeProductIds = cartItems.map((i: { productId: string }) => i.productId).filter(Boolean);
+
+      // Purge any cart items in DB for this user that are no longer in the active client cart
+      await prisma.cartItem.deleteMany({
+        where: {
+          sessionId: customerId,
+          productId: { notIn: activeProductIds },
+        },
       });
 
-      for (const item of cartItems) {
-        if (!item.productId) continue;
-        const product = dbProducts.find((p) => p.id === item.productId);
-        if (!product || !product.inStock || product.stockQty <= 0) continue;
-
-        const existingDbCartItem = await prisma.cartItem.findUnique({
-          where: {
-            sessionId_productId: {
-              sessionId: customerId,
-              productId: item.productId,
-            },
-          },
+      if (activeProductIds.length > 0) {
+        const dbProducts = await prisma.product.findMany({
+          where: { id: { in: activeProductIds } },
+          select: { id: true, stockQty: true, inStock: true },
         });
 
-        if (existingDbCartItem) {
-          // Set to the target item quantity directly, capped at product stock
+        for (const item of cartItems) {
+          if (!item.productId) continue;
+          const product = dbProducts.find((p) => p.id === item.productId);
+          if (!product || !product.inStock || product.stockQty <= 0) continue;
+
           const safeQty = Math.min(Math.max(1, item.quantity || 1), product.stockQty);
-          await prisma.cartItem.update({
-            where: { id: existingDbCartItem.id },
-            data: { quantity: safeQty },
-          });
-        } else {
-          const safeQty = Math.min(Math.max(1, item.quantity || 1), product.stockQty);
-          await prisma.cartItem.create({
-            data: {
+
+          await prisma.cartItem.upsert({
+            where: {
+              sessionId_productId: {
+                sessionId: customerId,
+                productId: item.productId,
+              },
+            },
+            update: { quantity: safeQty },
+            create: {
               sessionId: customerId,
               productId: item.productId,
               quantity: safeQty,
