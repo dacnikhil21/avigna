@@ -35,14 +35,11 @@ export async function POST(req: Request) {
         });
 
         if (existingDbCartItem) {
-          // Merge guest & DB quantity, capping at product stock
-          const mergedQty = Math.min(
-            existingDbCartItem.quantity + Math.max(1, item.quantity || 1),
-            product.stockQty
-          );
+          // Set to the target item quantity directly, capped at product stock
+          const safeQty = Math.min(Math.max(1, item.quantity || 1), product.stockQty);
           await prisma.cartItem.update({
             where: { id: existingDbCartItem.id },
-            data: { quantity: mergedQty },
+            data: { quantity: safeQty },
           });
         } else {
           const safeQty = Math.min(Math.max(1, item.quantity || 1), product.stockQty);
