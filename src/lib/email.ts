@@ -5,7 +5,8 @@ const resend = new Resend(process.env.RESEND_API_KEY || "re_mock");
 const SENDER_EMAIL = "Sri Avighna <orders@sriavighna.com>";
 
 export async function sendPasswordResetEmail(email: string, token: string) {
-  const resetLink = `${process.env.NEXTAUTH_URL}/reset-password?token=${token}`;
+  const baseUrl = process.env.NEXTAUTH_URL || process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  const resetLink = `${baseUrl}/reset-password?token=${token}`;
 
   const html = `
     <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #121212;">

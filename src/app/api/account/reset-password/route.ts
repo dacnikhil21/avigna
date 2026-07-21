@@ -34,9 +34,9 @@ export async function POST(request: Request) {
       data: { passwordHash },
     });
 
-    // Delete the token so it can't be reused
-    await prisma.passwordResetToken.delete({
-      where: { token },
+    // Delete all tokens for this email so none can be reused
+    await prisma.passwordResetToken.deleteMany({
+      where: { email: resetRecord.email },
     });
 
     return NextResponse.json({ success: true });
