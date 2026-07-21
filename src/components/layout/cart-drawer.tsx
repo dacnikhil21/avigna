@@ -14,7 +14,7 @@ export function CartDrawer() {
     useCartStore();
 
   const total = subtotal();
-  const shipping = total > 5000000 ? 0 : 50000;
+  const shipping = 0;
 
   return (
     <AnimatePresence>

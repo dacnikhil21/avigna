@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { customer, items } = body;
+    const { customer, items, paymentMethod } = body;
 
     if (!customer || !items?.length) {
       return NextResponse.json({ error: "Invalid request" }, { status: 400 });
@@ -91,11 +91,11 @@ export async function POST(request: Request) {
     const keyId = process.env.RAZORPAY_KEY_ID || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
     const keySecret = process.env.RAZORPAY_KEY_SECRET;
 
-    if (!keyId || !keySecret) {
-      // If Razorpay keys are not set, complete order creation directly as CONFIRMED
+    if (paymentMethod === "cod" || !keyId || !keySecret) {
+      // If COD or Razorpay keys not set, complete order creation directly as CONFIRMED / PROCESSING
       await prisma.order.update({
         where: { id: dbOrder.id },
-        data: { status: "PAID" },
+        data: { status: paymentMethod === "cod" ? "PROCESSING" : "PAID" },
       });
 
       return NextResponse.json({

@@ -49,6 +49,7 @@ export default function CheckoutPage() {
   const { items, subtotal, clearCart, isGift, giftMessage, setGiftOptions } = useCartStore();
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [paymentMethod, setPaymentMethod] = useState<"online" | "cod">("online");
   const [shippingForm, setShippingForm] = useState<{name: string, email: string, phone: string, address: string, city: string, state: string, pincode: string} | null>(null);
   const [addressLoading, setAddressLoading] = useState(true);
   const [isAddingAddress, setIsAddingAddress] = useState(false);
@@ -177,10 +178,11 @@ export default function CheckoutPage() {
         body: JSON.stringify({
           amount: grandTotal,
           customer: shippingForm,
+          paymentMethod,
           items: items.map((i) => ({
             productId: i.productId,
             quantity: i.quantity,
-          })), // We only send IDs and quantity now; price is verified on backend
+          })),
         }),
       });
 
@@ -282,106 +284,106 @@ export default function CheckoutPage() {
         Continue Shopping
       </Link>
 
-      <h1 className="heading-md mb-10">Checkout</h1>
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#121212] mb-8">Checkout</h1>
 
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-5 gap-10">
         {/* Form */}
         <FadeIn className="lg:col-span-3 space-y-8">
-          <div className="bg-luxury-cream/30 rounded-3xl p-6 md:p-8">
-            <h2 className="font-serif text-xl font-light mb-6 flex items-center gap-2">
-              <MapPin className="w-5 h-5 text-luxury-gold" />
-              Shipping Details
+          <div className="bg-luxury-cream/30 rounded-3xl p-6 md:p-8 border border-gray-100">
+            <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#121212] mb-6 flex items-center gap-2">
+              <MapPin className="w-6 h-6 text-[#C5A880]" />
+              Shipping Address
             </h2>
             {!shippingForm || isAddingAddress ? (
               <div className="bg-white p-6 rounded-2xl border border-gray-100 space-y-4">
-                <div className="flex justify-between items-center mb-2">
-                  <h3 className="font-serif text-lg font-light text-[#121212]">
-                    Add Shipping Address
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-2">
+                  <h3 className="font-bold text-base text-[#121212]">
+                    Add Shipping Details
                   </h3>
                   <button
                     type="button"
                     onClick={handleDetectLocation}
-                    className="text-xs text-[#C5A880] hover:underline flex items-center gap-1 font-medium bg-[#C5A880]/10 px-2.5 py-1 rounded-full border border-[#C5A880]/30 transition-colors"
+                    className="text-xs text-[#C5A880] hover:bg-[#C5A880]/20 flex items-center gap-1.5 font-semibold bg-[#C5A880]/10 px-3 py-1.5 rounded-full border border-[#C5A880]/30 transition-colors"
                   >
-                    📍 Use Current Location
+                    📍 Auto-Detect Location
                   </button>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="new-name" className="text-xs">Full Name *</Label>
+                    <Label htmlFor="new-name" className="text-xs font-semibold text-gray-700">Full Name *</Label>
                     <Input
                       id="new-name"
                       required
                       placeholder="e.g. Ananya Sharma"
                       value={newAddr.fullName}
                       onChange={(e) => setNewAddr({ ...newAddr, fullName: e.target.value })}
-                      className="mt-1 text-xs"
+                      className="mt-1 text-sm rounded-xl border-gray-200 focus:border-[#C5A880]"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="new-mobile" className="text-xs">Mobile Number *</Label>
+                    <Label htmlFor="new-mobile" className="text-xs font-semibold text-gray-700">Mobile Number *</Label>
                     <Input
                       id="new-mobile"
                       required
                       placeholder="10-digit mobile number"
                       value={newAddr.mobile}
                       onChange={(e) => setNewAddr({ ...newAddr, mobile: e.target.value })}
-                      className="mt-1 text-xs"
+                      className="mt-1 text-sm rounded-xl border-gray-200 focus:border-[#C5A880]"
                     />
                   </div>
                   <div className="sm:col-span-2">
-                    <Label htmlFor="new-flat" className="text-xs">Flat / House No. / Building *</Label>
+                    <Label htmlFor="new-flat" className="text-xs font-semibold text-gray-700">Flat / House No. / Building *</Label>
                     <Input
                       id="new-flat"
                       required
                       placeholder="e.g. Flat 402, Royal Residency"
                       value={newAddr.houseFlat}
                       onChange={(e) => setNewAddr({ ...newAddr, houseFlat: e.target.value })}
-                      className="mt-1 text-xs"
+                      className="mt-1 text-sm rounded-xl border-gray-200 focus:border-[#C5A880]"
                     />
                   </div>
                   <div className="sm:col-span-2">
-                    <Label htmlFor="new-street" className="text-xs">Street / Area / Landmark *</Label>
+                    <Label htmlFor="new-street" className="text-xs font-semibold text-gray-700">Street / Area / Landmark *</Label>
                     <Input
                       id="new-street"
                       required
                       placeholder="e.g. Jubilee Hills, Road No. 36"
                       value={newAddr.street}
                       onChange={(e) => setNewAddr({ ...newAddr, street: e.target.value })}
-                      className="mt-1 text-xs"
+                      className="mt-1 text-sm rounded-xl border-gray-200 focus:border-[#C5A880]"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="new-city" className="text-xs">City *</Label>
+                    <Label htmlFor="new-city" className="text-xs font-semibold text-gray-700">City *</Label>
                     <Input
                       id="new-city"
                       required
                       placeholder="e.g. Hyderabad"
                       value={newAddr.city}
                       onChange={(e) => setNewAddr({ ...newAddr, city: e.target.value })}
-                      className="mt-1 text-xs"
+                      className="mt-1 text-sm rounded-xl border-gray-200 focus:border-[#C5A880]"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="new-state" className="text-xs">State *</Label>
+                    <Label htmlFor="new-state" className="text-xs font-semibold text-gray-700">State *</Label>
                     <Input
                       id="new-state"
                       required
                       placeholder="e.g. Telangana"
                       value={newAddr.state}
                       onChange={(e) => setNewAddr({ ...newAddr, state: e.target.value })}
-                      className="mt-1 text-xs"
+                      className="mt-1 text-sm rounded-xl border-gray-200 focus:border-[#C5A880]"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="new-pincode" className="text-xs">Pincode *</Label>
+                    <Label htmlFor="new-pincode" className="text-xs font-semibold text-gray-700">Pincode *</Label>
                     <Input
                       id="new-pincode"
                       required
                       placeholder="6-digit pincode"
                       value={newAddr.pincode}
                       onChange={(e) => setNewAddr({ ...newAddr, pincode: e.target.value })}
-                      className="mt-1 text-xs"
+                      className="mt-1 text-sm rounded-xl border-gray-200 focus:border-[#C5A880]"
                     />
                   </div>
                 </div>
@@ -392,7 +394,7 @@ export default function CheckoutPage() {
                     size="sm"
                     disabled={saveAddressLoading}
                     onClick={handleSaveInlineAddress}
-                    className="text-xs"
+                    className="text-xs rounded-xl"
                   >
                     {saveAddressLoading ? "Saving..." : "Save & Use Address"}
                   </Button>
@@ -402,7 +404,7 @@ export default function CheckoutPage() {
                       variant="outline"
                       size="sm"
                       onClick={() => setIsAddingAddress(false)}
-                      className="text-xs"
+                      className="text-xs rounded-xl"
                     >
                       Cancel
                     </Button>
@@ -410,27 +412,77 @@ export default function CheckoutPage() {
                 </div>
               </div>
             ) : (
-              <div className="bg-white p-6 rounded-xl border border-gray-100">
+              <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                 <div className="flex justify-between items-start mb-4">
-                  <h3 className="font-medium text-lg">{shippingForm.name}</h3>
+                  <h3 className="font-bold text-lg text-[#121212]">{shippingForm.name}</h3>
                   <button
                     type="button"
                     onClick={() => setIsAddingAddress(true)}
-                    className="text-xs text-luxury-gold hover:underline font-medium"
+                    className="text-xs text-[#C5A880] hover:underline font-semibold bg-[#C5A880]/10 px-3 py-1 rounded-full"
                   >
                     + Add New / Change
                   </button>
                 </div>
-                <p className="text-gray-600 text-sm mb-1">{shippingForm.phone}</p>
-                <p className="text-gray-600 text-sm">{shippingForm.email}</p>
-                <p className="text-gray-600 text-sm mt-3">{shippingForm.address}</p>
+                <p className="text-gray-600 text-sm font-medium">{shippingForm.phone}</p>
+                <p className="text-gray-500 text-sm">{shippingForm.email}</p>
+                <p className="text-gray-700 text-sm mt-3 font-medium">{shippingForm.address}</p>
                 <p className="text-gray-600 text-sm">{shippingForm.city}, {shippingForm.state} {shippingForm.pincode}</p>
               </div>
             )}
           </div>
 
-          <div className="bg-luxury-cream/30 rounded-3xl p-6 md:p-8">
-            <h2 className="font-serif text-xl font-light mb-4">Gifting Options</h2>
+          {/* Payment Method Card Block */}
+          <div className="bg-luxury-cream/30 rounded-3xl p-6 md:p-8 border border-gray-100">
+            <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#121212] mb-6">Payment Method</h2>
+            <div className="space-y-3">
+              <label
+                onClick={() => setPaymentMethod("online")}
+                className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all ${
+                  paymentMethod === "online"
+                    ? "border-[#C5A880] bg-white shadow-sm ring-1 ring-[#C5A880]"
+                    : "border-gray-200 bg-white/50 hover:border-gray-300"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="online"
+                  checked={paymentMethod === "online"}
+                  onChange={() => setPaymentMethod("online")}
+                  className="w-4 h-4 text-[#C5A880] focus:ring-[#C5A880]"
+                />
+                <div className="flex-1">
+                  <p className="font-bold text-sm text-[#121212]">Online Payment (Razorpay)</p>
+                  <p className="text-xs text-gray-500">Instant approval via UPI, Credit/Debit Card, or Netbanking</p>
+                </div>
+              </label>
+
+              <label
+                onClick={() => setPaymentMethod("cod")}
+                className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all ${
+                  paymentMethod === "cod"
+                    ? "border-[#C5A880] bg-white shadow-sm ring-1 ring-[#C5A880]"
+                    : "border-gray-200 bg-white/50 hover:border-gray-300"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="cod"
+                  checked={paymentMethod === "cod"}
+                  onChange={() => setPaymentMethod("cod")}
+                  className="w-4 h-4 text-[#C5A880] focus:ring-[#C5A880]"
+                />
+                <div className="flex-1">
+                  <p className="font-bold text-sm text-[#121212]">Cash on Delivery (COD)</p>
+                  <p className="text-xs text-gray-500">Pay cash upon delivery at your doorstep</p>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div className="bg-luxury-cream/30 rounded-3xl p-6 md:p-8 border border-gray-100">
+            <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#121212] mb-4">Gifting Options</h2>
             <div className="space-y-4">
               <div className="flex items-start gap-2.5">
                 <input
@@ -438,22 +490,22 @@ export default function CheckoutPage() {
                   id="gift-note-toggle"
                   checked={isGift}
                   onChange={(e) => setGiftOptions(e.target.checked, e.target.checked ? giftMessage : "")}
-                  className="mt-1 border-gray-300 text-[#C5A880] focus:ring-[#C5A880] rounded-none"
+                  className="mt-1 border-gray-300 text-[#C5A880] focus:ring-[#C5A880] rounded"
                 />
-                <label htmlFor="gift-note-toggle" className="text-sm font-serif text-[#121212] select-none cursor-pointer">
+                <label htmlFor="gift-note-toggle" className="text-sm font-serif font-medium text-[#121212] select-none cursor-pointer">
                   Add a complimentary handwritten gift card
                 </label>
               </div>
               {isGift && (
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="giftMessage">Your Calligraphy Message</Label>
+                  <Label htmlFor="giftMessage" className="text-xs font-semibold">Your Calligraphy Message</Label>
                   <textarea
                     id="giftMessage"
                     placeholder="Write your personal message here..."
                     value={giftMessage}
                     onChange={(e) => setGiftOptions(isGift, e.target.value)}
                     rows={3}
-                    className="w-full text-sm font-sans border border-[#EFECE7] p-3 focus:outline-none focus:border-[#C5A880] resize-none bg-white rounded-none"
+                    className="w-full text-sm font-sans border border-[#EFECE7] p-3 focus:outline-none focus:border-[#C5A880] resize-none bg-white rounded-xl"
                   />
                 </div>
               )}
@@ -466,10 +518,10 @@ export default function CheckoutPage() {
 
         {/* Order summary */}
         <FadeIn delay={0.1} className="lg:col-span-2">
-          <div className="bg-white rounded-3xl shadow-luxury p-6 md:p-8 sticky top-32">
-            <h2 className="font-serif text-xl font-light mb-6">Order Summary</h2>
+          <div className="bg-white rounded-3xl border border-gray-100 shadow-luxury p-6 md:p-8 sticky top-32">
+            <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#121212] mb-6">Order Summary</h2>
 
-            <div className="space-y-4 mb-6 max-h-64 overflow-y-auto">
+            <div className="space-y-4 mb-6 max-h-64 overflow-y-auto pr-1">
               {items.map((item) => (
                 <div key={item.productId} className="flex gap-3">
                   <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-luxury-cream shrink-0">
@@ -482,9 +534,9 @@ export default function CheckoutPage() {
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-light line-clamp-1">{item.name}</p>
-                    <p className="text-xs text-luxury-muted">Qty: {item.quantity}</p>
-                    <p className="text-sm font-medium mt-0.5">
+                    <p className="text-sm font-medium text-[#121212] line-clamp-1">{item.name}</p>
+                    <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
+                    <p className="text-sm font-bold text-[#121212] mt-0.5">
                       {formatPrice(item.price * item.quantity)}
                     </p>
                   </div>
@@ -496,42 +548,40 @@ export default function CheckoutPage() {
 
             <div className="space-y-2 mb-6">
               <div className="flex justify-between text-sm">
-                <span className="text-luxury-muted">Subtotal</span>
-                <span>{formatPrice(total)}</span>
+                <span className="text-gray-500 font-medium">Subtotal</span>
+                <span className="font-bold text-[#121212]">{formatPrice(total)}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-luxury-muted">Shipping</span>
-                <span>
-                  {shipping === 0 ? (
-                    <span className="text-luxury-gold">Complimentary</span>
-                  ) : (
-                    formatPrice(shipping)
-                  )}
-                </span>
+                <span className="text-gray-500 font-medium">Delivery Charge</span>
+                <span className="text-[#C5A880] font-semibold">Complimentary</span>
               </div>
               <Separator className="my-3" />
-              <div className="flex justify-between font-medium text-lg">
-                <span>Total</span>
-                <span>{formatPrice(grandTotal)}</span>
+              <div className="flex justify-between font-bold text-lg text-[#121212]">
+                <span>Total Amount</span>
+                <span className="text-[#C5A880]">{formatPrice(grandTotal)}</span>
               </div>
             </div>
 
             <Button
               type="submit"
               variant="gold"
-              className="w-full"
+              className="w-full py-4 text-base font-bold rounded-2xl shadow-lg"
               size="lg"
               disabled={loading}
             >
-              {loading ? "Processing..." : `Pay ${formatPrice(grandTotal)}`}
+              {loading
+                ? "Processing..."
+                : paymentMethod === "cod"
+                ? "Place Order"
+                : `Pay ${formatPrice(grandTotal)}`}
             </Button>
 
             <div className="flex items-center justify-center gap-4 mt-4 text-xs text-luxury-muted">
-              <span className="flex items-center gap-1">
-                <Lock className="w-3 h-3" /> Secure
+              <span className="flex items-center gap-1 font-medium">
+                <Lock className="w-3.5 h-3.5" /> Secure Checkout
               </span>
-              <span className="flex items-center gap-1">
-                <Shield className="w-3 h-3" /> Encrypted
+              <span className="flex items-center gap-1 font-medium">
+                <Shield className="w-3.5 h-3.5" /> 100% Encrypted
               </span>
             </div>
           </div>
