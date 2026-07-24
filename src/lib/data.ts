@@ -64,7 +64,7 @@ const IMG = {
   ring4: "https://images.unsplash.com/photo-1603561519411-07134e71a2a9?w=800&q=80", // replaced watch
 
   // Pendants & Nose Pins & Anklets
-  pendant1: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&q=80",
+  pendant1: "https://images.unsplash.com/photo-1603561596112-0a132b757442?w=800&q=80",
   pendant2: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80", // replaced record player
   pendant3: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80",
   nospin1: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80",

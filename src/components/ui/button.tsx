@@ -4,24 +4,24 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-luxury-gold/50 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs sm:text-sm font-semibold tracking-[0.15em] transition-all duration-300 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]/50 disabled:pointer-events-none disabled:opacity-40 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-luxury-black text-white hover:bg-luxury-charcoal shadow-luxury hover:shadow-luxury-lg uppercase tracking-[0.12em]",
-        gold: "gold-gradient text-white hover:shadow-gold uppercase tracking-[0.12em]",
+          "bg-[#121212] text-white hover:bg-[#C5A880] shadow-sm uppercase",
+        gold: "gold-gradient text-white hover:shadow-gold uppercase font-bold",
         outline:
-          "border border-luxury-black bg-transparent text-luxury-black hover:bg-luxury-black hover:text-white uppercase tracking-[0.12em]",
-        ghost: "hover:bg-luxury-cream text-luxury-black",
-        link: "text-luxury-gold underline-offset-4 hover:underline",
-        glass: "glass text-luxury-black hover:bg-white/90",
+          "border border-[#121212] bg-transparent text-[#121212] hover:bg-[#121212] hover:text-white uppercase",
+        ghost: "hover:bg-[#FAF8F5] text-[#121212] uppercase",
+        link: "text-[#C5A880] underline-offset-4 hover:underline normal-case tracking-normal",
+        glass: "glass text-[#121212] hover:bg-white/90 uppercase",
       },
       size: {
-        default: "h-12 px-8 py-2",
-        sm: "h-9 px-5 text-xs",
-        lg: "h-14 px-10 text-base",
-        icon: "h-10 w-10",
+        default: "h-12 px-7 py-3",
+        sm: "h-9 px-4 text-[11px]",
+        lg: "h-14 px-9 text-sm",
+        icon: "h-10 w-10 rounded-full",
       },
     },
     defaultVariants: {

@@ -90,7 +90,39 @@
   }
 
   .section-padding {
-    @apply px-6 md:px-12 lg:px-20 xl:px-28;
+    @apply px-4 sm:px-6 md:px-12 lg:px-20 xl:px-28;
+  }
+
+  .section-y-padding {
+    @apply py-12 md:py-20 lg:py-24;
+  }
+
+  .heading-display {
+    @apply font-serif text-3xl sm:text-5xl lg:text-6xl font-light tracking-tight leading-[1.15];
+  }
+
+  .heading-page {
+    @apply font-serif text-2xl sm:text-4xl font-bold text-[#121212] tracking-tight;
+  }
+
+  .heading-section {
+    @apply font-serif text-xl sm:text-3xl font-light text-[#121212];
+  }
+
+  .heading-card {
+    @apply font-serif text-base sm:text-lg font-medium text-[#121212];
+  }
+
+  .eyebrow-text {
+    @apply text-[10px] sm:text-xs font-sans font-semibold tracking-[0.25em] uppercase text-[#C5A880];
+  }
+
+  .body-large {
+    @apply text-sm sm:text-base font-sans text-[#4A4A4A] leading-relaxed;
+  }
+
+  .body-standard {
+    @apply text-xs sm:text-sm font-sans text-[#4A4A4A] leading-normal;
   }
 
   .heading-xl {
@@ -110,42 +142,42 @@
   }
 
   .label-luxury {
-    @apply text-xs uppercase tracking-[0.2em] text-luxury-gold font-medium;
+    @apply text-[10px] sm:text-xs uppercase tracking-[0.25em] text-luxury-gold font-semibold;
   }
 
   .btn-luxury {
     @apply inline-flex items-center justify-center gap-2 px-8 py-3.5 
-           bg-luxury-black text-white text-sm uppercase tracking-[0.15em]
-           rounded-full transition-all duration-500 ease-out
-           hover:bg-luxury-charcoal hover:shadow-luxury-lg
+           bg-[#121212] text-white text-xs sm:text-sm uppercase tracking-[0.15em] font-semibold
+           rounded-full transition-all duration-300 ease-out
+           hover:bg-[#C5A880] hover:shadow-luxury-lg
            active:scale-[0.98];
   }
 
   .btn-luxury-outline {
     @apply inline-flex items-center justify-center gap-2 px-8 py-3.5
-           border border-luxury-black text-luxury-black text-sm uppercase tracking-[0.15em]
-           rounded-full transition-all duration-500 ease-out
-           hover:bg-luxury-black hover:text-white
+           border border-[#121212] text-[#121212] text-xs sm:text-sm uppercase tracking-[0.15em] font-semibold
+           rounded-full transition-all duration-300 ease-out
+           hover:bg-[#121212] hover:text-white
            active:scale-[0.98];
   }
 
   .btn-gold {
     @apply inline-flex items-center justify-center gap-2 px-8 py-3.5
-           gold-gradient text-white text-sm uppercase tracking-[0.15em]
-           rounded-full transition-all duration-500 ease-out
+           gold-gradient text-white text-xs sm:text-sm uppercase tracking-[0.15em] font-semibold
+           rounded-full transition-all duration-300 ease-out
            hover:shadow-gold active:scale-[0.98];
   }
 
   .card-luxury {
-    @apply bg-white rounded-3xl shadow-luxury overflow-hidden
+    @apply bg-white rounded-2xl sm:rounded-3xl border border-[#EFECE7] shadow-luxury overflow-hidden
            transition-all duration-500 ease-out
            hover:shadow-luxury-lg;
   }
 
   .input-luxury {
-    @apply w-full px-5 py-3.5 bg-luxury-cream/50 border border-luxury-beige/50
-           rounded-2xl text-sm text-luxury-black placeholder:text-luxury-muted/60
-           focus:outline-none focus:ring-2 focus:ring-luxury-gold/30 focus:border-luxury-gold/50
+    @apply w-full px-4 py-3.5 bg-[#FAF8F5] border border-[#EFECE7]
+           rounded-xl text-xs sm:text-sm text-[#121212] placeholder:text-[#7A7A7A]
+           focus:outline-none focus:border-[#C5A880] focus:bg-white
            transition-all duration-300;
   }
 }

@@ -66,9 +66,10 @@ export function CategoriesSection() {
               >
                 <div className="relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full overflow-hidden bg-[#FAF8F5] border border-[#EFECE7] transition-all duration-500 group-hover:border-[#C5A880] group-hover:scale-105 shadow-sm shrink-0">
                   <Image
-                    src={cat.image && !cat.image.startsWith("data:") ? cat.image : "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80"}
+                    src={cat.image || "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80"}
                     alt={displayName}
                     fill
+                    unoptimized={Boolean(cat.image?.startsWith("data:"))}
                     sizes="(max-width: 768px) 64px, 80px"
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />

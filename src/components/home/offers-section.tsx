@@ -5,9 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { StaggerContainer, StaggerItem } from "@/components/shared/motion";
 import { ArrowRight } from "lucide-react";
+import type { Product } from "@/types";
 
-const OFFERS = [
+const DEFAULT_OFFERS = [
   {
+    key: "latest-collections",
     title: "Latest Collections",
     subtitle: "Pristine 1 Gram Gold",
     tagline: "Explore New Season Releases",
@@ -20,6 +22,7 @@ const OFFERS = [
     badge: "New Season",
   },
   {
+    key: "festival-offers",
     title: "Festival Offers",
     subtitle: "Celebrate in Radiance",
     tagline: "Up to 20% Off on Heritage Sets",
@@ -32,14 +35,15 @@ const OFFERS = [
     badge: "Limited Offer",
   },
   {
+    key: "new-arrivals",
     title: "New Arrivals",
     subtitle: "Modern Simplicity",
     tagline: "Fresh Designs Added Daily",
     link: "/shop?sort=newest",
     images: [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&q=80",
+      "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80",
       "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80",
-      "https://images.unsplash.com/photo-1576016770956-debb63d900ad?w=800&q=80"
+      "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=800&q=80"
     ],
     badge: "Trending",
   },
@@ -47,22 +51,32 @@ const OFFERS = [
 
 function OfferCardImage({ images, alt }: { images: string[]; alt: string }) {
   const [currentIdx, setCurrentIdx] = useState(0);
+  const [failedIndices, setFailedIndices] = useState<Record<number, boolean>>({});
+
+  const validImages = (images && images.length > 0 ? images : [
+    "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80"
+  ]).map((img, idx) =>
+    failedIndices[idx] ? "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80" : img
+  );
 
   useEffect(() => {
+    if (validImages.length <= 1) return;
     const interval = setInterval(() => {
-      setCurrentIdx((prev) => (prev + 1) % images.length);
-    }, 4500); // Cycles every 4.5 seconds for final polish
+      setCurrentIdx((prev) => (prev + 1) % validImages.length);
+    }, 4500);
     return () => clearInterval(interval);
-  }, [images.length]);
+  }, [validImages.length]);
 
   return (
     <div className="absolute inset-0 w-full h-full">
-      {images.map((img, idx) => (
+      {validImages.map((img, idx) => (
         <Image
-          key={img}
+          key={`${img}-${idx}`}
           src={img}
           alt={alt}
           fill
+          unoptimized={Boolean(img?.startsWith("data:"))}
+          onError={() => setFailedIndices((prev) => ({ ...prev, [idx]: true }))}
           className={`object-cover transition-opacity duration-1000 ease-in-out ${
             idx === currentIdx ? "opacity-100" : "opacity-0 pointer-events-none"
           } transition-transform duration-1000 ease-out group-hover:scale-[1.04]`}
@@ -75,10 +89,51 @@ function OfferCardImage({ images, alt }: { images: string[]; alt: string }) {
 }
 
 export function OffersSection() {
+  const [offers, setOffers] = useState(DEFAULT_OFFERS);
+
+  useEffect(() => {
+    async function loadDynamicProductImages() {
+      try {
+        const res = await fetch("/api/products?limit=20");
+        const data = await res.json();
+        if (data && Array.isArray(data.items) && data.items.length > 0) {
+          const items: Product[] = data.items;
+          
+          // Extract primary images for latest products
+          const latestImgs = items
+            .filter((p) => p.isLatest && p.images && p.images.length > 0)
+            .flatMap((p) => p.images.map((img) => img.url))
+            .filter(Boolean);
+
+          // Extract primary images for featured products
+          const featuredImgs = items
+            .filter((p) => p.isFeatured && p.images && p.images.length > 0)
+            .flatMap((p) => p.images.map((img) => img.url))
+            .filter(Boolean);
+
+          setOffers((prev) =>
+            prev.map((offer) => {
+              if (offer.key === "new-arrivals" && latestImgs.length > 0) {
+                return { ...offer, images: latestImgs.slice(0, 3) };
+              }
+              if (offer.key === "festival-offers" && featuredImgs.length > 0) {
+                return { ...offer, images: featuredImgs.slice(0, 3) };
+              }
+              return offer;
+            })
+          );
+        }
+      } catch (err) {
+        console.error("Failed to load dynamic product offer images:", err);
+      }
+    }
+    loadDynamicProductImages();
+  }, []);
+
   return (
     <section className="section-padding py-8 md:py-16 bg-[#FAF8F5]">
       <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {OFFERS.map((offer) => (
+        {offers.map((offer) => (
           <StaggerItem key={offer.title}>
             <Link
               href={offer.link}
@@ -124,3 +179,4 @@ export function OffersSection() {
     </section>
   );
 }
+

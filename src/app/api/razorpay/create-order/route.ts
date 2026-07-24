@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { customer, items, paymentMethod } = body;
+    const { customer, items, paymentMethod, appliedCoupon, couponCode } = body;
 
     if (!customer || !items?.length) {
       return NextResponse.json({ error: "Invalid request" }, { status: 400 });
@@ -56,9 +56,21 @@ export async function POST(request: Request) {
 
     const orderNumber = generateOrderNumber();
     const shipping = 0; // Complimentary shipping per store policy
-    const amountInRupees = calculatedTotal + shipping;
-    const amountInPaise = amountInRupees * 100; // Razorpay requires amount in PAISE (1 INR = 100 Paise)
-    const subtotal = calculatedTotal;
+
+    // Coupon / Discount calculation (prices in DB are in PAISE)
+    const activeCoupon = appliedCoupon || couponCode;
+    let discountAmount = 0;
+    if (activeCoupon === "WELCOME500") {
+      discountAmount = 50000; // ₹500 in paise
+    } else if (activeCoupon === "AVIGHNA10") {
+      discountAmount = Math.round(calculatedTotal * 0.1);
+    } else if (activeCoupon === "GOLD1000") {
+      discountAmount = 100000; // ₹1,000 in paise
+    }
+
+    const subtotal = calculatedTotal; // already in PAISE
+    const grandTotal = Math.max(0, calculatedTotal + shipping - discountAmount); // in PAISE
+    const amountInPaise = grandTotal; // Razorpay expects amount in PAISE (e.g. 50000 paise = ₹500)
 
     const dbOrder = await prisma.order.create({
       data: {
@@ -72,7 +84,8 @@ export async function POST(request: Request) {
         pincode: customer.pincode || "000000",
         subtotal,
         shipping,
-        total: amountInRupees,
+        discount: discountAmount,
+        total: grandTotal,
         customerId: session.user.id,
         items: {
           create: finalItems.map(
@@ -91,8 +104,8 @@ export async function POST(request: Request) {
     const keyId = process.env.RAZORPAY_KEY_ID || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
     const keySecret = process.env.RAZORPAY_KEY_SECRET;
 
-    if (paymentMethod === "cod" || !keyId || !keySecret) {
-      // If COD or Razorpay keys not set, complete order creation directly as CONFIRMED / PROCESSING
+    if (paymentMethod === "cod" || amountInPaise <= 0 || !keyId || !keySecret) {
+      // If COD, zero total, or Razorpay keys not set, complete order creation directly as CONFIRMED / PROCESSING
       await prisma.order.update({
         where: { id: dbOrder.id },
         data: { status: paymentMethod === "cod" ? "PROCESSING" : "PAID" },
