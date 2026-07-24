@@ -116,27 +116,27 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
         </Link>
 
         {/* Info */}
-        <div className="p-2.5 md:p-3.5 flex flex-col flex-1">
+        <div className="p-3 md:p-4 flex flex-col flex-1">
           {/* Category */}
-          <p className="text-[8px] md:text-[9px] uppercase tracking-[0.15em] text-[#C5A880] mb-0.5 truncate font-medium">
+          <p className="text-[9px] md:text-[10px] uppercase tracking-[0.18em] text-[#8A6B29] font-bold mb-1 truncate">
             {product.category?.name ?? product.metal}
           </p>
 
           {/* Name */}
           <Link href={`/product/${product.slug}`}>
-            <h3 className="font-serif text-xs md:text-sm font-light leading-snug mb-2 text-[#121212] group-hover:text-[#C5A880] transition-colors duration-300 line-clamp-1">
+            <h3 className="font-serif text-xs md:text-sm font-semibold leading-snug mb-2.5 text-[#121212] group-hover:text-[#8A6B29] transition-colors duration-300 line-clamp-1">
               {product.name}
             </h3>
           </Link>
 
           {/* Pricing & 1-Tap Add */}
-          <div className="flex items-center justify-between mt-auto pt-2 border-t border-[#EFECE7]">
+          <div className="flex items-center justify-between mt-auto pt-2.5 border-t border-[#EFECE7]">
             <div className="flex flex-col">
-              <span className="text-xs md:text-sm font-semibold text-[#121212]">
+              <span className="text-xs md:text-sm font-bold text-[#121212]">
                 {product.salePrice ? formatPrice(product.salePrice) : formatPrice(product.price)}
               </span>
               {product.salePrice && (
-                <span className="text-[9px] md:text-[10px] text-[#9a948f] line-through">
+                <span className="text-[10px] md:text-[11px] text-[#7A7570] line-through font-medium">
                   {formatPrice(product.price)}
                 </span>
               )}

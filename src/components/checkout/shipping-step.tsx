@@ -20,23 +20,23 @@ export function ShippingStep() {
   return (
     <div className="bg-white rounded-2xl border border-[#EFECE7] p-5 sm:p-6 md:p-8 shadow-sm transition-all duration-300">
       {/* Step Header */}
-      <div className="flex items-center justify-between mb-5 pb-4 border-b border-[#EFECE7]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-4 border-b border-[#EFECE7]">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-[#121212] text-white flex items-center justify-center font-bold text-xs">
+          <div className="w-8 h-8 rounded-full bg-[#121212] text-white flex items-center justify-center font-bold text-xs shadow-xs">
             2
           </div>
           <div>
             <h2 className="font-serif text-lg sm:text-xl font-bold text-[#121212] flex items-center gap-2">
-              <Truck className="w-5 h-5 text-[#C5A880]" />
+              <Truck className="w-5 h-5 text-[#8A6B29]" />
               Shipping & Delivery
             </h2>
-            <p className="text-xs text-[#7A7A7A] mt-0.5">
+            <p className="text-xs text-[#5A544E] font-medium mt-0.5">
               Complimentary insured express courier transit across India
             </p>
           </div>
         </div>
-        <span className="text-[10px] uppercase tracking-widest font-bold bg-[#C5A880]/15 text-[#C5A880] px-3 py-1 rounded-full border border-[#C5A880]/30">
-          FREE Express Delivery
+        <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A5C1E] bg-[#F7F2E6] border border-[#D8C7A1] px-3 py-1 rounded-lg self-start sm:self-center inline-flex items-center gap-1 shadow-2xs">
+          <Sparkles className="w-3 h-3 text-[#7A5C1E]" /> FREE Express Delivery
         </span>
       </div>
 

@@ -198,9 +198,9 @@ export function OrderSummaryCard({
                     onApplyCoupon(off.code);
                     setCouponError(null);
                   }}
-                  className="text-[10px] uppercase font-bold text-[#C5A880] bg-[#FAF8F5] border border-[#C5A880]/30 hover:bg-[#C5A880] hover:text-white px-2.5 py-1 rounded-md transition-all flex items-center gap-1"
+                  className="text-[10px] uppercase font-bold text-[#8A6B29] bg-[#FFFDF9] border border-[#8A6B29]/40 hover:bg-[#8A6B29] hover:text-white px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 shadow-2xs"
                 >
-                  <Sparkles className="w-2.5 h-2.5" />
+                  <Sparkles className="w-2.5 h-2.5 text-[#8A6B29]" />
                   {off.code}
                 </button>
               ))}
@@ -213,24 +213,24 @@ export function OrderSummaryCard({
 
       {/* Price Breakdown */}
       <div className="space-y-2.5 text-xs sm:text-sm mb-6">
-        <div className="flex justify-between text-[#4A4A4A]">
+        <div className="flex justify-between text-[#4A443F] font-medium">
           <span>Items Subtotal</span>
-          <span className="font-semibold text-[#121212]">{formatPrice(subtotal)}</span>
+          <span className="font-bold text-[#121212]">{formatPrice(subtotal)}</span>
         </div>
 
         {discountAmount > 0 && (
-          <div className="flex justify-between text-emerald-700 font-semibold">
+          <div className="flex justify-between text-emerald-700 font-bold">
             <span>Promo Code Savings</span>
             <span>- {formatPrice(discountAmount)}</span>
           </div>
         )}
 
-        <div className="flex justify-between text-[#4A4A4A]">
+        <div className="flex justify-between text-[#4A443F] font-medium">
           <span>Insured Express Shipping</span>
-          <span className="text-[#C5A880] font-bold">FREE</span>
+          <span className="text-[#8A6B29] font-bold">FREE</span>
         </div>
 
-        <div className="flex justify-between text-[#7A7A7A] text-[11px]">
+        <div className="flex justify-between text-[#7A7570] text-[11px]">
           <span>GST & All Taxes</span>
           <span>Included</span>
         </div>
@@ -241,7 +241,7 @@ export function OrderSummaryCard({
           <span className="font-serif font-bold text-base text-[#121212]">
             Total Amount
           </span>
-          <span className="font-serif text-xl sm:text-2xl font-bold text-[#C5A880]">
+          <span className="font-serif text-xl sm:text-2xl font-bold text-[#8A6B29]">
             {formatPrice(grandTotal)}
           </span>
         </div>
@@ -252,7 +252,7 @@ export function OrderSummaryCard({
         type="button"
         onClick={onSubmit}
         disabled={loading || !shippingForm}
-        className="w-full py-6 bg-[#121212] hover:bg-[#C5A880] text-white text-xs sm:text-sm uppercase tracking-[0.2em] font-bold rounded-xl shadow-lg transition-all duration-300 transform-gpu active:scale-[0.98]"
+        className="w-full py-6 bg-[#121212] hover:bg-[#8A6B29] text-white text-xs sm:text-sm uppercase tracking-[0.15em] font-bold rounded-xl shadow-lg transition-all duration-300 transform-gpu active:scale-95"
       >
         {loading ? (
           <div className="flex items-center gap-2">
