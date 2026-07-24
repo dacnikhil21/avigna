@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { CheckCircle2, Save, Settings, ShieldAlert, AlertTriangle, Globe } from "lucide-react";
+import { CheckCircle2, Save, Settings, ShieldAlert, AlertTriangle, Globe, Truck, Sparkles } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -21,6 +21,13 @@ export function SettingsTab() {
   const [formFacebook, setFormFacebook] = useState("");
   const [formYoutube, setFormYoutube] = useState("");
   const [formPinterest, setFormPinterest] = useState("");
+
+  // Shipping & Delivery Options state
+  const [formStandardShippingFee, setFormStandardShippingFee] = useState("0");
+  const [formFreeShippingThreshold, setFormFreeShippingThreshold] = useState("0");
+  const [formExpressShippingFee, setFormExpressShippingFee] = useState("149");
+  const [formCodFee, setFormCodFee] = useState("0");
+  const [formCodEnabled, setFormCodEnabled] = useState(true);
 
   const [isDirty, setIsDirty] = useState(false);
   const [toastMsg, setToastMsg] = useState("");
@@ -300,6 +307,85 @@ export function SettingsTab() {
                 value={formAddress}
                 onChange={(e) => handleFieldChange(setFormAddress, e.target.value)}
               />
+            </div>
+          </div>
+        </div>
+
+        {/* Shipping & Delivery Options */}
+        <div className="bg-white border border-[#EFECE7] rounded-2xl p-6 shadow-sm space-y-6">
+          <div className="flex items-center justify-between border-b pb-2">
+            <h3 className="font-serif text-base text-slate-950 font-bold flex items-center gap-2 uppercase tracking-wide">
+              <Truck className="w-4.5 h-4.5 text-[#8A6B29] stroke-[2]" />
+              Shipping &amp; Delivery Fee Controls
+            </h3>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+              <Sparkles className="w-3 h-3" /> Live Configuration
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <Label htmlFor="set-[#standard-shipping]" className="text-xs uppercase tracking-wider font-bold text-slate-900">
+                Standard Shipping Fee (₹)
+              </Label>
+              <Input
+                id="set-standard-shipping"
+                type="number"
+                min="0"
+                placeholder="0 for Free Shipping"
+                className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#8A6B29] text-slate-900 font-bold"
+                value={formStandardShippingFee}
+                onChange={(e) => handleFieldChange(setFormStandardShippingFee, e.target.value)}
+              />
+              <p className="text-[11px] text-slate-500 font-medium">Set to 0 to enable Complimentary Free Shipping by default.</p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="set-free-threshold" className="text-xs uppercase tracking-wider font-bold text-slate-900">
+                Free Delivery Threshold Amount (₹)
+              </Label>
+              <Input
+                id="set-free-threshold"
+                type="number"
+                min="0"
+                placeholder="e.g. 999 or 0 for all orders"
+                className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#8A6B29] text-slate-900 font-bold"
+                value={formFreeShippingThreshold}
+                onChange={(e) => handleFieldChange(setFormFreeShippingThreshold, e.target.value)}
+              />
+              <p className="text-[11px] text-slate-500 font-medium">Minimum order subtotal required to get free delivery (0 = free on all orders).</p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="set-express-shipping" className="text-xs uppercase tracking-wider font-bold text-slate-900">
+                Express Delivery Courier Charge (₹)
+              </Label>
+              <Input
+                id="set-express-shipping"
+                type="number"
+                min="0"
+                placeholder="e.g. 149"
+                className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#8A6B29] text-slate-900 font-bold"
+                value={formExpressShippingFee}
+                onChange={(e) => handleFieldChange(setFormExpressShippingFee, e.target.value)}
+              />
+              <p className="text-[11px] text-slate-500 font-medium">Fee charged for priority BlueDart/Delhivery air shipping.</p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="set-cod-fee" className="text-xs uppercase tracking-wider font-bold text-slate-900">
+                Cash on Delivery (COD) Extra Fee (₹)
+              </Label>
+              <Input
+                id="set-cod-fee"
+                type="number"
+                min="0"
+                placeholder="e.g. 50 or 0"
+                className="input-luxury rounded-xl border-[#D1CFC9] hover:border-slate-400 focus:border-[#8A6B29] text-slate-900 font-bold"
+                value={formCodFee}
+                onChange={(e) => handleFieldChange(setFormCodFee, e.target.value)}
+              />
+              <p className="text-[11px] text-slate-500 font-medium">Handling surcharge applied when customer selects Pay on Delivery.</p>
             </div>
           </div>
         </div>
