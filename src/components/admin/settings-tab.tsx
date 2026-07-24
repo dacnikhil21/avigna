@@ -417,15 +417,20 @@ export function SettingsTab() {
           </div>
         </div>
 
-        {/* Security Alert info card */}
-        <div className="flex gap-4 p-5 bg-red-50 border border-red-200 rounded-2xl text-xs text-red-800 leading-relaxed font-bold shadow-sm">
-          <ShieldAlert className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
-          <div>
-            <h4 className="font-serif font-extrabold text-sm mb-1 uppercase tracking-wide">Administrative Credentials Note</h4>
-            <p>
-              Login passwords and security options are currently set to dummy mockup state for Sprint 5 review. Connect databases to configure admin credentials securely later.
-            </p>
+        {/* Security & Access Control */}
+        <div className="bg-white border border-[#EFECE7] rounded-2xl p-6 shadow-sm space-y-4">
+          <div className="flex items-center justify-between border-b pb-2">
+            <h3 className="font-serif text-base text-slate-950 font-bold flex items-center gap-2 uppercase tracking-wide">
+              <ShieldAlert className="w-4.5 h-4.5 text-[#8A6B29] stroke-[2]" />
+              Security &amp; Administrative Protection
+            </h3>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+              ✓ BCrypt Encrypted
+            </span>
           </div>
+          <p className="text-xs text-slate-600 font-medium leading-relaxed">
+            Your admin panel is protected via <strong>NextAuth session encryption</strong> and database-backed administrator accounts. All API mutations and inventory changes are logged.
+          </p>
         </div>
 
         {/* Save CTA */}
