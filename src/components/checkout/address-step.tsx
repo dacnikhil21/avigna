@@ -131,14 +131,14 @@ export function AddressStep({
   const isCompleted = Boolean(shippingForm && !isAddingAddress);
 
   return (
-    <div className="bg-white rounded-2xl border border-[#EFECE7] p-5 sm:p-6 md:p-8 shadow-sm transition-all duration-300">
+    <div className="bg-white rounded-2xl border-2 border-[#121212]/10 p-5 sm:p-6 md:p-8 shadow-sm transition-all duration-300">
       {/* Step Header */}
       <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#EFECE7]">
         <div className="flex items-center gap-3">
           <div
             className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shadow-xs ${
-              isCompleted
-                ? "bg-[#8A6B29] text-white"
+              isCompleted || true
+                ? "bg-[#121212] text-white"
                 : "bg-[#121212] text-white"
             }`}
           >
@@ -146,7 +146,7 @@ export function AddressStep({
           </div>
           <div>
             <h2 className="font-serif text-lg sm:text-xl font-bold text-[#121212] flex items-center gap-2">
-              <MapPin className="w-5 h-5 text-[#8A6B29]" />
+              <MapPin className="w-5 h-5 text-[#121212]" />
               Delivery Address
             </h2>
             <p className="text-xs text-[#5A544E] font-medium mt-0.5">
@@ -159,7 +159,7 @@ export function AddressStep({
           <button
             type="button"
             onClick={() => setIsAddingAddress(true)}
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#121212] hover:bg-[#8A6B29] px-4 py-2 rounded-xl transition-all shadow-xs active:scale-95"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#121212] hover:bg-black px-4 py-2 rounded-xl transition-all shadow-xs active:scale-95"
           >
             <Plus className="w-3.5 h-3.5" />
             Add New
@@ -170,16 +170,16 @@ export function AddressStep({
       {/* Content Body */}
       {isAddingAddress || !shippingForm ? (
         <form onSubmit={handleFormSubmit} className="space-y-5">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-[#FFFDF9] p-4 rounded-xl border border-[#D8D2C6]">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-[#F9F9F9] p-4 rounded-xl border border-[#E5E5E5]">
             <div className="flex items-center gap-2 text-xs font-bold text-[#121212]">
-              <Home className="w-4 h-4 text-[#8A6B29]" />
+              <Home className="w-4 h-4 text-[#121212]" />
               <span>Enter Shipping Details</span>
             </div>
             <button
               type="button"
               onClick={handleDetectLocation}
               disabled={detectingLocation}
-              className="inline-flex items-center gap-1.5 text-xs text-[#8A6B29] font-bold bg-white px-3 py-1.5 rounded-xl border border-[#8A6B29]/40 hover:bg-[#8A6B29] hover:text-white transition-all shadow-2xs"
+              className="inline-flex items-center gap-1.5 text-xs text-[#121212] font-bold bg-white px-3 py-1.5 rounded-xl border border-[#121212] hover:bg-[#121212] hover:text-white transition-all shadow-2xs"
             >
               {detectingLocation ? (
                 <>
@@ -206,7 +206,7 @@ export function AddressStep({
                 placeholder="e.g. Ananya Sharma"
                 value={newAddr.fullName}
                 onChange={(e) => setNewAddr({ ...newAddr, fullName: e.target.value })}
-                className="mt-1 text-xs sm:text-sm rounded-xl border-[#D8D2C6] focus:border-[#8A6B29] bg-white text-[#121212] font-medium"
+                className="mt-1 text-xs sm:text-sm rounded-xl border-[#121212]/30 focus:border-[#121212] bg-white text-[#121212] font-medium"
               />
             </div>
 
@@ -221,7 +221,7 @@ export function AddressStep({
                 placeholder="e.g. 9876543210"
                 value={newAddr.mobile}
                 onChange={(e) => setNewAddr({ ...newAddr, mobile: e.target.value })}
-                className="mt-1 text-xs sm:text-sm rounded-xl border-[#D8D2C6] focus:border-[#8A6B29] bg-white text-[#121212] font-medium"
+                className="mt-1 text-xs sm:text-sm rounded-xl border-[#121212]/30 focus:border-[#121212] bg-white text-[#121212] font-medium"
               />
             </div>
 
@@ -235,7 +235,7 @@ export function AddressStep({
                 placeholder="e.g. Flat 402, Royal Residency"
                 value={newAddr.houseFlat}
                 onChange={(e) => setNewAddr({ ...newAddr, houseFlat: e.target.value })}
-                className="mt-1 text-xs sm:text-sm rounded-xl border-[#D8D2C6] focus:border-[#8A6B29] bg-white text-[#121212] font-medium"
+                className="mt-1 text-xs sm:text-sm rounded-xl border-[#121212]/30 focus:border-[#121212] bg-white text-[#121212] font-medium"
               />
             </div>
 
@@ -249,7 +249,7 @@ export function AddressStep({
                 placeholder="e.g. Jubilee Hills, Road No. 36, Opp. Park"
                 value={newAddr.street}
                 onChange={(e) => setNewAddr({ ...newAddr, street: e.target.value })}
-                className="mt-1 text-xs sm:text-sm rounded-xl border-[#D8D2C6] focus:border-[#8A6B29] bg-white text-[#121212] font-medium"
+                className="mt-1 text-xs sm:text-sm rounded-xl border-[#121212]/30 focus:border-[#121212] bg-white text-[#121212] font-medium"
               />
             </div>
 
@@ -263,7 +263,7 @@ export function AddressStep({
                 placeholder="e.g. Hyderabad"
                 value={newAddr.city}
                 onChange={(e) => setNewAddr({ ...newAddr, city: e.target.value })}
-                className="mt-1 text-xs sm:text-sm rounded-xl border-[#D8D2C6] focus:border-[#8A6B29] bg-white text-[#121212] font-medium"
+                className="mt-1 text-xs sm:text-sm rounded-xl border-[#121212]/30 focus:border-[#121212] bg-white text-[#121212] font-medium"
               />
             </div>
 
@@ -277,7 +277,7 @@ export function AddressStep({
                 placeholder="e.g. Telangana"
                 value={newAddr.state}
                 onChange={(e) => setNewAddr({ ...newAddr, state: e.target.value })}
-                className="mt-1 text-xs sm:text-sm rounded-xl border-[#D8D2C6] focus:border-[#8A6B29] bg-white text-[#121212] font-medium"
+                className="mt-1 text-xs sm:text-sm rounded-xl border-[#121212]/30 focus:border-[#121212] bg-white text-[#121212] font-medium"
               />
             </div>
 
@@ -291,7 +291,7 @@ export function AddressStep({
                 placeholder="6-digit pincode"
                 value={newAddr.pincode}
                 onChange={(e) => setNewAddr({ ...newAddr, pincode: e.target.value })}
-                className="mt-1 text-xs sm:text-sm rounded-xl border-[#D8D2C6] focus:border-[#8A6B29] bg-white text-[#121212] font-medium"
+                className="mt-1 text-xs sm:text-sm rounded-xl border-[#121212]/30 focus:border-[#121212] bg-white text-[#121212] font-medium"
               />
             </div>
           </div>
@@ -300,7 +300,7 @@ export function AddressStep({
             <Button
               type="submit"
               disabled={saveAddressLoading}
-              className="bg-[#121212] hover:bg-[#8A6B29] text-white text-xs uppercase tracking-widest font-bold px-6 py-3 rounded-xl transition-all shadow-md active:scale-95"
+              className="bg-[#121212] hover:bg-black text-white text-xs uppercase tracking-widest font-bold px-6 py-3 rounded-xl transition-all shadow-md active:scale-95"
             >
               {saveAddressLoading ? (
                 <>
@@ -316,7 +316,7 @@ export function AddressStep({
                 type="button"
                 variant="outline"
                 onClick={() => setIsAddingAddress(false)}
-                className="text-xs uppercase tracking-widest border-[#D8D2C6] text-[#5A544E] font-bold hover:text-[#121212] rounded-xl py-3"
+                className="text-xs uppercase tracking-widest border-[#121212]/30 text-[#121212] font-bold hover:bg-[#121212] hover:text-white rounded-xl py-3"
               >
                 Cancel
               </Button>
@@ -348,30 +348,30 @@ export function AddressStep({
                     }
                     className={`relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
                       isSelected
-                        ? "border-[#8A6B29] bg-[#FFFDF9] shadow-xs"
-                        : "border-[#EFECE7] bg-white hover:border-[#8A6B29]/50"
+                        ? "border-[#121212] bg-[#F9F9F9] shadow-sm"
+                        : "border-[#EFECE7] bg-white hover:border-[#121212]/50"
                     }`}
                   >
                     <div className="flex items-start justify-between mb-2">
                       <div className="flex items-center gap-2">
                         <span className="font-bold text-sm text-[#121212]">{addr.fullName}</span>
                         {addr.isDefault && (
-                          <span className="text-[9px] uppercase tracking-wider font-bold bg-[#8A6B29]/15 text-[#8A6B29] px-2 py-0.5 rounded-md">
+                          <span className="text-[9px] uppercase tracking-wider font-bold bg-[#121212] text-white px-2 py-0.5 rounded-md">
                             Default
                           </span>
                         )}
                       </div>
                       {isSelected && (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-[#8A6B29] bg-[#8A6B29]/10 px-2.5 py-1 rounded-full">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-[#8A6B29] shrink-0" />
+                        <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-white bg-[#121212] px-2.5 py-1 rounded-full">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-white shrink-0" />
                           Selected
                         </span>
                       )}
                     </div>
                     <p className="text-xs text-[#121212] font-semibold flex items-center gap-1 mb-1">
-                      <Phone className="w-3 h-3 text-[#8A6B29]" /> {addr.mobile}
+                      <Phone className="w-3 h-3 text-[#121212]" /> {addr.mobile}
                     </p>
-                    <p className="text-xs text-[#4A443F] font-medium leading-relaxed">
+                    <p className="text-xs text-[#121212] font-medium leading-relaxed">
                       {fullAddr}, {addr.city}, {addr.state} - <span className="font-bold text-[#121212]">{addr.pincode}</span>
                     </p>
                   </div>
@@ -380,17 +380,17 @@ export function AddressStep({
             </div>
           ) : (
             /* Active Selected Single Address (When no saved list array exists) */
-            <div className="bg-[#FFFDF9] p-5 rounded-xl border-2 border-[#8A6B29] relative flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
+            <div className="bg-[#F9F9F9] p-5 rounded-xl border-2 border-[#121212] relative flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#8A6B29]" />
+                  <CheckCircle2 className="w-4 h-4 text-[#121212]" />
                   <span className="text-xs font-bold text-[#121212] uppercase tracking-wider">
                     Delivering to:
                   </span>
                   <span className="font-bold text-sm text-[#121212]">{shippingForm.name}</span>
-                  <span className="text-xs font-semibold text-[#5A544E]">({shippingForm.phone})</span>
+                  <span className="text-xs font-semibold text-[#121212]">({shippingForm.phone})</span>
                 </div>
-                <p className="text-xs text-[#4A443F] font-medium pl-6">
+                <p className="text-xs text-[#121212] font-medium pl-6">
                   {shippingForm.address}, {shippingForm.city}, {shippingForm.state} -{" "}
                   <span className="font-bold text-[#121212]">{shippingForm.pincode}</span>
                 </p>
@@ -398,7 +398,7 @@ export function AddressStep({
               <button
                 type="button"
                 onClick={() => setIsAddingAddress(true)}
-                className="self-start sm:self-center inline-flex items-center gap-1.5 text-xs font-bold text-[#8A6B29] hover:underline bg-white border border-[#8A6B29]/30 px-3 py-1.5 rounded-xl"
+                className="self-start sm:self-center inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#121212] px-3.5 py-2 rounded-xl hover:bg-black transition-colors"
               >
                 <Edit2 className="w-3.5 h-3.5" />
                 Change Address

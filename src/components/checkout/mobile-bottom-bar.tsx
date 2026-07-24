@@ -26,10 +26,10 @@ export function MobileBottomBar({
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
         {/* Left: Total preview */}
         <div>
-          <span className="text-[10px] text-[#5A544E] uppercase tracking-wider font-bold block">
+          <span className="text-[10px] text-[#121212] uppercase tracking-wider font-bold block">
             Total ({itemCount} {itemCount === 1 ? "item" : "items"})
           </span>
-          <span className="font-serif text-lg font-bold text-[#8A6B29] leading-none">
+          <span className="font-serif text-lg font-bold text-[#121212] leading-none">
             {formatPrice(grandTotal)}
           </span>
         </div>
@@ -39,15 +39,15 @@ export function MobileBottomBar({
           type="button"
           onClick={onSubmit}
           disabled={loading || !shippingForm}
-          className="flex-1 max-w-[240px] py-3.5 bg-[#121212] hover:bg-[#8A6B29] text-white text-xs uppercase tracking-widest font-bold rounded-xl shadow-md transition-all active:scale-95"
+          className="flex-1 max-w-[240px] py-3.5 bg-[#121212] hover:bg-black text-white text-xs uppercase tracking-widest font-bold rounded-xl shadow-md transition-all active:scale-95"
         >
           {loading ? (
-            <Loader2 className="w-4 h-4 animate-spin mx-auto" />
+            <Loader2 className="w-4 h-4 animate-spin mx-auto text-white" />
           ) : paymentMethod === "cod" ? (
             "Place COD Order"
           ) : (
             <span className="flex items-center justify-center gap-1.5">
-              <Lock className="w-3.5 h-3.5 text-[#8A6B29]" />
+              <Lock className="w-3.5 h-3.5 text-white" />
               Pay {formatPrice(grandTotal)}
             </span>
           )}

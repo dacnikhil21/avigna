@@ -295,7 +295,7 @@ export default function CheckoutPage() {
   const currentStep = !shippingForm ? 1 : paymentMethod ? 3 : 2;
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] pb-24 lg:pb-16 font-sans">
+    <div className="min-h-screen bg-white pb-24 lg:pb-16 font-sans">
       {/* Header */}
       <CheckoutHeader currentStep={currentStep} />
 

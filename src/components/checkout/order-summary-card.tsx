@@ -77,7 +77,7 @@ export function OrderSummaryCard({
         <h2 className="font-serif text-xl font-bold text-[#121212]">
           Order Summary
         </h2>
-        <span className="text-xs font-sans font-semibold bg-[#FAF8F5] text-[#C5A880] px-2.5 py-1 rounded-full border border-[#EFECE7]">
+        <span className="text-xs font-sans font-bold bg-[#121212] text-white px-3 py-1 rounded-full shadow-2xs">
           {items.reduce((acc, i) => acc + i.quantity, 0)} Items
         </span>
       </div>
@@ -87,7 +87,7 @@ export function OrderSummaryCard({
         {items.map((item) => (
           <div key={item.productId} className="pt-3 first:pt-0 flex gap-3.5 items-center">
             {/* Thumbnail */}
-            <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-[#FAF8F5] shrink-0 border border-[#EFECE7]">
+            <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-[#F9F9F9] shrink-0 border border-[#EFECE7]">
               <Image
                 src={item.image || "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80"}
                 alt={item.name}
@@ -99,16 +99,16 @@ export function OrderSummaryCard({
 
             {/* Details */}
             <div className="flex-1 min-w-0">
-              <p className="text-xs sm:text-sm font-medium text-[#121212] line-clamp-1">
+              <p className="text-xs sm:text-sm font-bold text-[#121212] line-clamp-1">
                 {item.name}
               </p>
-              <p className="text-[10px] text-[#7A7A7A] uppercase tracking-wider">
+              <p className="text-[10px] text-[#555555] uppercase tracking-wider font-semibold">
                 1 Gram Gold Replica
               </p>
 
               {/* Quantity controls */}
               <div className="flex items-center justify-between mt-2">
-                <div className="flex items-center border border-[#EFECE7] rounded-lg bg-[#FAF8F5]">
+                <div className="flex items-center border border-[#121212]/20 rounded-lg bg-[#F9F9F9]">
                   <button
                     type="button"
                     onClick={() => updateQuantity(item.productId, item.quantity - 1)}
@@ -142,17 +142,17 @@ export function OrderSummaryCard({
       {/* Coupon Code Section */}
       <div className="mb-6 pt-4 border-t border-[#EFECE7]">
         <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#121212] mb-2">
-          <Tag className="w-3.5 h-3.5 text-[#C5A880]" />
+          <Tag className="w-3.5 h-3.5 text-[#121212]" />
           <span>Apply Promo Code</span>
         </div>
 
         {appliedCoupon ? (
-          <div className="flex items-center justify-between bg-emerald-50 border border-emerald-200 p-3 rounded-xl">
+          <div className="flex items-center justify-between bg-emerald-50 border border-emerald-300 p-3 rounded-xl">
             <div className="flex items-center gap-2">
-              <Check className="w-4 h-4 text-emerald-600" />
+              <Check className="w-4 h-4 text-emerald-700" />
               <div>
                 <p className="text-xs font-bold text-emerald-900">{appliedCoupon}</p>
-                <p className="text-[10px] text-emerald-700">{formatPrice(discountAmount)} Instant Savings Applied</p>
+                <p className="text-[10px] text-emerald-800 font-bold">{formatPrice(discountAmount)} Instant Savings Applied</p>
               </div>
             </div>
             <button
@@ -173,19 +173,19 @@ export function OrderSummaryCard({
                   setCouponInput(e.target.value);
                   setCouponError(null);
                 }}
-                className="text-xs uppercase rounded-xl border-[#EFECE7] focus:border-[#C5A880] bg-[#FAF8F5]/50"
+                className="text-xs uppercase rounded-xl border-[#121212]/30 focus:border-[#121212] bg-white text-[#121212] font-semibold"
               />
               <Button
                 type="button"
                 onClick={handleApplyClick}
-                className="bg-[#121212] hover:bg-[#C5A880] text-white text-xs uppercase font-bold px-4 rounded-xl transition-colors shrink-0"
+                className="bg-[#121212] hover:bg-black text-white text-xs uppercase font-bold px-4 rounded-xl transition-colors shrink-0"
               >
                 Apply
               </Button>
             </div>
 
             {couponError && (
-              <p className="text-[11px] text-red-600 font-medium pl-1">{couponError}</p>
+              <p className="text-[11px] text-red-600 font-bold pl-1">{couponError}</p>
             )}
 
             {/* Quick Offer Tags */}
@@ -198,9 +198,9 @@ export function OrderSummaryCard({
                     onApplyCoupon(off.code);
                     setCouponError(null);
                   }}
-                  className="text-[10px] uppercase font-bold text-[#8A6B29] bg-[#FFFDF9] border border-[#8A6B29]/40 hover:bg-[#8A6B29] hover:text-white px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 shadow-2xs"
+                  className="text-[10px] uppercase font-bold text-[#121212] bg-[#F9F9F9] border border-[#121212] hover:bg-[#121212] hover:text-white px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 shadow-2xs"
                 >
-                  <Sparkles className="w-2.5 h-2.5 text-[#8A6B29]" />
+                  <Sparkles className="w-2.5 h-2.5 text-[#121212]" />
                   {off.code}
                 </button>
               ))}
@@ -213,7 +213,7 @@ export function OrderSummaryCard({
 
       {/* Price Breakdown */}
       <div className="space-y-2.5 text-xs sm:text-sm mb-6">
-        <div className="flex justify-between text-[#4A443F] font-medium">
+        <div className="flex justify-between text-[#121212] font-medium">
           <span>Items Subtotal</span>
           <span className="font-bold text-[#121212]">{formatPrice(subtotal)}</span>
         </div>
@@ -225,12 +225,12 @@ export function OrderSummaryCard({
           </div>
         )}
 
-        <div className="flex justify-between text-[#4A443F] font-medium">
+        <div className="flex justify-between text-[#121212] font-medium">
           <span>Insured Express Shipping</span>
-          <span className="text-[#8A6B29] font-bold">FREE</span>
+          <span className="text-[#121212] font-bold">FREE</span>
         </div>
 
-        <div className="flex justify-between text-[#7A7570] text-[11px]">
+        <div className="flex justify-between text-[#555555] text-[11px] font-medium">
           <span>GST & All Taxes</span>
           <span>Included</span>
         </div>
@@ -241,7 +241,7 @@ export function OrderSummaryCard({
           <span className="font-serif font-bold text-base text-[#121212]">
             Total Amount
           </span>
-          <span className="font-serif text-xl sm:text-2xl font-bold text-[#8A6B29]">
+          <span className="font-serif text-xl sm:text-2xl font-bold text-[#121212]">
             {formatPrice(grandTotal)}
           </span>
         </div>
@@ -252,7 +252,7 @@ export function OrderSummaryCard({
         type="button"
         onClick={onSubmit}
         disabled={loading || !shippingForm}
-        className="w-full py-6 bg-[#121212] hover:bg-[#8A6B29] text-white text-xs sm:text-sm uppercase tracking-[0.15em] font-bold rounded-xl shadow-lg transition-all duration-300 transform-gpu active:scale-95"
+        className="w-full py-6 bg-[#121212] hover:bg-black text-white text-xs sm:text-sm uppercase tracking-[0.15em] font-bold rounded-xl shadow-lg transition-all duration-300 transform-gpu active:scale-95"
       >
         {loading ? (
           <div className="flex items-center gap-2">
@@ -268,16 +268,16 @@ export function OrderSummaryCard({
 
       {/* Security & Guarantee Pills */}
       <div className="mt-5 pt-4 border-t border-[#EFECE7] space-y-2">
-        <div className="flex items-center gap-2 text-[11px] text-[#4A4A4A]">
-          <Lock className="w-3.5 h-3.5 text-[#C5A880] shrink-0" />
+        <div className="flex items-center gap-2 text-[11px] text-[#121212] font-semibold">
+          <Lock className="w-3.5 h-3.5 text-[#121212] shrink-0" />
           <span>256-Bit SSL Encrypted & PCI-DSS Compliant</span>
         </div>
-        <div className="flex items-center gap-2 text-[11px] text-[#4A4A4A]">
-          <ShieldCheck className="w-3.5 h-3.5 text-[#C5A880] shrink-0" />
+        <div className="flex items-center gap-2 text-[11px] text-[#121212] font-semibold">
+          <ShieldCheck className="w-3.5 h-3.5 text-[#121212] shrink-0" />
           <span>Certified 1 Gram Gold Guarantee</span>
         </div>
-        <div className="flex items-center gap-2 text-[11px] text-[#4A4A4A]">
-          <RotateCcw className="w-3.5 h-3.5 text-[#C5A880] shrink-0" />
+        <div className="flex items-center gap-2 text-[11px] text-[#121212] font-semibold">
+          <RotateCcw className="w-3.5 h-3.5 text-[#121212] shrink-0" />
           <span>15-Day Money-Back & Easy Replacement</span>
         </div>
       </div>

@@ -21,16 +21,16 @@ export function CheckoutHeader({ currentStep }: CheckoutHeaderProps) {
         <div className="flex items-center gap-4">
           <Link
             href="/shop"
-            className="inline-flex items-center gap-1.5 text-xs font-sans font-medium uppercase tracking-wider text-[#7A7A7A] hover:text-[#121212] transition-colors py-2 pr-3 border-r border-[#EFECE7]"
+            className="inline-flex items-center gap-1.5 text-xs font-sans font-bold uppercase tracking-wider text-[#121212] hover:text-black transition-colors py-2 pr-3 border-r border-[#EFECE7]"
           >
-            <ArrowLeft className="w-4 h-4 text-[#C5A880]" />
+            <ArrowLeft className="w-4 h-4 text-[#121212]" />
             <span className="hidden sm:inline">Back to Shop</span>
           </Link>
           <Link href="/" className="flex flex-col">
             <span className="font-serif text-base md:text-lg font-bold text-[#121212] tracking-wider leading-none">
               Sri Avighna
             </span>
-            <span className="text-[8px] uppercase tracking-[0.25em] text-[#C5A880] font-semibold mt-0.5">
+            <span className="text-[8px] uppercase tracking-[0.25em] text-[#121212] font-bold mt-0.5">
               1 Gram Gold Jewellery
             </span>
           </Link>
@@ -45,21 +45,17 @@ export function CheckoutHeader({ currentStep }: CheckoutHeaderProps) {
               <div key={step.number} className="flex items-center gap-2">
                 <div
                   className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${
-                    isCompleted
-                      ? "bg-[#C5A880] text-white"
-                      : isActive
-                      ? "bg-[#121212] text-white ring-4 ring-[#C5A880]/20"
-                      : "bg-[#FAF8F5] text-[#7A7A7A] border border-[#EFECE7]"
+                    isCompleted || isActive
+                      ? "bg-[#121212] text-white shadow-xs"
+                      : "bg-[#F5F5F5] text-[#7A7A7A] border border-[#EFECE7]"
                   }`}
                 >
                   {isCompleted ? "✓" : step.number}
                 </div>
                 <span
-                  className={`text-xs uppercase tracking-wider font-medium ${
-                    isActive
-                      ? "text-[#121212] font-semibold"
-                      : isCompleted
-                      ? "text-[#C5A880]"
+                  className={`text-xs uppercase tracking-wider font-bold ${
+                    isActive || isCompleted
+                      ? "text-[#121212]"
                       : "text-[#7A7A7A]"
                   }`}
                 >
@@ -74,11 +70,11 @@ export function CheckoutHeader({ currentStep }: CheckoutHeaderProps) {
         </div>
 
         {/* Right: Security Badge */}
-        <div className="flex items-center gap-2 bg-[#FAF8F5] border border-[#EFECE7] px-3 py-1.5 rounded-full">
-          <Lock className="w-3.5 h-3.5 text-[#C5A880]" />
+        <div className="flex items-center gap-2 bg-[#F9F9F9] border border-[#E5E5E5] px-3 py-1.5 rounded-full shadow-2xs">
+          <Lock className="w-3.5 h-3.5 text-[#121212]" />
           <div className="flex flex-col text-[9px] uppercase tracking-wider leading-tight">
             <span className="font-bold text-[#121212]">256-Bit SSL</span>
-            <span className="text-[#7A7A7A]">Encrypted Checkout</span>
+            <span className="text-[#555555] font-semibold">Encrypted Checkout</span>
           </div>
         </div>
       </div>

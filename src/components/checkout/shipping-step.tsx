@@ -18,7 +18,7 @@ export function ShippingStep() {
     });
 
   return (
-    <div className="bg-white rounded-2xl border border-[#EFECE7] p-5 sm:p-6 md:p-8 shadow-sm transition-all duration-300">
+    <div className="bg-white rounded-2xl border-2 border-[#121212]/10 p-5 sm:p-6 md:p-8 shadow-sm transition-all duration-300">
       {/* Step Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-4 border-b border-[#EFECE7]">
         <div className="flex items-center gap-3">
@@ -27,7 +27,7 @@ export function ShippingStep() {
           </div>
           <div>
             <h2 className="font-serif text-lg sm:text-xl font-bold text-[#121212] flex items-center gap-2">
-              <Truck className="w-5 h-5 text-[#8A6B29]" />
+              <Truck className="w-5 h-5 text-[#121212]" />
               Shipping & Delivery
             </h2>
             <p className="text-xs text-[#5A544E] font-medium mt-0.5">
@@ -35,46 +35,46 @@ export function ShippingStep() {
             </p>
           </div>
         </div>
-        <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A5C1E] bg-[#F7F2E6] border border-[#D8C7A1] px-3 py-1 rounded-lg self-start sm:self-center inline-flex items-center gap-1 shadow-2xs">
-          <Sparkles className="w-3 h-3 text-[#7A5C1E]" /> FREE Express Delivery
+        <span className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#121212] border border-[#121212] px-3 py-1 rounded-lg self-start sm:self-center inline-flex items-center gap-1 shadow-2xs">
+          <Sparkles className="w-3 h-3 text-white" /> FREE Express Delivery
         </span>
       </div>
 
       {/* Delivery Estimate Card */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Estimated Date Card */}
-        <div className="bg-[#FAF8F5] p-4 rounded-xl border border-[#EFECE7] flex items-start gap-3">
-          <div className="w-9 h-9 rounded-full bg-[#C5A880]/10 flex items-center justify-center shrink-0 border border-[#C5A880]/20">
-            <Clock className="w-4 h-4 text-[#C5A880]" />
+        <div className="bg-[#F9F9F9] p-4 rounded-xl border border-[#E5E5E5] flex items-start gap-3">
+          <div className="w-9 h-9 rounded-full bg-[#121212]/10 flex items-center justify-center shrink-0 border border-[#121212]/20">
+            <Clock className="w-4 h-4 text-[#121212]" />
           </div>
           <div>
-            <p className="text-[10px] uppercase tracking-wider font-semibold text-[#7A7A7A]">
+            <p className="text-[10px] uppercase tracking-wider font-bold text-[#555555]">
               Estimated Delivery Date
             </p>
             <p className="text-sm font-bold text-[#121212] mt-0.5">
               {formatDate(minDate)} – {formatDate(maxDate)}
             </p>
-            <p className="text-[11px] text-[#4A4A4A] mt-1 flex items-center gap-1">
-              <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+            <p className="text-[11px] text-[#121212] font-semibold mt-1 flex items-center gap-1">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
               Dispatched within 24 hours
             </p>
           </div>
         </div>
 
         {/* Transit Security Card */}
-        <div className="bg-[#FAF8F5] p-4 rounded-xl border border-[#EFECE7] flex items-start gap-3">
-          <div className="w-9 h-9 rounded-full bg-[#C5A880]/10 flex items-center justify-center shrink-0 border border-[#C5A880]/20">
-            <ShieldCheck className="w-4 h-4 text-[#C5A880]" />
+        <div className="bg-[#F9F9F9] p-4 rounded-xl border border-[#E5E5E5] flex items-start gap-3">
+          <div className="w-9 h-9 rounded-full bg-[#121212]/10 flex items-center justify-center shrink-0 border border-[#121212]/20">
+            <ShieldCheck className="w-4 h-4 text-[#121212]" />
           </div>
           <div>
-            <p className="text-[10px] uppercase tracking-wider font-semibold text-[#7A7A7A]">
+            <p className="text-[10px] uppercase tracking-wider font-bold text-[#555555]">
               100% Insured Transit
             </p>
             <p className="text-sm font-bold text-[#121212] mt-0.5">
               BlueDart & Delhivery Express
             </p>
-            <p className="text-[11px] text-[#4A4A4A] mt-1 flex items-center gap-1">
-              <Sparkles className="w-3 h-3 text-[#C5A880]" />
+            <p className="text-[11px] text-[#121212] font-semibold mt-1 flex items-center gap-1">
+              <Sparkles className="w-3 h-3 text-[#121212]" />
               Sandalwood box with wax seal
             </p>
           </div>
