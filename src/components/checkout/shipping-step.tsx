@@ -35,8 +35,8 @@ export function ShippingStep() {
             </p>
           </div>
         </div>
-        <span className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#121212] border border-[#121212] px-3 py-1 rounded-lg self-start sm:self-center inline-flex items-center gap-1 shadow-2xs">
-          <Sparkles className="w-3 h-3 text-white" /> FREE Express Delivery
+        <span className="text-[10px] font-bold uppercase tracking-wider text-[#121212] bg-[#F5F5F5] border border-[#121212]/20 px-3 py-1 rounded-lg self-start sm:self-center inline-flex items-center gap-1 shadow-2xs">
+          <Sparkles className="w-3 h-3 text-[#121212]" /> FREE Express Delivery
         </span>
       </div>
 

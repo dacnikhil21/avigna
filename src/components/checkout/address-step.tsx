@@ -356,14 +356,14 @@ export function AddressStep({
                       <div className="flex items-center gap-2">
                         <span className="font-bold text-sm text-[#121212]">{addr.fullName}</span>
                         {addr.isDefault && (
-                          <span className="text-[9px] uppercase tracking-wider font-bold bg-[#121212] text-white px-2 py-0.5 rounded-md">
+                          <span className="text-[9px] uppercase tracking-wider font-bold bg-[#F5F5F5] text-[#555555] border border-[#E5E5E5] px-2 py-0.5 rounded-md">
                             Default
                           </span>
                         )}
                       </div>
                       {isSelected && (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-white bg-[#121212] px-2.5 py-1 rounded-full">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-white shrink-0" />
+                        <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-[#121212] bg-[#F4F4F4] border border-[#121212]/30 px-2.5 py-1 rounded-full shadow-2xs">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#121212] shrink-0" />
                           Selected
                         </span>
                       )}

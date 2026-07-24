@@ -26,8 +26,8 @@ export function PaymentStep({ paymentMethod, setPaymentMethod }: PaymentStepProp
             </p>
           </div>
         </div>
-        <div className="self-start sm:self-center flex items-center gap-1.5 text-[10px] uppercase tracking-wider font-bold text-white bg-[#121212] px-3 py-1.5 rounded-lg shadow-2xs">
-          <Shield className="w-3.5 h-3.5 text-white" />
+        <div className="self-start sm:self-center flex items-center gap-1.5 text-[10px] uppercase tracking-wider font-bold text-[#121212] bg-[#F5F5F5] border border-[#121212]/20 px-3 py-1.5 rounded-lg shadow-2xs">
+          <Shield className="w-3.5 h-3.5 text-[#121212]" />
           Razorpay Secured
         </div>
       </div>
@@ -61,8 +61,8 @@ export function PaymentStep({ paymentMethod, setPaymentMethod }: PaymentStepProp
                   <span className="font-bold text-sm sm:text-base text-[#121212]">
                     Online Payment (UPI / Cards / NetBanking)
                   </span>
-                  <span className="text-[9px] uppercase tracking-widest font-bold bg-[#121212] text-white px-2 py-0.5 rounded-md flex items-center gap-1">
-                    <Zap className="w-2.5 h-2.5" /> Fast
+                  <span className="text-[9px] uppercase tracking-widest font-bold bg-[#F5F5F5] text-[#121212] border border-[#121212]/20 px-2 py-0.5 rounded-md flex items-center gap-1">
+                    <Zap className="w-2.5 h-2.5 text-[#121212]" /> Fast
                   </span>
                 </div>
                 <p className="text-xs text-[#5A544E] font-medium mt-0.5">

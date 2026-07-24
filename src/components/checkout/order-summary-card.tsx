@@ -77,7 +77,7 @@ export function OrderSummaryCard({
         <h2 className="font-serif text-xl font-bold text-[#121212]">
           Order Summary
         </h2>
-        <span className="text-xs font-sans font-bold bg-[#121212] text-white px-3 py-1 rounded-full shadow-2xs">
+        <span className="text-xs font-sans font-bold bg-[#F5F5F5] text-[#121212] border border-[#121212]/20 px-3 py-1 rounded-full shadow-2xs">
           {items.reduce((acc, i) => acc + i.quantity, 0)} Items
         </span>
       </div>

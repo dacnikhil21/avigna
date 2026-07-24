@@ -567,8 +567,9 @@ export function Header() {
         )}
       </AnimatePresence>
 
-      {/* Mobile Sticky Bottom Navigation Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/98 backdrop-blur-md border-t border-[#D8D2C6] h-[64px] flex items-center justify-around md:hidden pb-safe shadow-[0_-4px_16px_rgba(0,0,0,0.06)]">
+      {/* Mobile Sticky Bottom Navigation Bar (Hidden on checkout routes) */}
+      {!pathname.startsWith("/checkout") && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/98 backdrop-blur-md border-t border-[#D8D2C6] h-[64px] flex items-center justify-around md:hidden pb-safe shadow-[0_-4px_16px_rgba(0,0,0,0.06)]">
         <Link
           href="/"
           className={cn(
@@ -639,6 +640,7 @@ export function Header() {
           <span className="text-[9px] tracking-wider uppercase font-medium mt-1 font-sans">Account</span>
         </Link>
       </div>
+      )}
 
       {/* Premium Search Overlay */}
       <AnimatePresence>
