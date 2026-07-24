@@ -20,13 +20,13 @@ export async function TrendingSection() {
       <FadeIn className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-6 gap-4">
         <div>
           <p className="label-luxury mb-1 flex items-center gap-2">
-            <TrendingUp className="w-3.5 h-3.5 text-[#C5A880]" /> What&apos;s Hot
+            <TrendingUp className="w-3.5 h-3.5 text-[#8A6B29]" /> What&apos;s Hot
           </p>
           <h2 className="heading-md">Trending Jewellery</h2>
         </div>
         <Link
           href="/shop?sort=featured"
-          className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-[#C5A880] hover:text-[#121212] transition-colors font-medium"
+          className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-[#8A6B29] hover:text-[#121212] transition-colors font-medium"
         >
           View All <ArrowRight className="w-3.5 h-3.5" />
         </Link>

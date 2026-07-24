@@ -166,17 +166,17 @@ export function Header() {
                   transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
                 >
                   <span>{brand.offerBannerText || "FREE SHIPPING ON ALL ORDERS | BIS 916 CERTIFIED"}</span>
-                  <span className="text-[#C5A880]">✦</span>
+                  <span className="text-[#8A6B29]">✦</span>
                   <span>Pristine 1 Gram Gold Replica Jewellery</span>
-                  <span className="text-[#C5A880]">✦</span>
+                  <span className="text-[#8A6B29]">✦</span>
                   <span>Explore Our 1 Gram Gold Jewellery – Wanaparthy, Telangana</span>
-                  <span className="text-[#C5A880]">✦</span>
+                  <span className="text-[#8A6B29]">✦</span>
                   <span>{brand.offerBannerText || "FREE SHIPPING ON ALL ORDERS | BIS 916 CERTIFIED"}</span>
-                  <span className="text-[#C5A880]">✦</span>
+                  <span className="text-[#8A6B29]">✦</span>
                   <span>Pristine 1 Gram Gold Replica Jewellery</span>
-                  <span className="text-[#C5A880]">✦</span>
+                  <span className="text-[#8A6B29]">✦</span>
                   <span>Explore Our 1 Gram Gold Jewellery – Wanaparthy, Telangana</span>
-                  <span className="text-[#C5A880]">✦</span>
+                  <span className="text-[#8A6B29]">✦</span>
                 </motion.div>
               </div>
               <button
@@ -208,7 +208,7 @@ export function Header() {
               onClick={() => setIsMobileOpen(true)}
               className={cn(
                 "lg:hidden p-2 -ml-2 transition-colors duration-300",
-                isHeaderDark ? "text-white hover:text-[#C5A880]" : "text-[#121212] hover:text-[#C5A880]"
+                isHeaderDark ? "text-white hover:text-[#8A6B29]" : "text-[#121212] hover:text-[#8A6B29]"
               )}
               aria-label="Open menu"
             >
@@ -220,7 +220,7 @@ export function Header() {
               "hidden lg:flex items-center gap-3 lg:gap-4 xl:gap-6 text-xs xl:text-[13px] tracking-[0.08em] uppercase font-sans font-medium transition-colors duration-300",
               isHeaderDark ? "text-white" : "text-[#121212]"
             )}>
-              <Link href="/" className="hover:text-[#C5A880] transition-colors duration-300 py-6">
+              <Link href="/" className="hover:text-[#8A6B29] transition-colors duration-300 py-6">
                 Home
               </Link>
               <div
@@ -228,14 +228,14 @@ export function Header() {
                 onMouseLeave={() => handleShopHover(false)}
                 className="relative py-6 cursor-pointer"
               >
-                <span className="flex items-center gap-1 hover:text-[#C5A880] transition-colors duration-300">
+                <span className="flex items-center gap-1 hover:text-[#8A6B29] transition-colors duration-300">
                   Shop <ChevronDown className="w-3 h-3" />
                 </span>
               </div>
-              <Link href="/shop" className="hover:text-[#C5A880] transition-colors duration-300 py-6">
+              <Link href="/shop" className="hover:text-[#8A6B29] transition-colors duration-300 py-6">
                 Categories
               </Link>
-              <Link href="/collections" className="hover:text-[#C5A880] transition-colors duration-300 py-6">
+              <Link href="/collections" className="hover:text-[#8A6B29] transition-colors duration-300 py-6">
                 Collections
               </Link>
             </nav>
@@ -250,7 +250,7 @@ export function Header() {
                   )}>
                     {brand.logoText}
                   </span>
-                  <span className="hidden sm:block text-[8px] uppercase tracking-[0.3em] text-[#C5A880] mt-0.5 font-medium leading-none">
+                  <span className="hidden sm:block text-[8px] uppercase tracking-[0.3em] text-[#8A6B29] mt-0.5 font-medium leading-none">
                     {brand.logoSubText}
                   </span>
                 </div>
@@ -262,10 +262,10 @@ export function Header() {
               "hidden lg:flex items-center gap-3 lg:gap-4 xl:gap-6 justify-end transition-colors duration-300 text-xs xl:text-[13px] tracking-[0.08em] uppercase font-sans font-medium",
               isHeaderDark ? "text-white" : "text-[#121212]"
             )}>
-              <Link href="/about" className="hover:text-[#C5A880] transition-colors duration-300 py-6">
+              <Link href="/about" className="hover:text-[#8A6B29] transition-colors duration-300 py-6">
                 About Us
               </Link>
-              <Link href="/contact" className="hover:text-[#C5A880] transition-colors duration-300 py-6">
+              <Link href="/contact" className="hover:text-[#8A6B29] transition-colors duration-300 py-6">
                 Contact
               </Link>
 
@@ -273,7 +273,7 @@ export function Header() {
               <div className="flex items-center gap-2 lg:gap-3 xl:gap-4 ml-2 border-l border-current/10 pl-4">
                 <button
                   onClick={() => setIsSearchOpen(true)}
-                  className="flex items-center justify-center p-1.5 hover:text-[#C5A880] transition-colors duration-300"
+                  className="flex items-center justify-center p-1.5 hover:text-[#8A6B29] transition-colors duration-300"
                   aria-label="Search"
                 >
                   <Search className="w-4.5 h-4.5" />
@@ -281,12 +281,12 @@ export function Header() {
 
                 <Link
                   href="/wishlist"
-                  className="relative flex items-center justify-center p-1.5 hover:text-[#C5A880] transition-colors duration-300"
+                  className="relative flex items-center justify-center p-1.5 hover:text-[#8A6B29] transition-colors duration-300"
                   aria-label="Wishlist"
                 >
                   <Heart className="w-4.5 h-4.5" />
                   {wishlistCount > 0 && (
-                    <span className="absolute top-0.5 right-0.5 w-3.5 h-3.5 flex items-center justify-center bg-[#C5A880] text-white text-[8px] font-bold rounded-full animate-in zoom-in duration-200">
+                    <span className="absolute top-0.5 right-0.5 w-3.5 h-3.5 flex items-center justify-center bg-[#8A6B29] text-white text-[8px] font-bold rounded-full animate-in zoom-in duration-200">
                       {wishlistCount}
                     </span>
                   )}
@@ -294,12 +294,12 @@ export function Header() {
 
                 <button
                   onClick={openCart}
-                  className="relative flex items-center justify-center p-1.5 hover:text-[#C5A880] transition-colors duration-300"
+                  className="relative flex items-center justify-center p-1.5 hover:text-[#8A6B29] transition-colors duration-300"
                   aria-label="Cart"
                 >
                   <ShoppingBag className="w-4.5 h-4.5" />
                   {itemCount > 0 && (
-                    <span className="absolute -top-0.5 -right-0.5 w-4 h-4 flex items-center justify-center bg-[#C5A880] text-white text-[8px] font-bold rounded-full">
+                    <span className="absolute -top-0.5 -right-0.5 w-4 h-4 flex items-center justify-center bg-[#8A6B29] text-white text-[8px] font-bold rounded-full">
                       {itemCount}
                     </span>
                   )}
@@ -307,7 +307,7 @@ export function Header() {
 
                 <Link
                   href="/account"
-                  className="flex items-center justify-center p-1.5 hover:text-[#C5A880] transition-colors duration-300"
+                  className="flex items-center justify-center p-1.5 hover:text-[#8A6B29] transition-colors duration-300"
                   aria-label="Account"
                 >
                   <User className="w-4.5 h-4.5" />
@@ -321,13 +321,13 @@ export function Header() {
                 onClick={openCart}
                 className={cn(
                   "relative p-2 transition-colors duration-300",
-                  isHeaderDark ? "text-white hover:text-[#C5A880]" : "text-[#121212] hover:text-[#C5A880]"
+                  isHeaderDark ? "text-white hover:text-[#8A6B29]" : "text-[#121212] hover:text-[#8A6B29]"
                 )}
                 aria-label="Shopping cart"
               >
                 <ShoppingBag className="w-5 h-5" />
                 {itemCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 w-4.5 h-4.5 min-w-[18px] min-h-[18px] flex items-center justify-center bg-[#C5A880] text-white text-[9px] font-medium rounded-full">
+                  <span className="absolute -top-0.5 -right-0.5 w-4.5 h-4.5 min-w-[18px] min-h-[18px] flex items-center justify-center bg-[#8A6B29] text-white text-[9px] font-medium rounded-full">
                     {itemCount}
                   </span>
                 )}
@@ -353,46 +353,46 @@ export function Header() {
                   {/* Column 1: Grid of categories */}
                   <div className="col-span-6 grid grid-cols-3 gap-6">
                     <div>
-                      <h4 className="font-sans font-semibold text-[11px] tracking-[0.1em] uppercase text-[#C5A880] mb-4">
+                      <h4 className="font-sans font-semibold text-[11px] tracking-[0.1em] uppercase text-[#8A6B29] mb-4">
                         Necklaces &amp; Chains
                       </h4>
                       <ul className="space-y-2 text-[13px] text-[#121212] font-normal tracking-[0.02em]">
-                        <li><Link href="/shop?category=necklace" className="hover:text-[#C5A880] transition-colors duration-250">Necklace</Link></li>
-                        <li><Link href="/shop?category=long-haram" className="hover:text-[#C5A880] transition-colors duration-250">Long Haram</Link></li>
-                        <li><Link href="/shop?category=short-haram" className="hover:text-[#C5A880] transition-colors duration-250">Short Haram</Link></li>
-                        <li><Link href="/shop?category=thali-chains" className="hover:text-[#C5A880] transition-colors duration-250">Thali Chains</Link></li>
-                        <li><Link href="/shop?category=chandraharam-chains" className="hover:text-[#C5A880] transition-colors duration-250">Chandraharam Chains</Link></li>
-                        <li><Link href="/shop?category=long-black-beads" className="hover:text-[#C5A880] transition-colors duration-250">Long Black Beads</Link></li>
-                        <li><Link href="/shop?category=short-black-beads" className="hover:text-[#C5A880] transition-colors duration-250">Short Black Beads</Link></li>
+                        <li><Link href="/shop?category=necklace" className="hover:text-[#8A6B29] transition-colors duration-250">Necklace</Link></li>
+                        <li><Link href="/shop?category=long-haram" className="hover:text-[#8A6B29] transition-colors duration-250">Long Haram</Link></li>
+                        <li><Link href="/shop?category=short-haram" className="hover:text-[#8A6B29] transition-colors duration-250">Short Haram</Link></li>
+                        <li><Link href="/shop?category=thali-chains" className="hover:text-[#8A6B29] transition-colors duration-250">Thali Chains</Link></li>
+                        <li><Link href="/shop?category=chandraharam-chains" className="hover:text-[#8A6B29] transition-colors duration-250">Chandraharam Chains</Link></li>
+                        <li><Link href="/shop?category=long-black-beads" className="hover:text-[#8A6B29] transition-colors duration-250">Long Black Beads</Link></li>
+                        <li><Link href="/shop?category=short-black-beads" className="hover:text-[#8A6B29] transition-colors duration-250">Short Black Beads</Link></li>
                       </ul>
                     </div>
                     
                     <div>
-                      <h4 className="font-sans font-semibold text-[11px] tracking-[0.1em] uppercase text-[#C5A880] mb-4">
+                      <h4 className="font-sans font-semibold text-[11px] tracking-[0.1em] uppercase text-[#8A6B29] mb-4">
                         Bangles &amp; Rings
                       </h4>
                       <ul className="space-y-2 text-[13px] text-[#121212] font-normal tracking-[0.02em]">
-                        <li><Link href="/shop?category=earrings" className="hover:text-[#C5A880] transition-colors duration-250">Earrings</Link></li>
-                        <li><Link href="/shop?category=bangles" className="hover:text-[#C5A880] transition-colors duration-250">Bangles</Link></li>
-                        <li><Link href="/shop?category=glass-bangles" className="hover:text-[#C5A880] transition-colors duration-250">Glass Bangles</Link></li>
-                        <li><Link href="/shop?category=finger-rings" className="hover:text-[#C5A880] transition-colors duration-250">Finger Rings</Link></li>
-                        <li><Link href="/shop?category=bracelets" className="hover:text-[#C5A880] transition-colors duration-250">Bracelets</Link></li>
-                        <li><Link href="/shop?category=anklets" className="hover:text-[#C5A880] transition-colors duration-250">Anklets</Link></li>
+                        <li><Link href="/shop?category=earrings" className="hover:text-[#8A6B29] transition-colors duration-250">Earrings</Link></li>
+                        <li><Link href="/shop?category=bangles" className="hover:text-[#8A6B29] transition-colors duration-250">Bangles</Link></li>
+                        <li><Link href="/shop?category=glass-bangles" className="hover:text-[#8A6B29] transition-colors duration-250">Glass Bangles</Link></li>
+                        <li><Link href="/shop?category=finger-rings" className="hover:text-[#8A6B29] transition-colors duration-250">Finger Rings</Link></li>
+                        <li><Link href="/shop?category=bracelets" className="hover:text-[#8A6B29] transition-colors duration-250">Bracelets</Link></li>
+                        <li><Link href="/shop?category=anklets" className="hover:text-[#8A6B29] transition-colors duration-250">Anklets</Link></li>
                       </ul>
                     </div>
 
                     <div>
-                      <h4 className="font-sans font-semibold text-[11px] tracking-[0.1em] uppercase text-[#C5A880] mb-4">
+                      <h4 className="font-sans font-semibold text-[11px] tracking-[0.1em] uppercase text-[#8A6B29] mb-4">
                         Special Collections
                       </h4>
                       <ul className="space-y-2 text-[13px] text-[#121212] font-normal tracking-[0.02em]">
-                        <li><Link href="/shop?category=bridal-collection" className="hover:text-[#C5A880] transition-colors duration-250">Bridal Collection</Link></li>
-                        <li><Link href="/shop?category=classical-dance-jewellery" className="hover:text-[#C5A880] transition-colors duration-250">Classical Dance</Link></li>
-                        <li><Link href="/shop?category=panchaloham-jewellery" className="hover:text-[#C5A880] transition-colors duration-250">Panchaloham</Link></li>
-                        <li><Link href="/shop?category=vaddanam" className="hover:text-[#C5A880] transition-colors duration-250">Vaddanam</Link></li>
-                        <li><Link href="/shop?category=mens-collection" className="hover:text-[#C5A880] transition-colors duration-250">Men&apos;s Collection</Link></li>
-                        <li><Link href="/shop?category=kids-collection" className="hover:text-[#C5A880] transition-colors duration-250">Kids Collection</Link></li>
-                        <li><Link href="/shop?category=latest-collections" className="hover:text-[#C5A880] transition-colors duration-250">Latest Collections</Link></li>
+                        <li><Link href="/shop?category=bridal-collection" className="hover:text-[#8A6B29] transition-colors duration-250">Bridal Collection</Link></li>
+                        <li><Link href="/shop?category=classical-dance-jewellery" className="hover:text-[#8A6B29] transition-colors duration-250">Classical Dance</Link></li>
+                        <li><Link href="/shop?category=panchaloham-jewellery" className="hover:text-[#8A6B29] transition-colors duration-250">Panchaloham</Link></li>
+                        <li><Link href="/shop?category=vaddanam" className="hover:text-[#8A6B29] transition-colors duration-250">Vaddanam</Link></li>
+                        <li><Link href="/shop?category=mens-collection" className="hover:text-[#8A6B29] transition-colors duration-250">Men&apos;s Collection</Link></li>
+                        <li><Link href="/shop?category=kids-collection" className="hover:text-[#8A6B29] transition-colors duration-250">Kids Collection</Link></li>
+                        <li><Link href="/shop?category=latest-collections" className="hover:text-[#8A6B29] transition-colors duration-250">Latest Collections</Link></li>
                       </ul>
                     </div>
                   </div>
@@ -400,7 +400,7 @@ export function Header() {
                   {/* Column 2: Featured Collection */}
                   <div className="col-span-3 border-l border-[#EFECE7] pl-8 flex flex-col justify-between">
                     <div>
-                      <h4 className="font-sans font-semibold text-[11px] tracking-[0.1em] uppercase text-[#C5A880] mb-4">
+                      <h4 className="font-sans font-semibold text-[11px] tracking-[0.1em] uppercase text-[#8A6B29] mb-4">
                         Featured Collection
                       </h4>
                       <h5 className="font-serif text-2xl font-light text-[#121212] mb-2">Temple Gold</h5>
@@ -410,12 +410,12 @@ export function Header() {
                     </div>
                     <Link
                       href="/collections/temple-gold"
-                      className="inline-flex items-center text-[12px] font-medium tracking-[0.08em] uppercase text-[#121212] hover:text-[#C5A880] transition-colors duration-300 group mt-auto self-start"
+                      className="inline-flex items-center text-[12px] font-medium tracking-[0.08em] uppercase text-[#121212] hover:text-[#8A6B29] transition-colors duration-300 group mt-auto self-start"
                     >
                       <span className="relative">
                         Explore Temple Gold
                         <span className="absolute bottom-0 left-0 w-full h-[1px] bg-[#121212] scale-x-100 group-hover:scale-x-0 origin-left transition-transform duration-300" />
-                        <span className="absolute bottom-0 left-0 w-full h-[1px] bg-[#C5A880] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
+                        <span className="absolute bottom-0 left-0 w-full h-[1px] bg-[#8A6B29] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
                       </span>
                     </Link>
                   </div>
@@ -466,7 +466,7 @@ export function Header() {
               <div className="flex items-center justify-between mb-8">
                 <div>
                   <span className="font-serif text-2xl font-light">{brand.logoText}</span>
-                  <p className="text-[9px] uppercase tracking-[0.3em] text-[#C5A880]">
+                  <p className="text-[9px] uppercase tracking-[0.3em] text-[#8A6B29]">
                     {brand.logoSubText}
                   </p>
                 </div>
@@ -484,10 +484,10 @@ export function Header() {
                 <div>
                   <button
                     onClick={() => setIsShopExpanded(!isShopExpanded)}
-                    className="flex items-center justify-between w-full py-2 hover:text-[#C5A880] transition-colors duration-300"
+                    className="flex items-center justify-between w-full py-2 hover:text-[#8A6B29] transition-colors duration-300"
                   >
                     <span>Shop</span>
-                    <ChevronDown className={cn("w-4 h-4 transition-transform duration-300 text-[#C5A880]", isShopExpanded && "rotate-180")} />
+                    <ChevronDown className={cn("w-4 h-4 transition-transform duration-300 text-[#8A6B29]", isShopExpanded && "rotate-180")} />
                   </button>
                   <AnimatePresence initial={false}>
                     {isShopExpanded && (
@@ -498,46 +498,46 @@ export function Header() {
                         transition={{ duration: 0.3, ease: "easeOut" }}
                         className="pl-4 overflow-hidden flex flex-col gap-2.5 mt-2 border-l border-[#EFECE7]"
                       >
-                        <Link href="/shop" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#C5A880] font-normal">All Jewellery</Link>
-                        <Link href="/shop?category=necklace" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#C5A880] font-normal">Necklaces & Chokers</Link>
-                        <Link href="/shop?category=earrings" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#C5A880] font-normal">Earrings & Jhumkas</Link>
-                        <Link href="/shop?category=bangles" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#C5A880] font-normal">Bangles & Kadas</Link>
-                        <Link href="/shop?category=finger-rings" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#C5A880] font-normal">Rings & Accessories</Link>
+                        <Link href="/shop" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#8A6B29] font-normal">All Jewellery</Link>
+                        <Link href="/shop?category=necklace" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#8A6B29] font-normal">Necklaces & Chokers</Link>
+                        <Link href="/shop?category=earrings" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#8A6B29] font-normal">Earrings & Jhumkas</Link>
+                        <Link href="/shop?category=bangles" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#8A6B29] font-normal">Bangles & Kadas</Link>
+                        <Link href="/shop?category=finger-rings" onClick={() => setIsMobileOpen(false)} className="text-sm py-1.5 hover:text-[#8A6B29] font-normal">Rings & Accessories</Link>
                       </motion.div>
                     )}
                   </AnimatePresence>
                 </div>
 
-                <Link href="/" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40">
+                <Link href="/" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#8A6B29] transition-colors duration-300 border-b border-[#EFECE7]/40">
                   Home
                 </Link>
 
-                <Link href="/shop" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40">
+                <Link href="/shop" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#8A6B29] transition-colors duration-300 border-b border-[#EFECE7]/40">
                   Shop
                 </Link>
 
-                <Link href="/collections" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40">
+                <Link href="/collections" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#8A6B29] transition-colors duration-300 border-b border-[#EFECE7]/40">
                   Collections
                 </Link>
 
-                <Link href="/about" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40">
+                <Link href="/about" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#8A6B29] transition-colors duration-300 border-b border-[#EFECE7]/40">
                   About Us
                 </Link>
 
-                <Link href="/contact" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40">
+                <Link href="/contact" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#8A6B29] transition-colors duration-300 border-b border-[#EFECE7]/40">
                   Contact
                 </Link>
 
-                <Link href="/wishlist" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 border-b border-[#EFECE7]/40 flex items-center justify-between gap-2">
+                <Link href="/wishlist" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#8A6B29] transition-colors duration-300 border-b border-[#EFECE7]/40 flex items-center justify-between gap-2">
                   <span>Wishlist</span>
                   {wishlistCount > 0 && (
-                    <span className="w-5 h-5 flex items-center justify-center bg-[#C5A880] text-white text-[10px] font-bold rounded-full">
+                    <span className="w-5 h-5 flex items-center justify-center bg-[#8A6B29] text-white text-[10px] font-bold rounded-full">
                       {wishlistCount}
                     </span>
                   )}
                 </Link>
 
-                <Link href="/account" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#C5A880] transition-colors duration-300 flex items-center gap-2">
+                <Link href="/account" onClick={() => setIsMobileOpen(false)} className="py-2 hover:text-[#8A6B29] transition-colors duration-300 flex items-center gap-2">
                   <User className="w-4.5 h-4.5" />
                   <span>Account</span>
                 </Link>
@@ -548,17 +548,17 @@ export function Header() {
                 <Link
                   href="/contact"
                   onClick={() => setIsMobileOpen(false)}
-                  className="flex items-center gap-2 text-sm text-[#121212] hover:text-[#C5A880] transition-colors"
+                  className="flex items-center gap-2 text-sm text-[#121212] hover:text-[#8A6B29] transition-colors"
                 >
-                  <MapPin className="w-4 h-4 text-[#C5A880]" />
+                  <MapPin className="w-4 h-4 text-[#8A6B29]" />
                   <span>1 Gram Gold Store Locator</span>
                 </Link>
                 <Link
                   href="/faq"
                   onClick={() => setIsMobileOpen(false)}
-                  className="flex items-center gap-2 text-sm text-[#121212] hover:text-[#C5A880] transition-colors"
+                  className="flex items-center gap-2 text-sm text-[#121212] hover:text-[#8A6B29] transition-colors"
                 >
-                  <HelpCircle className="w-4 h-4 text-[#C5A880]" />
+                  <HelpCircle className="w-4 h-4 text-[#8A6B29]" />
                   <span>Client FAQ</span>
                 </Link>
               </div>
@@ -666,7 +666,7 @@ export function Header() {
             >
               {/* Input Row */}
               <div className="flex items-center gap-3 px-5 py-4 border-b border-[#EFECE7]">
-                <Search className="w-5 h-5 text-[#C5A880] shrink-0" />
+                <Search className="w-5 h-5 text-[#8A6B29] shrink-0" />
                 <input
                   type="text"
                   value={searchVal}
@@ -690,18 +690,18 @@ export function Header() {
                 <div className="p-6 space-y-6 max-h-[70vh] overflow-y-auto no-scrollbar">
                   {recentSearches.length > 0 && (
                     <div>
-                      <h4 className="text-[10px] uppercase tracking-widest font-semibold text-[#C5A880] mb-2.5 flex items-center gap-1.5 select-none">
+                      <h4 className="text-[10px] uppercase tracking-widest font-semibold text-[#8A6B29] mb-2.5 flex items-center gap-1.5 select-none">
                         <Clock className="w-3.5 h-3.5" /> Recent Searches
                       </h4>
                       <div className="flex flex-wrap gap-2">
                         {recentSearches.map((term) => (
                           <div
                             key={term}
-                            className="group flex items-center gap-1.5 px-3 py-1 bg-[#FAF8F5] border border-[#EFECE7] rounded-full text-xs text-[#4A4A4A] hover:border-[#C5A880] transition-colors"
+                            className="group flex items-center gap-1.5 px-3 py-1 bg-[#FAF8F5] border border-[#EFECE7] rounded-full text-xs text-[#4A4A4A] hover:border-[#8A6B29] transition-colors"
                           >
                             <button
                               onClick={() => handleSearchSubmit(term)}
-                              className="hover:text-[#C5A880] font-medium"
+                              className="hover:text-[#8A6B29] font-medium"
                             >
                               {term}
                             </button>
@@ -720,7 +720,7 @@ export function Header() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-1">
                     <div>
-                      <h4 className="text-[10px] uppercase tracking-widest font-semibold text-[#C5A880] mb-3 select-none">Popular Categories</h4>
+                      <h4 className="text-[10px] uppercase tracking-widest font-semibold text-[#8A6B29] mb-3 select-none">Popular Categories</h4>
                       <ul className="space-y-2">
                         {[
                           { name: "Earrings", slug: "earrings" },
@@ -736,9 +736,9 @@ export function Header() {
                                 saveRecentSearch(cat.name);
                                 setIsSearchOpen(false);
                               }}
-                              className="text-xs text-[#4A4A4A] hover:text-[#C5A880] font-medium flex items-center gap-2 transition-colors group"
+                              className="text-xs text-[#4A4A4A] hover:text-[#8A6B29] font-medium flex items-center gap-2 transition-colors group"
                             >
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#EFECE7] group-hover:bg-[#C5A880] transition-colors" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#EFECE7] group-hover:bg-[#8A6B29] transition-colors" />
                               {cat.name}
                             </Link>
                           </li>
@@ -747,7 +747,7 @@ export function Header() {
                     </div>
 
                     <div>
-                      <h4 className="text-[10px] uppercase tracking-widest font-semibold text-[#C5A880] mb-3 select-none">Trending Searches</h4>
+                      <h4 className="text-[10px] uppercase tracking-widest font-semibold text-[#8A6B29] mb-3 select-none">Trending Searches</h4>
                       <ul className="space-y-2">
                         {[
                           "1 Gram Gold Necklace",
@@ -759,9 +759,9 @@ export function Header() {
                           <li key={term}>
                             <button
                               onClick={() => handleSearchSubmit(term)}
-                              className="text-xs text-[#4A4A4A] hover:text-[#C5A880] font-medium flex items-center gap-2 text-left transition-colors group"
+                              className="text-xs text-[#4A4A4A] hover:text-[#8A6B29] font-medium flex items-center gap-2 text-left transition-colors group"
                             >
-                              <Search className="w-3 h-3 text-gray-400 group-hover:text-[#C5A880] transition-colors" />
+                              <Search className="w-3 h-3 text-gray-400 group-hover:text-[#8A6B29] transition-colors" />
                               {term}
                             </button>
                           </li>
@@ -772,10 +772,10 @@ export function Header() {
                 </div>
               ) : (
                 <div className="p-6 max-h-[70vh] overflow-y-auto no-scrollbar space-y-4">
-                  <h4 className="text-[10px] uppercase tracking-widest font-semibold text-[#C5A880] select-none">Search Results</h4>
+                  <h4 className="text-[10px] uppercase tracking-widest font-semibold text-[#8A6B29] select-none">Search Results</h4>
                   {searchLoading ? (
                     <div className="flex items-center justify-center py-10">
-                      <div className="w-6 h-6 border-2 border-[#C5A880] border-t-transparent rounded-full animate-spin" />
+                      <div className="w-6 h-6 border-2 border-[#8A6B29] border-t-transparent rounded-full animate-spin" />
                     </div>
                   ) : searchResults.length > 0 ? (
                     <div className="divide-y divide-[#EFECE7]">

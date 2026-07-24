@@ -13,8 +13,8 @@ export function WishlistContent() {
   if (items.length === 0) {
     return (
       <div className="min-h-[70vh] bg-[#FAF8F5] flex flex-col items-center justify-center px-6 py-40 text-center">
-        <Heart className="w-12 h-12 text-[#C5A880] mb-6 stroke-[1.5]" />
-        <p className="text-[11px] font-sans tracking-[0.3em] uppercase text-[#C5A880] mb-4">
+        <Heart className="w-12 h-12 text-[#8A6B29] mb-6 stroke-[1.5]" />
+        <p className="text-[11px] font-sans tracking-[0.3em] uppercase text-[#8A6B29] mb-4">
           Your Wishlist
         </p>
         <h1 className="font-serif text-3xl md:text-4xl font-light text-[#121212] italic mb-6">
@@ -25,7 +25,7 @@ export function WishlistContent() {
         </p>
         <Link
           href="/shop"
-          className="inline-flex items-center justify-center px-8 py-4 bg-[#121212] text-white text-xs uppercase tracking-[0.2em] font-medium hover:bg-[#C5A880] transition-all duration-500 rounded-none"
+          className="inline-flex items-center justify-center px-8 py-4 bg-[#121212] text-white text-xs uppercase tracking-[0.2em] font-medium hover:bg-[#8A6B29] transition-all duration-500 rounded-none"
         >
           Explore the Catalog
         </Link>

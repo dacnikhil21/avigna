@@ -146,13 +146,13 @@ export function OffersSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/20 z-[1] pointer-events-none" />
 
               {/* Badge */}
-              <span className="absolute top-4 left-4 px-2.5 py-1 bg-[#C5A880] text-white text-[9px] uppercase tracking-widest font-medium rounded-md z-[2]">
+              <span className="absolute top-4 left-4 px-2.5 py-1 bg-[#8A6B29] text-white text-[9px] uppercase tracking-widest font-medium rounded-md z-[2]">
                 {offer.badge}
               </span>
 
               {/* Content */}
               <div className="absolute inset-0 p-6 flex flex-col justify-end z-[2] pointer-events-none">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-[#C5A880] mb-1 font-medium">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-[#8A6B29] mb-1 font-medium">
                   {offer.subtitle}
                 </p>
                 <h3 className="font-serif text-xl md:text-2xl font-light text-white mb-2 leading-tight">
@@ -164,7 +164,7 @@ export function OffersSection() {
                 
                 {/* Micro-animated CTA with gold shine effect */}
                 <div className="self-start">
-                  <span className="relative overflow-hidden inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.15em] text-white group-hover:text-[#C5A880] transition-colors font-medium py-1.5 px-3 bg-black/45 border border-white/20 rounded-md backdrop-blur-sm">
+                  <span className="relative overflow-hidden inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.15em] text-white group-hover:text-[#8A6B29] transition-colors font-medium py-1.5 px-3 bg-black/45 border border-white/20 rounded-md backdrop-blur-sm">
                     Discover Now
                     <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
                     {/* Animated Shine layer */}

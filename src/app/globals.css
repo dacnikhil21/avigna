@@ -4,25 +4,25 @@
 
 @layer base {
   :root {
-    --background: 40 20% 98%;
-    --foreground: 0 0% 10%;
-    --card: 40 20% 98%;
-    --card-foreground: 0 0% 10%;
-    --popover: 40 20% 98%;
-    --popover-foreground: 0 0% 10%;
-    --primary: 40 45% 58%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 7%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 7%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 7%;
+    --primary: 40 55% 35%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 30 20% 94%;
-    --secondary-foreground: 0 0% 10%;
-    --muted: 30 15% 92%;
-    --muted-foreground: 0 0% 42%;
-    --accent: 30 20% 94%;
-    --accent-foreground: 0 0% 10%;
+    --secondary: 40 15% 96%;
+    --secondary-foreground: 0 0% 7%;
+    --muted: 40 10% 94%;
+    --muted-foreground: 0 0% 35%;
+    --accent: 40 15% 96%;
+    --accent-foreground: 0 0% 7%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 30 15% 88%;
-    --input: 30 15% 88%;
-    --ring: 40 45% 58%;
+    --border: 40 10% 88%;
+    --input: 40 10% 88%;
+    --ring: 40 55% 35%;
     --radius: 0.75rem;
   }
 }
@@ -40,7 +40,7 @@
   }
 
   body {
-    @apply bg-luxury-white text-luxury-black font-sans;
+    @apply bg-white text-luxury-black font-sans;
     overflow-x: hidden;
     /* Prevent fixed bottom mobile nav from overlapping footer */
     padding-bottom: 64px;
@@ -69,24 +69,24 @@
   .luxury-gradient {
     background: linear-gradient(
       135deg,
-      #fafaf8 0%,
-      #f5f0eb 50%,
-      #e8e0d5 100%
+      #ffffff 0%,
+      #f9f8f5 50%,
+      #f2ede4 100%
     );
   }
 
   .gold-gradient {
     background: linear-gradient(
       135deg,
-      #c9a962 0%,
-      #d4bc7a 50%,
-      #a8893e 100%
+      #8a6b29 0%,
+      #a8893e 50%,
+      #70541e 100%
     );
   }
 
   .gold-text {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #c9a962, #d4bc7a, #a8893e);
+    background-image: linear-gradient(135deg, #8a6b29, #a8893e, #70541e);
   }
 
   .section-padding {

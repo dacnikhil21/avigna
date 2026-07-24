@@ -8,15 +8,15 @@ const config: Config = {
     extend: {
       colors: {
         luxury: {
-          white: "#FAFAF8",
-          cream: "#F5F0EB",
+          white: "#FFFFFF",
+          cream: "#F9F8F5",
           beige: "#E8E0D5",
-          gold: "#C9A962",
-          "gold-light": "#D4BC7A",
-          "gold-dark": "#A8893E",
-          black: "#1A1A1A",
-          charcoal: "#2D2D2D",
-          muted: "#6B6560",
+          gold: "#8A6B29",
+          "gold-light": "#C9A962",
+          "gold-dark": "#70541E",
+          black: "#121212",
+          charcoal: "#262626",
+          muted: "#5A544E",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

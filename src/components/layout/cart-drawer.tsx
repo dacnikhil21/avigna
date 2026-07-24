@@ -78,7 +78,7 @@ export function CartDrawer() {
             <div className="p-4 sm:p-5 border-b border-[#EFECE7] bg-white sticky top-0 z-10">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-full bg-[#FAF8F5] border border-[#EFECE7] flex items-center justify-center text-[#C5A880]">
+                  <div className="w-9 h-9 rounded-full bg-[#FAF8F5] border border-[#EFECE7] flex items-center justify-center text-[#8A6B29]">
                     <ShoppingBag className="w-4 h-4" />
                   </div>
                   <div>
@@ -102,8 +102,8 @@ export function CartDrawer() {
 
               {/* Sleek 1-Line Free Shipping Banner */}
               {items.length > 0 && (
-                <div className="mt-3 px-3 py-1.5 rounded-lg bg-[#FAF8F5] border border-[#C5A880]/30 flex items-center gap-2 text-[11px] font-medium text-[#121212]">
-                  <Truck className="w-3.5 h-3.5 text-[#C5A880] shrink-0" />
+                <div className="mt-3 px-3 py-1.5 rounded-lg bg-[#FAF8F5] border border-[#8A6B29]/30 flex items-center gap-2 text-[11px] font-medium text-[#121212]">
+                  <Truck className="w-3.5 h-3.5 text-[#8A6B29] shrink-0" />
                   <span>
                     🎉 <strong className="font-semibold">FREE Express Delivery & Insured Transit</strong> Unlocked
                   </span>
@@ -116,7 +116,7 @@ export function CartDrawer() {
               {items.length === 0 ? (
                 /* Empty Cart State */
                 <div className="flex flex-col items-center justify-center h-full text-center py-12 px-4">
-                  <div className="w-16 h-16 rounded-full bg-[#FAF8F5] border border-[#EFECE7] flex items-center justify-center mb-4 text-[#C5A880]">
+                  <div className="w-16 h-16 rounded-full bg-[#FAF8F5] border border-[#EFECE7] flex items-center justify-center mb-4 text-[#8A6B29]">
                     <ShoppingBag className="w-8 h-8" />
                   </div>
                   <h3 className="font-serif text-lg font-bold text-[#121212] mb-1">
@@ -136,7 +136,7 @@ export function CartDrawer() {
                           key={cat.slug}
                           href={`/shop?category=${cat.slug}`}
                           onClick={closeCart}
-                          className="text-[11px] font-medium text-[#4A4A4A] bg-[#FAF8F5] border border-[#EFECE7] hover:border-[#C5A880] hover:text-[#C5A880] px-3 py-1 rounded-full transition-all"
+                          className="text-[11px] font-medium text-[#4A4A4A] bg-[#FAF8F5] border border-[#EFECE7] hover:border-[#8A6B29] hover:text-[#8A6B29] px-3 py-1 rounded-full transition-all"
                         >
                           {cat.label}
                         </Link>
@@ -186,7 +186,7 @@ export function CartDrawer() {
                           <Link
                             href={`/product/${item.slug}`}
                             onClick={closeCart}
-                            className="font-serif text-xs sm:text-sm font-semibold text-[#121212] hover:text-[#C5A880] transition-colors line-clamp-1 leading-snug"
+                            className="font-serif text-xs sm:text-sm font-semibold text-[#121212] hover:text-[#8A6B29] transition-colors line-clamp-1 leading-snug"
                           >
                             {item.name}
                           </Link>
@@ -257,7 +257,7 @@ export function CartDrawer() {
                   </div>
                   <div className="flex justify-between text-[#4A4A4A]">
                     <span>Insured Delivery</span>
-                    <span className="text-[#C5A880] font-bold">FREE</span>
+                    <span className="text-[#8A6B29] font-bold">FREE</span>
                   </div>
 
                   <Separator className="my-1.5 bg-[#EFECE7]" />
@@ -266,7 +266,7 @@ export function CartDrawer() {
                     <span className="font-serif font-bold text-sm text-[#121212]">
                       Total Amount
                     </span>
-                    <span className="font-serif text-lg font-bold text-[#C5A880]">
+                    <span className="font-serif text-lg font-bold text-[#8A6B29]">
                       {formatPrice(total)}
                     </span>
                   </div>
@@ -289,10 +289,10 @@ export function CartDrawer() {
                 {/* Trust Badges */}
                 <div className="pt-1 flex items-center justify-center gap-4 text-[9px] text-[#7A7A7A] uppercase tracking-wider">
                   <span className="flex items-center gap-1 font-medium">
-                    <ShieldCheck className="w-3 h-3 text-[#C5A880]" /> 256-Bit SSL
+                    <ShieldCheck className="w-3 h-3 text-[#8A6B29]" /> 256-Bit SSL
                   </span>
                   <span className="flex items-center gap-1 font-medium">
-                    <RotateCcw className="w-3 h-3 text-[#C5A880]" /> 15-Day Exchange
+                    <RotateCcw className="w-3 h-3 text-[#8A6B29]" /> 15-Day Exchange
                   </span>
                 </div>
               </div>

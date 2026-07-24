@@ -57,17 +57,17 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
     : product.isBridal
     ? { label: "Bridal", color: "bg-[#B76E79]" }
     : product.isTrending
-    ? { label: "Trending", color: "bg-[#C5A880]" }
+    ? { label: "Trending", color: "bg-[#8A6B29]" }
     : product.isLatest
     ? { label: "New", color: "bg-[#3A7D44]" }
     : null;
 
   return (
     <>
-      <article className="group flex flex-col bg-white rounded-xl overflow-hidden border border-[#EFECE7] hover:shadow-lg hover:border-[#C5A880]/30 transition-all duration-500 h-full">
+      <article className="group flex flex-col bg-white rounded-xl overflow-hidden border border-[#EFECE7] hover:shadow-lg hover:border-[#8A6B29]/30 transition-all duration-500 h-full">
         {/* Image */}
         <Link href={`/product/${product.slug}`} className="block relative">
-          <div className="relative aspect-[4/5] overflow-hidden bg-[#FAF8F5]">
+          <div className="relative aspect-[4/5] overflow-hidden bg-[#F9F8F5]">
             <Image
               src={product.images && product.images.length > 0 && product.images[0]?.url ? product.images[0].url : "/images/hero-1.jpeg"}
               alt={product.images && product.images.length > 0 && product.images[0]?.altText ? product.images[0].altText : product.name}
@@ -95,12 +95,12 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
               className={cn(
                 "absolute top-2 right-2 z-10 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm",
                 isWishlisted
-                  ? "bg-white text-[#C5A880] opacity-100"
+                  ? "bg-white text-[#8A6B29] opacity-100"
                   : "bg-white/80 text-[#6B6560] md:opacity-0 group-hover:opacity-100"
               )}
               aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
             >
-              <Heart className={cn("w-3 h-3", isWishlisted && "fill-[#C5A880]")} />
+              <Heart className={cn("w-3 h-3", isWishlisted && "fill-[#8A6B29]")} />
             </button>
 
             {/* Quick View hover overlay */}
@@ -148,7 +148,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
                 "px-2.5 py-1 rounded-md text-[9px] md:text-[10px] uppercase tracking-wider font-medium transition-all duration-300 flex items-center gap-1",
                 added
                   ? "bg-emerald-700 text-white"
-                  : "bg-[#121212] text-white hover:bg-[#C5A880] hover:text-[#121212] active:scale-95",
+                  : "bg-[#121212] text-white hover:bg-[#8A6B29] hover:text-white active:scale-95",
                 product.stockQty <= 0 && "opacity-40 cursor-not-allowed bg-gray-200 text-gray-500"
               )}
               aria-label="Add to bag"
